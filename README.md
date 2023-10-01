@@ -1,5 +1,6 @@
-[![Logo](https://hamidkamyab.ir/ "Logo")](https://raw.githubusercontent.com/hamidkamyab/jameshop/main/public/imgs/logo-thin.png "Logo")
+<p align="center"><a href="https://hamidkamyab.ir/" target="_blank"><img src="https://github.com/hamidkamyab/jameshop/blob/main/public/imgs/logo-thin.png" width="300" alt="JameShop Logo"></a></p>
 
-------------
-#####[Description:](https://github.com/hamidkamyab/jameshop#description "Description")
+
+
+## About JameShop
 JameShop is a clothing store website that I designed using the Laravel framework.
