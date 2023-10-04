@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="col-12 d-flex justify-content-center px-2 reportCard mb-5">
+    <div class="col-12 d-flex justify-content-center px-2 mb-5">
         <table class="table">
             <thead class="bg-dark text-white">
                 <tr>
@@ -17,28 +17,19 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>تیشرت</td>
-                    <td>پوشاک</td>
-                    <td>1402/07/05</td>
-                    <td>
-                        <a href="#" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>کلاه</td>
-                    <td>پوشاک</td>
-                    <td>1402/07/05</td>
-                    <td>
-                        <a href="#" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                        </a>
-                    </td>
-                </tr>
+                @foreach ($categories as $key=>$category)
+                    <tr>
+                        <td>{{$key}}</td>
+                        <td>{{$category->title}}</td>
+                        <td>{{$category->parent_id}}</td>
+                        <td>{{$category->created_at}}</td>
+                        <td>
+                            <a href="#" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true"><i class="icon-cancel-1"></i></span>
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

@@ -13,8 +13,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        // $categories = Category::paginate(20);
-        $categories = [0,1];
+        $categories = Category::paginate(20);
         return view('admin.categories.index',compact('categories'));
     }
 
@@ -23,7 +22,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('admin.categories.create',compact('categories'));
     }
 
     /**
@@ -31,7 +31,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**

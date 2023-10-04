@@ -151,7 +151,7 @@
         </nav>
     </div>
 
-    <div class="HeadMenu position-fixed mb-3 top-0 border-bottom bg-white position-fixed w-100 d-flex align-items-center gap-3 px-5 NoSelect">
+    <div class="HeadMenu position-fixed mb-3 top-0 bg-white position-fixed w-100 d-flex align-items-center gap-3 px-5 NoSelect">
         <div>
             <a href="/" class="mb-2 mb-lg-0 text-dark text-decoration-none">
                 <img src="{{ asset('imgs/admin/logo-bold.png') }}" alt="" width="80">
@@ -202,14 +202,14 @@
         <div class="content mCustomScrollbar h-100" data-mcs-theme="dark">
             <div class="subContent container d-flex flex-wrap align-items-start gap-2" >
                 <div class="col-12 d-flex flex-wrap justify-content-center gap-2">
-                    <div class="navigtionBar col-12 p-3 bg-white d-flex align-items-center h-auto">
+                    <div class="navigtionBar col-12 p-3 bg-white d-flex align-items-center h-auto border-start border-4 border-info">
                         <h4 class="BYekan text-muted m-0 p-0">
                             @yield('navigation')
                         </h4>
                     </div>
                     <!-- navigtionBar -->
 
-                    <div class="col-12 bg-white p-3">
+                    <div class="col-12 bg-white p-3 d-flex justify-content-center border-start border-4 border-info">
                         @yield('content')
                     </div>
                 </div>
