@@ -5,6 +5,20 @@
 @endsection
 @section('content')
     <div class="col-12 d-flex flex-wrap justify-content-center px-2 mb-5">
+        <div class="col-12">
+            @if(Session::has('store_category'))
+                @include('admin.partials.Alert',['msg'=>session('store_category'),'status'=>'success'])
+            @endif
+            @if(Session::has('destroy_category'))
+                @include('admin.partials.Alert',['msg'=>session('destroy_category'),'status'=>'success'])
+            @endif
+            @if(Session::has('update_category'))
+                @include('admin.partials.Alert',['msg'=>session('update_category'),'status'=>'success'])
+            @endif
+            @if(Session::has('error_category'))
+                @include('admin.partials.Alert',['msg'=>session('error_category'),'status'=>'danger'])
+            @endif
+        </div>
         <table class="table">
             <thead class="bg-dark text-white">
                 <tr>
@@ -18,13 +32,17 @@
                 {{session(['count' => 0])}}
                 @foreach ($categories as $key=>$category)
                     <tr class="bg-light-gray">
-                        <td>{{(session('count')+1) + (($categories->currentPage()-1) * $categories->perPage())}}{{session(['count' => session('count') + 1])}}</td>
+                        <td>{{(session('count')+1)}}{{session(['count' => session('count') + 1])}}</td>
                         <td>{{$category->title}}</td>
                         <td>{{verta($category->created_at)->format('Y/m/d')}}</td>
                         <td>
-                            <a href="#" class="text-danger">
-                                <i class="icon-cancel-1"></i>
-                            </a>
+                            <form action="{{route('categories.destroy',$category->id)}}" method="Post"  class="m-0 mt-1">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-danger border-0 p-0 bg-transparent">
+                                    <i class="icon-cancel-1 fs-5"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                     @if($category->children)

@@ -87,6 +87,14 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $category = Category::with('children')->where('id',$id)->first();
+        if(count($category->children) > 0){
+            Session::flash('error_category','دسته بندی '.$category->title.' دارای دسته های زیر مجموعه است و امکان حذف آن وجود ندارد');
+            return redirect(route('categories.index'));
+        }else{
+            $category->delete();
+            Session::flash('destroy_category','دسته بندی '.$category->title.' با موفقیت حذف شد');
+        }
+        return redirect(route('categories.index'));
     }
 }
