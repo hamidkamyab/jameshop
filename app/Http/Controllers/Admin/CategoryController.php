@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\CreateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
 {
@@ -13,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate(20);
+        $categories = Category::with('children')->where('parent_id',null)->paginate(2);
         return view('admin.categories.index',compact('categories'));
     }
 
@@ -22,16 +24,38 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::with('children')->where('parent_id',null)->get();
+        // dd($categories->all());
         return view('admin.categories.create',compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateCategoryRequest $request)
     {
-        dd($request);
+        $category = new Category();
+
+        if($request->slug){
+            $slug = make_slug($request->slug);
+        }else{
+            $slug = make_slug($request->title);
+        }
+
+        if($request->meta_description){
+            $meta_description = $request->meta_description;
+        }else if(!$request->meta_description && $request->description){
+            $meta_description = $request->description;
+        }
+        $category->title = $request->title;
+        $category->slug = $slug;
+        $category->description = $request->description;
+        $category->meta_description = $meta_description;
+        $category->meta_keywords = $request->meta_keywords;
+        $category->parent_id = $request->parent_id;
+        $category->save();
+        Session::flash('store_category','دسته بندی مورد نظر با موفقیت اضافه شد');
+        return redirect(route('categories.index'));
     }
 
     /**
