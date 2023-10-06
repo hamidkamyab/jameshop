@@ -25,7 +25,6 @@ class CategoryController extends Controller
     public function create()
     {
         $categories = Category::with('children')->where('parent_id',null)->get();
-        // dd($categories->all());
         return view('admin.categories.create',compact('categories'));
     }
 
@@ -35,20 +34,14 @@ class CategoryController extends Controller
     public function store(CreateCategoryRequest $request)
     {
         $category = new Category();
-
-        if($request->slug){
-            $slug = make_slug($request->slug);
-        }else{
-            $slug = make_slug($request->title);
-        }
-
+        $meta_description = null;
         if($request->meta_description){
             $meta_description = $request->meta_description;
         }else if(!$request->meta_description && $request->description){
             $meta_description = $request->description;
         }
         $category->title = $request->title;
-        $category->slug = $slug;
+        $category->slug = $request->slug;
         $category->description = $request->description;
         $category->meta_description = $meta_description;
         $category->meta_keywords = $request->meta_keywords;
@@ -71,15 +64,33 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $categories = Category::with('children')->where('parent_id',null)->get();
+
+        return view('admin.categories.edit',compact('category','categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CreateCategoryRequest $request, string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $meta_description = null;
+        if($request->meta_description){
+            $meta_description = $request->meta_description;
+        }else if(!$request->meta_description && $request->description){
+            $meta_description = $request->description;
+        }
+        $category->title = $request->title;
+        $category->slug = $request->slug;
+        $category->description = $request->description;
+        $category->meta_description = $meta_description;
+        $category->meta_keywords = $request->meta_keywords;
+        $category->parent_id = $request->parent_id;
+        $category->save();
+        Session::flash('update_category','دسته بندی مورد نظر با موفقیت ویرایش شد');
+        return redirect(route('categories.index'));
     }
 
     /**
