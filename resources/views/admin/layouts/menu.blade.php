@@ -49,13 +49,31 @@
                 </ul>
             </li>
             <li class="itemLi">
-                <a href="#" class="item px-2 d-flex align-items-center justify-content-between gap-1 text-white toggle_menu">
-                    <div class="d-flex align-items-center gap-2">
-                        <i class="icon-user"></i>
-                        <span class="BYekan hiddenItem">کاربران</span>
+                <a href="javascript:void(0)" class="item px-2 d-flex align-items-center justify-content-between gap-1 text-white toggle_menu">
+                    <div class="d-flex align-items-center gap-2 ">
+                        <i class="icon-th-large"></i>
+                        <span class="BYekan hiddenItem">ویژگی</span>
                     </div>
-                    <i class="icon-down-open icon-open d-none"></i>
+                    <i class="icon-down-open icon-open open"></i>
                 </a>
+                <ul class="sub-menu list-unstyled open">
+                    <li class="itemLi active">
+                        <a href="{{route('attributes_group.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
+                            <div class="d-flex align-items-center gap-2 ">
+                                <i class="icon-clipboard"></i>
+                                <span class="BYekan hiddenItem">لیست ویژگی ها</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="itemLi">
+                        <a href="{{route('attributes_group.create')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
+                            <div class="d-flex align-items-center gap-2 ">
+                                <i class="icon-plus-squared-1"></i>
+                                <span class="BYekan hiddenItem">ایجاد ویژگی</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="itemLi">
                 <a href="#" class="item px-2 d-flex align-items-center justify-content-between gap-1 text-white toggle_menu">

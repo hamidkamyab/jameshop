@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AttributeGroupController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
@@ -26,4 +27,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::prefix('admin')->group(function(){
     Route::get('/',[DashboardController::class,'index'])->name('admin.dashboard');
     Route::resource('categories',CategoryController::class);
+    Route::resource('attributes_group',AttributeGroupController::class);
 });

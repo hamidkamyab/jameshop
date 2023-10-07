@@ -607,6 +607,24 @@
       ]
     },
     {
+      "uid": "c9bef3dc67fea47e94c4a5030ea64dad",
+      "css": "clipboard",
+      "code": 59403,
+      "src": "elusive"
+    },
+    {
+      "uid": "1a27e6346cdf0480c9c22351378bebbb",
+      "css": "clipboard-1",
+      "code": 59404,
+      "src": "typicons"
+    },
+    {
+      "uid": "9e1c33b6849ceb08db8acfaf02188b7d",
+      "css": "plus-squared-1",
+      "code": 59548,
+      "src": "entypo"
+    },
+    {
       "uid": "e963dadf3a8b69a3056a816688587934",
       "css": "acid",
       "code": 59688,
