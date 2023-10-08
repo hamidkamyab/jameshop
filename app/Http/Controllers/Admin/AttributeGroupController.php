@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\AttributeGroupRequest;
 use App\Models\AttributeGroup;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class AttributeGroupController extends Controller
 {
@@ -22,15 +24,21 @@ class AttributeGroupController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.attribute_group.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AttributeGroupRequest $request)
     {
-        //
+        $attributeGroup = new AttributeGroup();
+
+        $attributeGroup->title = $request->title;
+        $attributeGroup->type = $request->type;
+        $attributeGroup->save();
+        Session::flash('store_attr','ویژگی '.$request->title.' با موفقیت ثبت شد.');
+        return redirect(route('attributes_group.index'));
     }
 
     /**
