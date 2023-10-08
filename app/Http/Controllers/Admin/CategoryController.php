@@ -47,7 +47,7 @@ class CategoryController extends Controller
         $category->meta_keywords = $request->meta_keywords;
         $category->parent_id = $request->parent_id;
         $category->save();
-        Session::flash('store_category','دسته بندی '.$request->title.' با موفقیت اضافه شد');
+        Session::flash('opration_category','دسته بندی '.$request->title.' با موفقیت اضافه شد');
         return redirect(route('categories.index'));
     }
 
@@ -89,7 +89,7 @@ class CategoryController extends Controller
         $category->meta_keywords = $request->meta_keywords;
         $category->parent_id = $request->parent_id;
         $category->save();
-        Session::flash('update_category','دسته بندی '.$request->title.' با موفقیت ویرایش شد');
+        Session::flash('opration_category','دسته بندی '.$request->title.' با موفقیت ویرایش شد');
         return redirect(route('categories.index'));
     }
 
@@ -104,7 +104,7 @@ class CategoryController extends Controller
             return redirect(route('categories.index'));
         }else{
             $category->delete();
-            Session::flash('destroy_category','دسته بندی '.$category->title.' با موفقیت حذف شد');
+            Session::flash('opration_category','دسته بندی '.$category->title.' با موفقیت حذف شد');
         }
         return redirect(route('categories.index'));
     }

@@ -33,11 +33,10 @@ class AttributeGroupController extends Controller
     public function store(AttributeGroupRequest $request)
     {
         $attributeGroup = new AttributeGroup();
-
         $attributeGroup->title = $request->title;
         $attributeGroup->type = $request->type;
         $attributeGroup->save();
-        Session::flash('store_attr','ویژگی '.$request->title.' با موفقیت ثبت شد.');
+        Session::flash('opration_attribute','ویژگی '.$request->title.' با موفقیت ثبت شد.');
         return redirect(route('attributes_group.index'));
     }
 
@@ -54,15 +53,21 @@ class AttributeGroupController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $attributeGroup = AttributeGroup::findorFail($id);
+        return view('admin.attribute_group.edit',compact('attributeGroup'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(AttributeGroupRequest $request, string $id)
     {
-        //
+        $attributeGroup = AttributeGroup::findOrFail($id);
+        $attributeGroup->title = $request->title;
+        $attributeGroup->type = $request->type;
+        $attributeGroup->save();
+        Session::flash('opration_attribute','ویژگی '.$request->title.' با موفقیت ویرایش شد.');
+        return redirect(route('attributes_group.index'));
     }
 
     /**

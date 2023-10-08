@@ -6,15 +6,10 @@
 @section('content')
     <div class="col-12 d-flex flex-wrap justify-content-center px-2 mb-5">
         <div class="col-12">
-            @if(Session::has('store_attr'))
-                @include('admin.partials.Alert',['msg'=>[session('store_attr')],'status'=>'success'])
+            @if(Session::has('opration_attribute'))
+                @include('admin.partials.Alert',['msg'=>[session('opration_attribute')],'status'=>'success'])
             @endif
-            @if(Session::has('destroy_attr'))
-                @include('admin.partials.Alert',['msg'=>[session('destroy_attr')],'status'=>'success'])
-            @endif
-            @if(Session::has('update_attr'))
-                @include('admin.partials.Alert',['msg'=>[session('update_attr')],'status'=>'success'])
-            @endif
+
             @if(Session::has('error_attr'))
                 @include('admin.partials.Alert',['msg'=>[session('error_attr')],'status'=>'danger'])
             @endif

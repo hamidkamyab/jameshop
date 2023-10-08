@@ -6,6 +6,9 @@
 
 @section('content')
     <div class="row justify-content-center">
+        @if (count($errors) > 0)
+                @include('admin.partials.Alert',['msg'=>$errors->all(),'status'=>'danger'])
+        @endif
         <div class="col-6 py-4">
             <form class="row g-4" action="{{ route('categories.update',$category->id) }}" method="post">
                 @csrf
