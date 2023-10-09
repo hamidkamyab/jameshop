@@ -54,7 +54,7 @@ class AttributeGroupController extends Controller
     public function edit(string $id)
     {
         $attributeGroup = AttributeGroup::findorFail($id);
-        return view('admin.attribute_group.edit',compact('attributeGroup'));
+        return view('admin.attributes_group.edit',compact('attributeGroup'));
     }
 
     /**

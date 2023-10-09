@@ -78,7 +78,7 @@
             <li class="itemLi">
                 <a href="javascript:void(0)" class="item px-2 d-flex align-items-center justify-content-between gap-1 text-white toggle_menu">
                     <div class="d-flex align-items-center gap-2 ">
-                        <i class="icon-th-large"></i>
+                        <i class="icon-server"></i>
                         <span class="BYekan hiddenItem">مقدار ویژگی</span>
                     </div>
                     <i class="icon-down-open icon-open open"></i>
@@ -87,7 +87,7 @@
                     <li class="itemLi active">
                         <a href="{{route('attributes_value.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
                             <div class="d-flex align-items-center gap-2 ">
-                                <i class="icon-clipboard"></i>
+                                <i class=" icon-doc-text-1"></i>
                                 <span class="BYekan hiddenItem">لیست ویژگی ها</span>
                             </div>
                         </a>

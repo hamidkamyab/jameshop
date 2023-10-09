@@ -56,7 +56,9 @@ class AttributeValueController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $attributeValue = AttributeValue::findOrFail($id);
+        $attributesGroup = AttributeGroup::all();
+        return view('admin.attributes_value.edit',compact('attributeValue','attributesGroup'));
     }
 
     /**
@@ -64,7 +66,12 @@ class AttributeValueController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $attributes = AttributeValue::findOrFail($id);
+        $attributes->title = $request->title;
+        $attributes->attributes_group_id = $request->attributes_group_id;
+        $attributes->save();
+        Session::flash('operation_attribute_value','مقدار '.$request->title.' برای ویژگی مورد نظر با موفقیت ویرایش شد.');
+        return redirect(route('attributes_value.index'));
     }
 
     /**

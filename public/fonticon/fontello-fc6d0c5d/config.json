@@ -643,6 +643,24 @@
       "src": "fontawesome"
     },
     {
+      "uid": "d59ff824282fc6edaeca991deab522aa",
+      "css": "server",
+      "code": 62003,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "1189604bf305b6b03a74685ce60e6632",
+      "css": "doc-text",
+      "code": 59407,
+      "src": "entypo"
+    },
+    {
+      "uid": "6a06892e76b81e023da6ddfb38a26b37",
+      "css": "doc-text-1",
+      "code": 59408,
+      "src": "typicons"
+    },
+    {
       "uid": "e963dadf3a8b69a3056a816688587934",
       "css": "acid",
       "code": 59688,
