@@ -76,35 +76,27 @@
                 </ul>
             </li>
             <li class="itemLi">
-                <a href="#" class="item px-2 d-flex align-items-center justify-content-between gap-1 text-white toggle_menu">
-                    <div class="d-flex align-items-center gap-2">
-                        <i class="icon-buffer"></i>
-                        <span class="BYekan hiddenItem">صفحات</span>
+                <a href="javascript:void(0)" class="item px-2 d-flex align-items-center justify-content-between gap-1 text-white toggle_menu">
+                    <div class="d-flex align-items-center gap-2 ">
+                        <i class="icon-th-large"></i>
+                        <span class="BYekan hiddenItem">مقدار ویژگی</span>
                     </div>
-                    <i class="icon-down-open icon-open"></i>
+                    <i class="icon-down-open icon-open open"></i>
                 </a>
-                <ul class="sub-menu list-unstyled">
-                    <li class="itemLi">
-                        <a href="#" class="item px-2 d-flex align-items-center gap-2 text-white">
+                <ul class="sub-menu list-unstyled open">
+                    <li class="itemLi active">
+                        <a href="{{route('attributes_value.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
                             <div class="d-flex align-items-center gap-2 ">
-                                <i class="icon-gauge"></i>
-                                <span class="BYekan hiddenItem">زیر منو</span>
+                                <i class="icon-clipboard"></i>
+                                <span class="BYekan hiddenItem">لیست ویژگی ها</span>
                             </div>
                         </a>
                     </li>
                     <li class="itemLi">
-                        <a href="#" class="item px-2 d-flex align-items-center gap-2 text-white">
+                        <a href="{{route('attributes_value.create')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
                             <div class="d-flex align-items-center gap-2 ">
-                                <i class="icon-gauge"></i>
-                                <span class="BYekan hiddenItem">زیر منو دو</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="itemLi">
-                        <a href="#" class="item px-2 d-flex align-items-center gap-2 text-white">
-                            <div class="d-flex align-items-center gap-2">
-                                <i class="icon-gauge"></i>
-                                <span class="BYekan hiddenItem">زیر منو سه</span>
+                                <i class="icon-plus-squared-1"></i>
+                                <span class="BYekan hiddenItem">ثبت مقدار ویژگی</span>
                             </div>
                         </a>
                     </li>

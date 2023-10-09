@@ -13,10 +13,6 @@
     <link rel="stylesheet" href="{{ asset('fonticon/css/fontello-ie7.css') }}">
     <link rel="stylesheet" href="{{ asset('fonticon/css/animation.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.custom-scrollbar.css') }}">
-
-
-    {{-- <link rel="stylesheet" href="select2.min.css">
-    <script src="select2.min.js"></script> --}}
     <script>
         $(document).ready(function() {
             $('.searchSelect').select2();

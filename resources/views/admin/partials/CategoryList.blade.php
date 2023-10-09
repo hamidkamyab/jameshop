@@ -4,18 +4,18 @@
         <td>{{ str_repeat('+', $level) }} {{ $category->title }}</td>
         <td>{{ verta($category->created_at)->format('Y/m/d') }}</td>
         <td>
-            <div class="d-flex align-items-center justify-content-center">
-                <form action="{{ route('categories.destroy', $category->id) }}" method="Post" class="m-0 mt-1">
+            <div class="d-flex align-items-center justify-content-center gap-2 pt-1">
+                <a href="{{ route('categories.edit', $category->id) }}" title="ویرایش دسته {{ $category->title }}">
+                    <i class="icon-edit-1 fs-6"></i>
+                </a>
+                <form action="{{ route('categories.destroy', $category->id) }}" method="Post" class="m-0">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="text-danger border-0 p-0 bg-transparent"
                         title="حذف دسته {{ $category->title }}">
-                        <i class="icon-cancel-1 fs-5"></i>
+                        <i class="icon-trash fs-6"></i>
                     </button>
                 </form>
-                <a href="{{ route('categories.edit', $category->id) }}" title="ویرایش دسته {{ $category->title }}">
-                    <i class="icon-pencil fs-6"></i>
-                </a>
             </div>
         </td>
     </tr>

@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\AttributeGroupController;
+use App\Http\Controllers\Admin\AttributeValueController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Models\AttributeValue;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,4 +30,5 @@ Route::prefix('admin')->group(function(){
     Route::get('/',[DashboardController::class,'index'])->name('admin.dashboard');
     Route::resource('categories',CategoryController::class);
     Route::resource('attributes_group',AttributeGroupController::class);
+    Route::resource('attributes_value',AttributeValueController::class);
 });

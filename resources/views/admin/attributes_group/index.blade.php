@@ -26,23 +26,23 @@
             </thead>
             <tbody>
                 @foreach ($attributesGroup as $key=>$attribute)
-                    <tr class="bg-light-gray">
+                    <tr>
                         <td>{{$key+1}}</td>
                         <td>{{$attribute->title}}</td>
                         <td>{{$attribute->type}}</td>
                         <td>{{verta($attribute->created_at)->format('H:i:s')}} - {{verta($attribute->created_at)->format('Y/m/d')}}</td>
                         <td>
-                            <div class="d-flex align-items-center justify-content-center">
-                                <form action="{{route('attributes_group.destroy',$attribute->id)}}" method="Post"  class="m-0 mt-1">
+                            <div class="d-flex align-items-center justify-content-center gap-2 pt-1">
+                                <a href="{{ route('attributes_group.edit', $attribute->id) }}" title="ویرایش ویژگی {{ $attribute->title }}">
+                                    <i class="icon-edit-1 fs-6"></i>
+                                </a>
+                                <form action="{{route('attributes_group.destroy',$attribute->id)}}" method="Post"  class="m-0">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-danger border-0 p-0 bg-transparent" title="حذف ویژگی {{$attribute->title}}">
-                                        <i class="icon-cancel-1 fs-5"></i>
+                                        <i class="icon-trash fs-6"></i>
                                     </button>
                                 </form>
-                                <a href="{{ route('attributes_group.edit', $attribute->id) }}" title="ویرایش ویژگی {{ $attribute->title }}">
-                                    <i class="icon-pencil fs-6"></i>
-                                </a>
                             </div>
                         </td>
                     </tr>

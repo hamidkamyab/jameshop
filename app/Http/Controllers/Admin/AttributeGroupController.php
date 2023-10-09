@@ -16,7 +16,7 @@ class AttributeGroupController extends Controller
     public function index()
     {
         $attributesGroup = AttributeGroup::paginate(20);
-        return view('admin.attribute_group.index',compact('attributesGroup'));
+        return view('admin.attributes_group.index',compact('attributesGroup'));
     }
 
     /**
@@ -24,7 +24,7 @@ class AttributeGroupController extends Controller
      */
     public function create()
     {
-        return view('admin.attribute_group.create');
+        return view('admin.attributes_group.create');
     }
 
     /**
