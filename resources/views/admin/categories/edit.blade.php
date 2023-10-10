@@ -53,7 +53,7 @@
                 </div>
 
                 <div class="col-12 d-flex justify-content-between">
-                    <button type="submit" class="btn btn-primary">ثبت دسته بندی</button>
+                    <button type="submit" class="btn btn-primary">ویرایش دسته بندی</button>
                     <a href="{{ route('categories.index') }}" class="btn btn-outline-danger">انصراف</a>
                 </div>
 

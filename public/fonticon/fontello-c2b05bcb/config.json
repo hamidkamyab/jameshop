@@ -661,6 +661,18 @@
       "src": "typicons"
     },
     {
+      "uid": "eeec3208c90b7b48e804919d0d2d4a41",
+      "css": "upload",
+      "code": 59617,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "4f3b31017c63ba04dc4f78ce7a8f02b1",
+      "css": "upload-1",
+      "code": 61487,
+      "src": "mfglabs"
+    },
+    {
       "uid": "e963dadf3a8b69a3056a816688587934",
       "css": "acid",
       "code": 59688,

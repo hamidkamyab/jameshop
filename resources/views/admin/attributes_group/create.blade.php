@@ -32,7 +32,7 @@
                 </div>
 
                 <div class="col-12 d-flex justify-content-between">
-                    <button type="submit" class="btn btn-primary">ثبت ویژگی </button>
+                    <button type="submit" class="btn btn-primary">ثبت ویژگی</button>
                     <a href="{{ route('attributes_group.index') }}" class="btn btn-outline-danger">انصراف</a>
                 </div>
 

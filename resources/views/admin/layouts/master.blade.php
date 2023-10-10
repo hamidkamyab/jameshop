@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="{{ asset('fonticon/css/fontello-ie7.css') }}">
     <link rel="stylesheet" href="{{ asset('fonticon/css/animation.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.custom-scrollbar.css') }}">
+    @yield('styles')
+
     <script>
         $(document).ready(function() {
             $('.searchSelect').select2();
@@ -43,7 +45,7 @@
 
 
                 <div class="footer align-self-end col-12 p-2 mb-4 bg-white d-flex justify-content-center align-items-center h-auto text-muted gap-1 vazir" dir="ltr" style="bottom:0">
-                    <span class="fs-12">©</span>
+                    <i class="icon-copyright fs-6"></i>
                     <span class="m-0 p-0 fw-bold fs-12" >
                         CopyRight: Hamid Kamyab - 2024
                     </span>
@@ -60,7 +62,7 @@
 
 <script src="{{ asset('js/admin.js') }}" type="text/javascript "></script>
 <script src="{{ asset('js/jquery.custom-scrollbar.js') }}"></script>
-
+@yield('scripts')
 
 <script>
     const wvc = document.getElementById('w_visit_chart');
