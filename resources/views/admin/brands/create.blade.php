@@ -1,6 +1,6 @@
 ﻿@extends('admin.layouts.master')
 
-@section('styles')
+@section('head')
     <link rel="stylesheet" href="{{ asset('css/dropzone.min.css') }}">
 @endsection
 @section('navigation')
@@ -26,40 +26,24 @@
                         rows="5"></textarea>
                 </div>
                 <div class="col-12">
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        آپلود تصویر برند
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                        Launch static backdrop modal
                     </button>
                 </div>
                 <div class="col-12 d-flex justify-content-between">
+                    <input type="hidden" name="photo_id" id="photo_id" >
                     <button type="submit" class="btn btn-primary">ثبت برند</button>
                     <a href="{{ route('brands.index') }}" class="btn btn-outline-danger">انصراف</a>
                 </div>
             </form>
-            @include('admin.partials.ModalUpload',['title'=>'تصویر برند','url'=>route('photos.upload')])
+
+            @include('admin.partials.ModalUpload', [
+                'title' => 'تصویر برند',
+                'url' => route('photos.upload'),
+            ])
         </div>
     </div>
 @endsection
 
-@section('scripts')
-    <script src="{{ asset('js/dropzone.min.js') }}"></script>
-@endsection
 
-{{-- <script>
-    Dropzone.autoDiscover = false; // غیرفعال کردن اتوماتیک Dropzone
-    let myDropzone = new Dropzone("#dropzoneTag", {
 
-        maxFilesize: 2, // حداکثر اندازه فایل (مگابایت)
-        acceptedFiles: ".avi", // نوع‌های مجاز فایل
-        paramName: "file", // نام فیلد برای ارسال فایل
-        uploadMultiple: false, // امکان آپلود چند فایل به صورت همزمان غیرفعال باشد
-        addRemoveLinks: true, // اضافه کردن لینک حذف فایل
-        // تنظیمات دیگر
-        init: function() {
-            this.on("success", function(file, response) {
-                // عملیات موفقیت‌آمیز پس از آپلود فایل
-                console.log(response);
-            });
-        },
-    });
-</script> --}}

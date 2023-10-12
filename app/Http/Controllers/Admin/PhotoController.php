@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Photo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class PhotoController extends Controller
 {
@@ -33,7 +37,19 @@ class PhotoController extends Controller
 
     public function upload(Request $request)
     {
-        return 'Hello';
+        $file = $request->file('file');
+        $fileName = time().'_'.$file->getClientOriginalName();
+        $dir = 'public/brands';
+        Storage::disk('local')->putFileAs($dir,$file,$fileName);
+        $photo = new Photo();
+        $photo->name = $fileName;
+        $photo->path = 'brands/'.$fileName;
+        // $photo->user_id = Auth::user()->id; //////////////////////////////////// Auth
+        $photo->user_id =1;
+        $photo->save();
+        return response()->json([
+            'photo_id' => $photo->id
+        ]);
     }
 
     /**

@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{{ asset('fonticon/css/fontello-ie7.css') }}">
     <link rel="stylesheet" href="{{ asset('fonticon/css/animation.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.custom-scrollbar.css') }}">
-    @yield('styles')
+    @yield('head')
 
     <script>
         $(document).ready(function() {
@@ -62,7 +62,7 @@
 
 <script src="{{ asset('js/admin.js') }}" type="text/javascript "></script>
 <script src="{{ asset('js/jquery.custom-scrollbar.js') }}"></script>
-@yield('scripts')
+@yield('footer')
 
 <script>
     const wvc = document.getElementById('w_visit_chart');

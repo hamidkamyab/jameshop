@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('title')->unique();
             $table->text('description')->nullable();
+            $table->unsignedBigInteger('photo_id');
             $table->timestamps();
+            $table->foreign('photo_id')->references('id')->on('photos')->onDelete('cascade');
         });
     }
 
