@@ -13,7 +13,7 @@ class Photo extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function brand(){
-        return $this->belongsTo(Brand::class);
+    public function brands(){
+        return $this->hasMany(Brand::class);
     }
 }

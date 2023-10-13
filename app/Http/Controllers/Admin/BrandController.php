@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\BrandRequest;
+use App\Models\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class BrandController extends Controller
 {
@@ -12,7 +15,8 @@ class BrandController extends Controller
      */
     public function index()
     {
-        //
+        $brands = Brand::with('photo')->paginate(30);
+        return view('admin.brands.index',compact('brands'));
     }
 
     /**
@@ -26,9 +30,15 @@ class BrandController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(BrandRequest $request)
     {
-        //
+        $brand = new Brand();
+        $brand->title = $request->title;
+        $brand->description = $request->description;
+        $brand->photo_id = $request->photo_id;
+        $brand->save();
+        Session::flash('opration_brand','برند '.$request->title.' با موفقیت ثبت شد.');
+        return redirect(route('brands.index'));
     }
 
     /**

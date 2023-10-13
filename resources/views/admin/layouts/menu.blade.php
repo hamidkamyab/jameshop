@@ -29,7 +29,7 @@
                     </div>
                     <i class="icon-down-open icon-open open"></i>
                 </a>
-                <ul class="sub-menu list-unstyled open">
+                <ul class="sub-menu list-unstyled">
                     <li class="itemLi active">
                         <a href="{{route('categories.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
                             <div class="d-flex align-items-center gap-2 ">
@@ -56,7 +56,7 @@
                     </div>
                     <i class="icon-down-open icon-open open"></i>
                 </a>
-                <ul class="sub-menu list-unstyled open">
+                <ul class="sub-menu list-unstyled">
                     <li class="itemLi active">
                         <a href="{{route('attributes_group.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
                             <div class="d-flex align-items-center gap-2 ">
@@ -83,7 +83,7 @@
                     </div>
                     <i class="icon-down-open icon-open open"></i>
                 </a>
-                <ul class="sub-menu list-unstyled open">
+                <ul class="sub-menu list-unstyled">
                     <li class="itemLi active">
                         <a href="{{route('attributes_value.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
                             <div class="d-flex align-items-center gap-2 ">
@@ -102,7 +102,33 @@
                     </li>
                 </ul>
             </li>
-
+            <li class="itemLi">
+                <a href="javascript:void(0)" class="item px-2 d-flex align-items-center justify-content-between gap-1 text-white toggle_menu">
+                    <div class="d-flex align-items-center gap-2 ">
+                        <i class=" icon-megaphone"></i>
+                        <span class="BYekan hiddenItem">برند</span>
+                    </div>
+                    <i class="icon-down-open icon-open open"></i>
+                </a>
+                <ul class="sub-menu list-unstyled open">
+                    <li class="itemLi active">
+                        <a href="{{route('brands.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
+                            <div class="d-flex align-items-center gap-2 ">
+                                <i class=" icon-megaphone"></i>
+                                <span class="BYekan hiddenItem">لیست برندها</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="itemLi">
+                        <a href="{{route('brands.create')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
+                            <div class="d-flex align-items-center gap-2 ">
+                                <i class=" icon-certificate"></i>
+                                <span class="BYekan hiddenItem">ثبت برند</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </nav>
 </div>

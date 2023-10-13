@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('css/dropzone.min.css') }}">
 @endsection
 @section('navigation')
-    ایجاد ویژگی
+    ایجاد برند
 @endsection
 
 @section('content')
@@ -21,17 +21,24 @@
                         value="{{ old('title') }}" />
                 </div>
                 <div class="col-12">
+                    <label for="inputTitle" class="form-label">تصویر برند</label>
+                    <div class=" d-flex align-items-end justify-content-start gap-3 noSelect">
+                        <div class="brand_imgDiv d-flex align-items-center justify-content-center rounded-3 p-1">
+                            <i class="icon-picture text-muted fs-1"></i>
+                            <img src="" class="w-100" />
+                        </div>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                            آپلود تصویر برند
+                        </button>
+                    </div>
+                </div>
+                <div class="col-12">
                     <label for="inputDescription" class="form-label">توضیحات</label>
                     <textarea name="description" id="inputDescription" class="form-control" placeholder="توضیحات برند...." cols="10"
                         rows="5"></textarea>
                 </div>
-                <div class="col-12">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">
-                        Launch static backdrop modal
-                    </button>
-                </div>
                 <div class="col-12 d-flex justify-content-between">
-                    <input type="hidden" name="photo_id" id="photo_id" >
+                    <input type="hidden" name="photo_id" id="photo_id">
                     <button type="submit" class="btn btn-primary">ثبت برند</button>
                     <a href="{{ route('brands.index') }}" class="btn btn-outline-danger">انصراف</a>
                 </div>
@@ -44,6 +51,3 @@
         </div>
     </div>
 @endsection
-
-
-

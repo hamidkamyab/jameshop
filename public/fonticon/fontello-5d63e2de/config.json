@@ -673,6 +673,24 @@
       "src": "mfglabs"
     },
     {
+      "uid": "381da2c2f7fd51f8de877c044d7f439d",
+      "css": "picture",
+      "code": 59600,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "1a14e43d8e27f5b63fb418b586a2ade3",
+      "css": "certificate",
+      "code": 59409,
+      "src": "elusive"
+    },
+    {
+      "uid": "489090690d8bd1745e365485946e20a8",
+      "css": "megaphone",
+      "code": 59410,
+      "src": "entypo"
+    },
+    {
       "uid": "e963dadf3a8b69a3056a816688587934",
       "css": "acid",
       "code": 59688,

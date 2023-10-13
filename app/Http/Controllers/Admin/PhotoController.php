@@ -43,12 +43,13 @@ class PhotoController extends Controller
         Storage::disk('local')->putFileAs($dir,$file,$fileName);
         $photo = new Photo();
         $photo->name = $fileName;
-        $photo->path = 'brands/'.$fileName;
+        $photo->path = '/storage/brands/'.$fileName;
         // $photo->user_id = Auth::user()->id; //////////////////////////////////// Auth
         $photo->user_id =1;
         $photo->save();
         return response()->json([
-            'photo_id' => $photo->id
+            'photo_id' => $photo->id,
+            'path' => $photo->path,
         ]);
     }
 

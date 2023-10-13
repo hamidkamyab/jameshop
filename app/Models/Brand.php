@@ -9,8 +9,8 @@ class Brand extends Model
 {
     use HasFactory;
 
-    public function photos()
+    public function photo()
     {
-        return $this->hasMany(Photo::class);
+        return $this->belongsTo(Photo::class);
     }
 }
