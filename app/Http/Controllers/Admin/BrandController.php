@@ -54,15 +54,21 @@ class BrandController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $brand = Brand::with('photo')->findOrFail($id);
+        return view('admin.brands.edit',compact('brand'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(BrandRequest $request, string $id)
     {
-        //
+        $brand = Brand::findOrFail($id);
+        $brand->title = $request->title;
+        $brand->description = $request->description;
+        $brand->save();
+        Session::flash('opration_brand','برند '.$request->title.' با موفقیت ویرایش شد.');
+        return redirect(route('brands.index'));
     }
 
     /**

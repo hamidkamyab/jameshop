@@ -33,10 +33,10 @@
                         <td>{{verta($brand->created_at)->format('H:i:s')}} - {{verta($brand->created_at)->format('Y/m/d')}}</td>
                         <td>
                             <div class="d-flex align-items-center justify-content-center gap-2 pt-1">
-                                <a href="{{ route('attributes_group.edit', $brand->id) }}" title="ویرایش برند {{ $brand->title }}">
+                                <a href="{{ route('brands.edit', $brand->id) }}" title="ویرایش برند {{ $brand->title }}">
                                     <i class="icon-edit-1 fs-6"></i>
                                 </a>
-                                <form action="{{route('attributes_group.destroy',$brand->id)}}" method="Post"  class="m-0">
+                                <form action="{{route('brands.destroy',$brand->id)}}" method="Post"  class="m-0">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-danger border-0 p-0 bg-transparent" title="حذف برند {{$brand->title}}">

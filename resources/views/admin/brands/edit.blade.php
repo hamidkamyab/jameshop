@@ -1,7 +1,7 @@
 ﻿@extends('admin.layouts.master')
 
 @section('navigation')
-    ایجاد دسته بندی
+    ویرایش برند
 @endsection
 
 @section('content')
@@ -10,34 +10,41 @@
                 @include('admin.partials.Alert',['msg'=>$errors->all(),'status'=>'danger'])
         @endif
         <div class="col-6 py-4">
-            <form class="row g-4" action="{{ route('attributes_group.update',$attributeGroup->id) }}" method="post">
+            <form class="row g-4" action="{{ route('brands.update',$brand->id) }}" method="post">
                 @csrf
                 @method('PATCH')
                 <div class="col-12">
                     <label for="inputTitle" class="form-label">عنوان</label>
-                    <input type="text" class="form-control" id="inputTitle" name="title"  placeholder="عنوان ویژگی..." value="{{$attributeGroup->title}}">
+                    <input type="text" class="form-control" id="inputTitle" name="title"  placeholder="عنوان برند..." value="{{$brand->title}}">
                 </div>
                 <div class="col-12">
-                    <label for="inputSlug" class="form-label">نوع ویژگی</label>
-                    <div class="d-flex gap-4">
-                        <div class="form-check">
-                            <label for="inputTypeOne"  role="button">تکی</label>
-                            <input type="radio" class="form-check-input" id="inputTypeOne" name="type" @if($attributeGroup->getRawOriginal('type') == '0') checked @endif value="0" role="button" />
+                    <label for="inputTitle" class="form-label">تصویر برند</label>
+                    <div class=" d-flex align-items-end justify-content-start gap-3 noSelect">
+                        <div class="brand_imgDiv d-flex align-items-center justify-content-center rounded-3 p-1">
+                            <i class="icon-picture text-muted fs-1"></i>
+                            <img src="{{$brand->photo->path}}" class="w-100" />
                         </div>
-                        <div class="form-check">
-                            <label for="inputTypeMulti"  role="button">دسته ای</label>
-                            <input type="radio" class="form-check-input" id="inputTypeMulti" name="type" @if($attributeGroup->getRawOriginal('type') == '1') checked @endif value="1" role="button" />
-                        </div>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                            آپلود تصویر برند
+                        </button>
                     </div>
+                </div>
+                <div class="col-12">
+                    <label for="inputDescription" class="form-label">توضیحات</label>
+                    <textarea type="text" class="form-control" id="inputDescription" name="description"  placeholder="توضیحات برند..." >{{$brand->description}}</textarea>
                 </div>
 
                 <div class="col-12 d-flex justify-content-between">
-                    <button type="submit" class="btn btn-primary">ویرایش ویژگی</button>
-                    <a href="{{ route('attributes_group.index') }}" class="btn btn-outline-danger">انصراف</a>
+                    <input type="hidden" name="photo_id" id="photo_id" value="{{$brand->photo->id}}">
+                    <button type="submit" class="btn btn-primary">ویرایش برند</button>
+                    <a href="{{ route('brands.index') }}" class="btn btn-outline-danger">انصراف</a>
                 </div>
 
             </form>
-
+            @include('admin.partials.ModalUpload', [
+                'title' => 'تصویر برند',
+                'url' => route('photos.upload'),
+            ])
         </div>
     </div>
 

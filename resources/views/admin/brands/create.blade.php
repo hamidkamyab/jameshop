@@ -1,8 +1,6 @@
 ﻿@extends('admin.layouts.master')
 
-@section('head')
-    <link rel="stylesheet" href="{{ asset('css/dropzone.min.css') }}">
-@endsection
+
 @section('navigation')
     ایجاد برند
 @endsection

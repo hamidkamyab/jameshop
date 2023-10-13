@@ -7133,12 +7133,18 @@ window.onload = () => {
     } else {
         $('.main').removeClass('wid')
     }
+
+    var brandSRC = $('.brand_imgDiv > img').attr('src');
+    if (brandSRC) {
+        $('.brand_imgDiv > i').fadeOut(100)
+        $('.brand_imgDiv > img').fadeIn(350)
+    }
 }
 
 
 /*********DropzoneJs******** */
-$(document).ready(function() {
-    var tag = '<i class="icon-upload m-1 fs-3"></i>';
-    $('.dz-message').append(tag);
-});
+// $(document).ready(function() {
+//     var tag = '<i class="icon-upload m-1 fs-3"></i>';
+//     $('.dz-message').append(tag);
+// });
 /************************** */

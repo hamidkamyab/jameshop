@@ -1,4 +1,7 @@
-﻿<!-- Modal -->
+﻿@section('head')
+    <link rel="stylesheet" href="{{ asset('css/dropzone.min.css') }}">
+@endsection
+<!-- Modal -->
 <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -16,7 +19,16 @@
                 {{-- <form action="{{ $url }}" class="dropzone" id="dropzoneTag">
                     @csrf
                 </form> --}}
-                <div class="dropzone" id="dropzoneTag"></div>
+                <div class="dropzone" id="dropzoneTag">
+                    <div class="dz-message">
+                        <div class="d-flex flex-column">
+                            <i class="icon-upload m-1 fs-2"></i>
+                            <span class="fs-5">فایل‌های خود را کشیده و اینجا رها کنید</span>
+                            <span class="fs-5">یا اینجا کلیک کنید</span>
+                        </div>
+
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -38,8 +50,24 @@
                 this.on("success", (file, responseText) => {
                     $('#photo_id').val(responseText['photo_id']);
                     $('.brand_imgDiv > i').fadeOut(0);
-                    $('.brand_imgDiv > img').attr('src',responseText['path'])
+                    $('.brand_imgDiv > img').attr('src', responseText['path'])
                     $('.brand_imgDiv > img').fadeIn(500);
+                });
+                this.on("removedfile", (file) => {
+                    var response = file['xhr']['responseText'];
+                    response = JSON.parse(response);
+                    console.log(response['photo_id'])
+
+                    // if (file.id) {
+                    //     // ارسال درخواست حذف به کنترلر Laravel
+                    //     axios.delete(`/file/${file.id}`)
+                    //         .then(response => {
+                    //             console.log(response.data.message);
+                    //         })
+                    //         .catch(error => {
+                    //             console.error(error);
+                    //         });
+                    // }
                 });
             }
         });
