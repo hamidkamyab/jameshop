@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Photo;
+use App\Models\MediaFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
-class PhotoController extends Controller
+class MediaFileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,15 +41,16 @@ class PhotoController extends Controller
         $fileName = time().'_'.$file->getClientOriginalName();
         $dir = 'public/brands';
         Storage::disk('local')->putFileAs($dir,$file,$fileName);
-        $photo = new Photo();
-        $photo->name = $fileName;
-        $photo->path = '/storage/brands/'.$fileName;
+        $mediafile = new MediaFile();
+        $mediafile->name = $fileName;
+        $mediafile->path = '/storage/brands/'.$fileName;
+        $mediafile->type = $file->getMimeType();
         // $photo->user_id = Auth::user()->id; //////////////////////////////////// Auth
-        $photo->user_id =1;
-        $photo->save();
+        $mediafile->user_id =1;
+        $mediafile->save();
         return response()->json([
-            'photo_id' => $photo->id,
-            'path' => $photo->path,
+            'mediafile_id' => $mediafile->id,
+            'path' => $mediafile->path,
         ]);
     }
 

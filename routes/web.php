@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\AttributeValueController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\PhotoController;
+use App\Http\Controllers\Admin\MediaFileController;
 use App\Models\AttributeValue;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +34,9 @@ Route::prefix('admin')->group(function(){
     Route::resource('attributes_group',AttributeGroupController::class);
     Route::resource('attributes_value',AttributeValueController::class);
     Route::resource('brands', BrandController::class);
-    Route::post('photos/upload',[PhotoController::class,'upload'])->name('photos.upload');
-    Route::resource('photos',PhotoController::class);
+    Route::post('mediafiles/upload',[MediaFileController::class,'upload'])
+    ->name('mediafiles.upload');
+    Route::post('mediafiles/remove',[MediaFileController::class,'remove'])
+    ->name('mediafiles.remove');
+    Route::resource('mediafiles',MediaFileController::class);
 });

@@ -36,7 +36,7 @@
                         rows="5"></textarea>
                 </div>
                 <div class="col-12 d-flex justify-content-between">
-                    <input type="hidden" name="photo_id" id="photo_id">
+                    <input type="hidden" name="photo_id" id="mediafile_id">
                     <button type="submit" class="btn btn-primary">ثبت برند</button>
                     <a href="{{ route('brands.index') }}" class="btn btn-outline-danger">انصراف</a>
                 </div>
@@ -44,7 +44,7 @@
 
             @include('admin.partials.ModalUpload', [
                 'title' => 'تصویر برند',
-                'url' => route('photos.upload'),
+                'url' => route('mediafiles.upload'),
             ])
         </div>
     </div>

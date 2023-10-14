@@ -48,7 +48,7 @@
             },
             init: function() {
                 this.on("success", (file, responseText) => {
-                    $('#photo_id').val(responseText['photo_id']);
+                    $('#mediafile_id').val(responseText['mediafile_id']);
                     $('.brand_imgDiv > i').fadeOut(0);
                     $('.brand_imgDiv > img').attr('src', responseText['path'])
                     $('.brand_imgDiv > img').fadeIn(500);

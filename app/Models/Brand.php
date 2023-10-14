@@ -11,6 +11,6 @@ class Brand extends Model
 
     public function photo()
     {
-        return $this->belongsTo(Photo::class);
+        return $this->belongsTo(MediaFile::class);
     }
 }
