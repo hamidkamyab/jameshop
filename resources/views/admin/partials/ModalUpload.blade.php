@@ -19,6 +19,15 @@
                 {{-- <form action="{{ $url }}" class="dropzone" id="dropzoneTag">
                     @csrf
                 </form> --}}
+                <div class="alert alert-danger uploadError" role="alert">
+                    <div class=" d-flex align-items-center justify-content-between">
+                        <div class="d-flex gap-2 align-items-center">
+                            <i class="icon-attention"></i>
+                            <p class="p-0 m-0 errorBody"></p>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
                 <div class="dropzone" id="dropzoneTag">
                     <div class="dz-message">
                         <div class="d-flex flex-column">
@@ -42,9 +51,11 @@
         $("div#dropzoneTag").dropzone({
             addRemoveLinks: true,
             uploadMultiple: false,
-            url: "{{ $url }}",
+            url: "{{ $upload }}",
             sending: function(file, xhr, formData) {
                 formData.append("_token", "{{ csrf_token() }}")
+                formData.append("type", "{{ $type }}")
+                formData.append("mimesFile", "jpg,jpeg,png")
             },
             init: function() {
                 this.on("success", (file, responseText) => {
@@ -53,21 +64,24 @@
                     $('.brand_imgDiv > img').attr('src', responseText['path'])
                     $('.brand_imgDiv > img').fadeIn(500);
                 });
-                this.on("removedfile", (file) => {
-                    var response = file['xhr']['responseText'];
-                    response = JSON.parse(response);
-                    console.log(response['photo_id'])
+                this.on("error", function(file, responseText) {
+                    $('.uploadError').fadeIn(1500);
+                    $('.uploadError .errorBody').text(responseText['errors']['file']);
 
-                    // if (file.id) {
-                    //     // ارسال درخواست حذف به کنترلر Laravel
-                    //     axios.delete(`/file/${file.id}`)
-                    //         .then(response => {
-                    //             console.log(response.data.message);
-                    //         })
-                    //         .catch(error => {
-                    //             console.error(error);
-                    //         });
-                    // }
+                });
+                this.on("removedfile", async (file, responseText) => {
+
+                    var response = JSON.parse(file['xhr']['responseText']);
+                    var formData = new FormData()
+                    formData.append("_token", "{{ csrf_token() }}");
+                    formData.append("id", response['mediafile_id']);
+
+                    if (response['mediafile_id']) {
+                        const res = await fetch("{{ route('mediafiles.remove') }}",{
+                            method: "POST",
+                            body:formData
+                        })
+                    }
                 });
             }
         });

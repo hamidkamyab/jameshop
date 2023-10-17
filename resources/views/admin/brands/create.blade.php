@@ -44,7 +44,8 @@
 
             @include('admin.partials.ModalUpload', [
                 'title' => 'تصویر برند',
-                'url' => route('mediafiles.upload'),
+                'upload' => route('mediafiles.upload'),
+                'type' => 'image'
             ])
         </div>
     </div>
