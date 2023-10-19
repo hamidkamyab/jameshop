@@ -87,6 +87,14 @@ class BrandController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $brand = Brand::findOrFail($id);
+        $photo = MediaFile::findOrFail($brand->photo_id);
+        $disk = 'public';
+        $path = str_replace("/storage/", "", $photo->path);
+        Storage::disk($disk)->delete($path);
+        $photo->delete();
+        $brand->delete();
+        Session::flash('opration_brand', 'برند ' . $brand->title . ' با موفقیت حذف شد.');
+        return redirect(route('brands.index'));
     }
 }
