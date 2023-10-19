@@ -27,8 +27,9 @@
             <tbody>
                 @foreach ($brands as $key=>$brand)
                     <tr class="align-middle">
-                        <td>{{$key+1}}</td>
-                        <td class="text-center"><img src="{{$brand->photo->path}}" alt="" class="brandImgTbl"></td>
+                        <td>{{$key+1}}
+                        </td>
+                        <td class="text-center"><img src="{{$brand->photo()->path}}" alt="" class="brandImgTbl"></td>
                         <td>{{$brand->title}}</td>
                         <td>{{verta($brand->created_at)->format('H:i:s')}} - {{verta($brand->created_at)->format('Y/m/d')}}</td>
                         <td>

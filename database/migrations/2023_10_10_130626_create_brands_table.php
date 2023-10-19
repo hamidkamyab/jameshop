@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('title')->unique();
             $table->text('description')->nullable();
-            $table->unsignedBigInteger('photo_id');
+            $table->unsignedBigInteger('photo_id')->nullable();
             $table->timestamps();
-            $table->foreign('photo_id')->references('id')->on('media_files')->onDelete('cascade');
+
         });
     }
 

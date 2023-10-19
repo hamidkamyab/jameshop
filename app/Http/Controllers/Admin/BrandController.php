@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BrandRequest;
 use App\Models\Brand;
+use App\Models\MediaFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class BrandController extends Controller
 {
@@ -15,8 +17,9 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brands = Brand::with('photo')->paginate(30);
-        return view('admin.brands.index',compact('brands'));
+        $brands = Brand::paginate(30);
+
+        return view('admin.brands.index', compact('brands'));
     }
 
     /**
@@ -37,7 +40,7 @@ class BrandController extends Controller
         $brand->description = $request->description;
         $brand->photo_id = $request->photo_id;
         $brand->save();
-        Session::flash('opration_brand','برند '.$request->title.' با موفقیت ثبت شد.');
+        Session::flash('opration_brand', 'برند ' . $request->title . ' با موفقیت ثبت شد.');
         return redirect(route('brands.index'));
     }
 
@@ -54,8 +57,8 @@ class BrandController extends Controller
      */
     public function edit(string $id)
     {
-        $brand = Brand::with('photo')->findOrFail($id);
-        return view('admin.brands.edit',compact('brand'));
+        $brand = Brand::findOrFail($id);
+        return view('admin.brands.edit', compact('brand'));
     }
 
     /**
@@ -66,8 +69,16 @@ class BrandController extends Controller
         $brand = Brand::findOrFail($id);
         $brand->title = $request->title;
         $brand->description = $request->description;
+        if ($request->photo_id != $brand->photo_id) {
+            $photo = MediaFile::findOrFail($brand->photo_id);
+            $disk = 'public';
+            $path = str_replace("/storage/", "", $photo->path);
+            Storage::disk($disk)->delete($path);
+            $photo->delete();
+            $brand->photo_id = $request->photo_id;
+        }
         $brand->save();
-        Session::flash('opration_brand','برند '.$request->title.' با موفقیت ویرایش شد.');
+        Session::flash('opration_brand', 'برند ' . $request->title . ' با موفقیت ویرایش شد.');
         return redirect(route('brands.index'));
     }
 

@@ -350,6 +350,8 @@ a {
 
 .brand_imgDiv img {
     display: none;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .brandImgTbl {

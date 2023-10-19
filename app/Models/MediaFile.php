@@ -13,7 +13,4 @@ class MediaFile extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function brands(){
-        return $this->hasMany(Brand::class);
-    }
 }
