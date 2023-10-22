@@ -24,10 +24,10 @@ class BrandRequest extends FormRequest
     {
         return [
             'title' => [
-                // 'required',
+                'required',
                 'min:2',
                 'max:255',
-                // Rule::unique('brands','title')->ignore($this->id)
+                Rule::unique('brands','title')->ignore(request()->brand)
             ],
             'photo_id' => 'required|numeric',
             'description' => 'min:10|max:1000',

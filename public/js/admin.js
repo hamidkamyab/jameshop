@@ -7134,10 +7134,10 @@ window.onload = () => {
         $('.main').removeClass('wid')
     }
 
-    var brandSRC = $('.brand_imgDiv > img').attr('src');
+    var brandSRC = $('.mediaFileBox > img').attr('src');
     if (brandSRC) {
-        $('.brand_imgDiv > i').fadeOut(100)
-        $('.brand_imgDiv > img').fadeIn(350)
+        $('.mediaFileBox > i').fadeOut(100)
+        $('.mediaFileBox > img').fadeIn(350)
     }
 }
 

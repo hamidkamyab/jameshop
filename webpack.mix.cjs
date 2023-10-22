@@ -12,3 +12,7 @@ mix.scripts([
     'resources/admin/src/js/chart.js',
     'resources/admin/src/js/style.js',
 ], 'public/js/admin.js')
+
+mix.scripts([
+    'resources/admin/src/js/ajax.js',
+], 'public/js/ajax.js')

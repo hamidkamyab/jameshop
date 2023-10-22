@@ -110,6 +110,9 @@ class MediaFileController extends Controller
         $path = str_replace("/storage/", "", $File->path);
         Storage::disk($disk)->delete($path);
         $File->delete();
+        return response()->json([
+            'status' => 'success'
+        ]);
     }
 
     /**

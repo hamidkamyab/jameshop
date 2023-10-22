@@ -342,13 +342,13 @@ a {
 
 /************************/
 
-.brand_imgDiv {
+.mediaFileBox {
     width: 158px;
     height: 158px;
     background-color: rgb(228, 226, 226)
 }
 
-.brand_imgDiv img {
+.mediaFileBox img {
     display: none;
     max-width: 100%;
     max-height: 100%;

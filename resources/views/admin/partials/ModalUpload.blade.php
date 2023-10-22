@@ -48,42 +48,10 @@
 @section('footer')
     <script src="{{ asset('js/dropzone.min.js') }}"></script>
     <script>
-        $("div#dropzoneTag").dropzone({
-            addRemoveLinks: true,
-            uploadMultiple: false,
-            url: "{{ $upload }}",
-            sending: function(file, xhr, formData) {
-                formData.append("_token", "{{ csrf_token() }}")
-                formData.append("type", "{{ $type }}")
-                formData.append("mimesFile", "jpg,jpeg,png")
-            },
-            init: function() {
-                this.on("success", (file, responseText) => {
-                    $('#mediafile_id').val(responseText['mediafile_id']);
-                    $('.brand_imgDiv > i').fadeOut(0);
-                    $('.brand_imgDiv > img').attr('src', responseText['path'])
-                    $('.brand_imgDiv > img').fadeIn(500);
-                });
-                this.on("error", function(file, responseText) {
-                    $('.uploadError').fadeIn(1500);
-                    $('.uploadError .errorBody').text(responseText['errors']['file']);
-
-                });
-                this.on("removedfile", async (file, responseText) => {
-
-                    var response = JSON.parse(file['xhr']['responseText']);
-                    var formData = new FormData()
-                    formData.append("_token", "{{ csrf_token() }}");
-                    formData.append("id", response['mediafile_id']);
-
-                    if (response['mediafile_id']) {
-                        const res = await fetch("{{ route('mediafiles.remove') }}",{
-                            method: "POST",
-                            body:formData
-                        })
-                    }
-                });
-            }
-        });
+        const url = "{{ $upload }}";
+        const _token = "{{ csrf_token() }}";
+        const type = "{{ $type }}";
+        const removeRoute = "{{ route('mediafiles.remove') }}";
     </script>
+    <script src="{{ asset('js/ajax.js') }}"></script>
 @endsection
