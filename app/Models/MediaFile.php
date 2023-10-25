@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class MediaFile extends Model
 {
     use HasFactory;
-
+    protected $mediaPath = "/storage/";
     public function user(){
         return $this->belongsTo(User::class);
     }
-
+    public function getPathAttribute($media){
+        return $this->mediaPath . $media;
+    }
 }

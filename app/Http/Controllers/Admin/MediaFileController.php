@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\MediaFile;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -65,8 +64,8 @@ class MediaFileController extends Controller
         Storage::disk('local')->putFileAs($dir, $file, $fileName);
         $mediafile = new MediaFile();
         $mediafile->name = $fileName;
-        $mediafile->path = '/storage/brands/' . $fileName;
-        $mediafile->type = $file->getMimeType();
+        $mediafile->path = 'brands/' . $fileName;
+        $mediafile->type = $parts[0];
         // $photo->user_id = Auth::user()->id; //////////////////////////////////// Auth
         $mediafile->user_id = 1;
         $mediafile->save();
@@ -107,8 +106,7 @@ class MediaFileController extends Controller
     {
         $File = MediaFile::findOrFail($request->id);
         $disk = 'public';
-        $path = str_replace("/storage/", "", $File->path);
-        Storage::disk($disk)->delete($path);
+        Storage::disk($disk)->delete($File->path);
         $File->delete();
         return response()->json([
             'status' => 'success'

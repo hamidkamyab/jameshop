@@ -20,9 +20,9 @@
                 <div class="col-12">
                     <label for="inputTitle" class="form-label">تصویر برند</label>
                     <div class=" d-flex align-items-end justify-content-start gap-3 noSelect">
-                        <div class="brand_imgDiv d-flex align-items-center justify-content-center rounded-3 p-1">
+                        <div class="mediaFileBox d-flex align-items-center justify-content-center rounded-3 p-1">
                             <i class="icon-picture text-muted fs-1"></i>
-                            <img src="{{$brand->photo()->path}}" />
+                            <img src="{{$brand->photo()->path}}" id="mediaFileImg" />
                         </div>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">
                             آپلود تصویر برند
@@ -43,8 +43,8 @@
             </form>
             @include('admin.partials.ModalUpload', [
                 'title' => 'تصویر برند',
-                'type' => 'jpg|jpeg|png',
                 'upload' => route('mediafiles.upload'),
+                'type' => 'image'
             ])
         </div>
     </div>
