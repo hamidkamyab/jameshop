@@ -42,4 +42,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function mediaFile(){
+        return $this->hasMany(MediaFile::class);
+    }
+
+    public function product(){
+        return $this->hasMany(Product::class);
+    }
 }

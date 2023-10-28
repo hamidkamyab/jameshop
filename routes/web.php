@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MediaFileController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Models\AttributeValue;
 use Illuminate\Support\Facades\Route;
 
@@ -39,4 +40,5 @@ Route::prefix('admin')->group(function(){
     Route::post('mediafiles/remove',[MediaFileController::class,'remove'])
     ->name('mediafiles.remove');
     Route::resource('mediafiles',MediaFileController::class);
+    Route::resource('products',ProductController::class);
 });

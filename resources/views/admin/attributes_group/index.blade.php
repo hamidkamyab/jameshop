@@ -4,16 +4,14 @@
 ویژگی ها
 @endsection
 @section('content')
-    <div class="col-12 d-flex flex-wrap justify-content-center px-2 mb-5">
-        <div class="col-12">
-            @if(Session::has('opration_attribute'))
-                @include('admin.partials.Alert',['msg'=>[session('opration_attribute')],'status'=>'success'])
-            @endif
+    <div class="bg-white col-12 p-3 pb-5 border-start border-4 border-info right-box">
+        @if(Session::has('opration_attribute'))
+            @include('admin.partials.Alert',['msg'=>[session('opration_attribute')],'status'=>'success'])
+        @endif
 
-            @if(Session::has('error_attr'))
-                @include('admin.partials.Alert',['msg'=>[session('error_attr')],'status'=>'danger'])
-            @endif
-        </div>
+        @if(Session::has('error_attr'))
+            @include('admin.partials.Alert',['msg'=>[session('error_attr')],'status'=>'danger'])
+        @endif
         <table class="table">
             <thead class="bg-dark text-white">
                 <tr>

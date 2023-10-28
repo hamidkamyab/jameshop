@@ -38,9 +38,11 @@
                     </div>
                     <!-- navigtionBar -->
 
-                    <div class="col-12 bg-white p-3 border-start border-4 border-info">
+                    <div class="col-12 d-flex justify-content-between gap-2 overflow-hidden align-items-start main-box">
                         @yield('content')
                     </div>
+
+
                 </div>
 
 

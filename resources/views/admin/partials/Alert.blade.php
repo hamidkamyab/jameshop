@@ -1,4 +1,4 @@
-﻿    <div class="alert alert-{{ $status }} d-flex align-items-start justify-content-between m-0 fade show" role="alert">
+﻿    <div class="alert alert-{{ $status }} d-flex align-items-start justify-content-between m-0 my-1 fade show w-100" role="alert">
         <div class="d-flex gap-2 align-items-start w-100">
             @if ($status == 'success')
                 <i class="icon-ok"></i>
