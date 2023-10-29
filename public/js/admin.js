@@ -7142,9 +7142,8 @@ window.onload = () => {
 }
 
 
-/*********DropzoneJs******** */
-// $(document).ready(function() {
-//     var tag = '<i class="icon-upload m-1 fs-3"></i>';
-//     $('.dz-message').append(tag);
-// });
+/*********SendForm******** */
+function sendForm(target) {
+    document.getElementById(target).submit();
+}
 /************************** */

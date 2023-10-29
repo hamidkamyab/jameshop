@@ -31,7 +31,7 @@
         <div class="content mCustomScrollbar h-100" data-mcs-theme="dark">
             <div class="subContent container d-flex flex-wrap align-items-start gap-2" >
                 <div class="col-12 d-flex flex-wrap justify-content-center gap-2">
-                    <div class="navigtionBar col-12 p-3 bg-white d-flex align-items-center h-auto border-start border-4 border-info">
+                    <div class="navigtionBar col-12 p-3 bg-white d-flex align-items-center h-auto border-start border-4 border-info shadow-sm">
                         <h4 class="BYekan text-muted m-0 p-0">
                             @yield('navigation')
                         </h4>

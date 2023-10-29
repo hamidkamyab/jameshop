@@ -11,7 +11,7 @@
             @include('admin.partials.Alert', ['msg' => $errors->all(), 'status' => 'danger'])
         @endif
         <div class="row justify-content-center">
-            <form class="row m-0 g-4" action="{{ route('brands.store') }}" method="post">
+            <form class="row m-0 g-4" action="{{ route('brands.store') }}" method="post" id="formTarget">
                 @csrf
                 <div class="col-12">
                     <label for="inputTitle" class="form-label">نام</label>
@@ -60,7 +60,7 @@
     <div class="col-3 bg-white p-2 pe-3 border-start border-4 border-info left-box">
         <div class="row justify-content-center">
             <div class="col-12 d-flex justify-content-between">
-                <button type="submit" class="btn btn-primary">ثبت برند</button>
+                <button type="submit" class="btn btn-primary"  onclick="sendForm('formTarget')">ثبت برند</button>
                 <a href="{{ route('brands.index') }}" class="btn btn-outline-danger">انصراف</a>
             </div>
         </div>

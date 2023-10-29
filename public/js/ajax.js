@@ -44,24 +44,24 @@ $("div#dropzoneTag").dropzone({
 
 var tag = document.getElementById("deleteBrandImg");
 tag.addEventListener('click', async() => {
-        var formData = new FormData()
-        formData.append("_token", _token);
-        formData.append("id", $('#mediafile_id').val());
-        if ($('#mediafile_id').val()) {
-            var response = await fetch(removeRoute, {
-                method: "POST",
-                body: formData
-            })
-            result = await response.json();
-            if (result.status == 'success') {
-                $('#mediafile_id').val("");
-                $('#mediaFileImg').fadeOut(0);
-                $('#mediaFileImg').attr('src', "")
-                $('#mediafile_path').val("")
-                $('.mediaFileBox > i').fadeIn(500);
-                $('#deleteBrandImg').fadeOut(250)
-                $('#uploadModalBtn').removeClass('disabled')
-            }
+    var formData = new FormData()
+    formData.append("_token", _token);
+    formData.append("id", $('#mediafile_id').val());
+    if ($('#mediafile_id').val()) {
+        var response = await fetch(removeRoute, {
+            method: "POST",
+            body: formData
+        })
+        result = await response.json();
+        if (result.status == 'success') {
+            $('#mediafile_id').val("");
+            $('#mediaFileImg').fadeOut(0);
+            $('#mediaFileImg').attr('src', "")
+            $('#mediafile_path').val("")
+            $('.mediaFileBox > i').fadeIn(500);
+            $('#deleteBrandImg').fadeOut(250)
+            $('#uploadModalBtn').removeClass('disabled')
         }
-    })
-    /*************************/
+    }
+});
+/*************************/

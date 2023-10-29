@@ -10,7 +10,7 @@
             @include('admin.partials.Alert', ['msg' => $errors->all(), 'status' => 'danger'])
         @endif
         <div class="row justify-content-center">
-            <form class="row gap-4 m-0" action="{{ route('brands.update', $brand->id) }}" method="post">
+            <form class="row gap-4 m-0" action="{{ route('brands.update', $brand->id) }}" method="post" id="formTarget">
                 @csrf
                 @method('PATCH')
                 <div class="col-12">
@@ -49,7 +49,7 @@
     <div class="col-3 bg-white p-2 pe-3 border-start border-4 border-info left-box">
         <div class="row justify-content-center">
             <div class="col-12 d-flex justify-content-between">
-                <button type="submit" class="btn btn-primary">ویرایش برند</button>
+                <button type="submit" class="btn btn-primary" onclick="sendForm('formTarget')">ویرایش برند</button>
                 <a href="{{ route('brands.index') }}" class="btn btn-outline-danger">انصراف</a>
             </div>
         </div>
