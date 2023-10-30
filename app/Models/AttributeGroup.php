@@ -16,4 +16,7 @@ class AttributeGroup extends Model
     {
         return $value === 0 ? 'ویژگی تکی' : 'ویژگی دسته ای';
     }
+    public function categories(){
+        return $this->belongsTo(Category::class,'category_id','id');
+    }
 }

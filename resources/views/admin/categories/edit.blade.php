@@ -32,10 +32,11 @@
                             <option value="{{ $category_children->id }}" @if ($category->parent_id == $category_children->id) selected @endif>
                                 {{ $category_children->title }}</option>
                             @if ($category_children->children)
-                                @include('admin.partials.CategoryCreate', [
+                                @include('admin.partials.CategoryChildren', [
                                     'categories' => $category_children->children,
                                     'level' => 1,
-                                    'parent_id' => $category->parent_id,
+                                    'selectedId' => $category->parent_id,
+                                    'toltipTitle' => $category->title
                                 ])
                             @endif
                         @endforeach

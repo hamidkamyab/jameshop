@@ -15,4 +15,8 @@ class Category extends Model
     public function children(){
         return $this->getChildren()->with('children');
     }
+
+    public function attributesGroup(){
+        return $this->hasMany(AttributeGroup::class);
+    }
 }

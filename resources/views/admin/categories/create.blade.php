@@ -30,9 +30,10 @@
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->title }}</option>
                             @if ($category->children)
-                                @include('admin.partials.CategoryCreate', [
+                                @include('admin.partials.CategoryChildren', [
                                     'categories' => $category->children,
                                     'level' => 1,
+                                    'toltipTitle' => $category->title
                                 ])
                             @endif
                         @endforeach

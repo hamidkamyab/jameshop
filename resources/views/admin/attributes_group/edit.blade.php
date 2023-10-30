@@ -33,6 +33,23 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-6">
+                    <label for="inputParent" class="form-label">دسته بندی</label>
+                    <select class="form-select searchSelect mb-4" id="inputParent" name="category_id">
+                        <option selected disabled>انتخاب کنید...</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}" @if($category->id == $attributeGroup->category_id) selected @endif>{{ $category->title }}</option>
+                            @if ($category->children)
+                                @include('admin.partials.CategoryChildren', [
+                                    'categories' => $category->children,
+                                    'level' => 1,
+                                    'toltipTitle' => $category->title,
+                                    'selectedId' => $attributeGroup->category_id
+                                ])
+                            @endif
+                        @endforeach
+                    </select>
+                </div>
             </form>
         </div>
     </div>

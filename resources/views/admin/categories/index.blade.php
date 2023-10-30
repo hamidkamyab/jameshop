@@ -39,7 +39,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-danger border-0 p-0 bg-transparent"
-                                        title="حذف دسته {{ $category->title }}">
+                                    title="حذف دسته {{ $category->title }}">
                                         <i class="icon-trash fs-6"></i>
                                     </button>
                                 </form>
@@ -58,4 +58,6 @@
         <div>{{ $categories->links() }}</div>
 
     </div>
+
 @endsection
+
