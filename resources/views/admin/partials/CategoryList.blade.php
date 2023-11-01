@@ -9,10 +9,11 @@
                     title="الحاق ویژگی به دسته {{ $category->title }}" class="text-primary">
                     <i class="icon-attach fs-6"></i>
                 </a>
-                <a
-                    title="نمایش ویژگی های دسته {{ $category->title }}" class="text-orange">
+                <button type="button" title="نمایش ویژگی های دسته {{ $category->title }}"
+                    class="AttributeModalBtn text-orange border-0 p-0 bg-transparent" data-bs-toggle="modal"
+                    data-bs-target="#AttributeModal" id="{{$category->id}}">
                     <i class="icon-eye fs-6"></i>
-                </a>
+                </button>
                 <a href="{{ route('categories.edit', $category->id) }}" title="ویرایش دسته {{ $category->title }}"  class="text-success">
                     <i class="icon-edit-1 fs-6"></i>
                 </a>

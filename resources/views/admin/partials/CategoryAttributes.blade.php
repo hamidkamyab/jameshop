@@ -16,7 +16,6 @@
                 <table id="attrTable" class="table table-sm">
                     <thead>
                         <tr>
-                            <th>#</th>
                             <th class="fs-6 fw-normal">عنوان ویژگی</th>
                             <th class="fs-6  fw-normal text-center">حذف</th>
                         </tr>
@@ -33,5 +32,5 @@
     </div>
 </div>
 <script>
-    urlAttrDestroy = "{{route('categories.attributes_destroy')}}";
+    urlAttrDestroy = "{{route('categories.attributes_destroy',['attrID','catID'])}}";
 </script>

@@ -34,7 +34,7 @@ Route::prefix('admin')->group(function(){
     Route::post('attributes',[CategoryController::class,'attributesList'])->name('categories.attributes_list');
     Route::get('attributes/{id}',[CategoryController::class,'attributesCreate'])->name('categories.attributes_create');
     Route::post('attributes/{id}',[CategoryController::class,'attributesStore'])->name('categories.attributes_store');
-    Route::post('attributes/destroy',[CategoryController::class,'attributesDestroy'])->name('categories.attributes_destroy');
+    Route::get('attributes/destroy/{attrId}/{catId}',[CategoryController::class,'attributesDestroy'])->name('categories.attributes_destroy');
     Route::resource('categories',CategoryController::class);
     Route::resource('attributes_group',AttributeGroupController::class);
     Route::resource('attributes_value',AttributeValueController::class);

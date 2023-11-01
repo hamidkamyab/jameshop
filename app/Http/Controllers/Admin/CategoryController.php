@@ -144,8 +144,15 @@ class CategoryController extends Controller
         return redirect(route('categories.index'));
     }
 
-    public function attributesDestroy(Request $request)
+    public function attributesDestroy(string $attrId,string $catId)
     {
-        return $request->all();
+        $AttributeGroupCategory = AttributeGroupCategory::where('attribute_group_id',$attrId)->where('category_id',$catId)->first();
+        $res = $AttributeGroupCategory->delete();
+        if($res && $res == 1){
+            $result = response()->json(['status' => 'success'],Response::HTTP_OK);
+        }else{
+            $result = response()->json(['status' => 'error'],Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+        return $result;
     }
 }

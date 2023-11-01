@@ -38,6 +38,7 @@ if (AttributeModalBtnTag) {
             formData.append('id', Id)
             const response = await fetch(url, { method: "POST", body: formData })
             const res = await response.json();
+
             if (res['status'] == 'success') {
                 var data = res['attrGroupCategory']['attributes_group'];
                 document.getElementById('AttributeModalLabel').innerText = "ویژگی های دسته بندی " + res["attrGroupCategory"]["title"];
@@ -45,10 +46,9 @@ if (AttributeModalBtnTag) {
                 var element = "";
                 data.forEach((value, key) => {
                     element += '<tr id="rowId-' + (value.id) + '">' +
-                        '<td>' + (key + 1) + '</td>' +
                         '<td>' + value.title + '</td>' +
                         '<td class="text-center">' +
-                        '<button type="submit" class="text-danger border-0 p-0 bg-transparent" title="لغو ویژگی از دسته ' + res["attrGroupCategory"]["title"] + '" onClick="deleteAttr(' + value.id + ')">' +
+                        '<button type="submit" class="text-danger border-0 p-0 bg-transparent" title="لغو ویژگی از دسته ' + res["attrGroupCategory"]["title"] + '" onClick="deleteAttr(' + value.id + ',' + Id + ')">' +
                         '<i class="icon-trash fs-6"></i>' +
                         '</button>' +
                         '</td>' +
@@ -65,12 +65,13 @@ if (AttributeModalBtnTag) {
 /****************************/
 
 /*************deleteAttr***************/
-async function deleteAttr(id) {
-    const formData = new FormData();
-    formData.append('_token', _token)
-    formData.append('id', id)
-    const response = await fetch(urlAttrDestroy, { method: "POST", body: formData });
+async function deleteAttr(attrId, catId) {
+    var newURL = urlAttrDestroy.replace("attrID/catID", attrId + "/" + catId)
+    const response = await fetch(newURL, { method: "GET" });
     const res = await response.json();
-    console.log(res);
+    if (res['status'] == 'success') {
+        var targetId = '#rowId-' + attrId;
+        $(targetId).fadeOut();
+    }
 }
 /****************************/
