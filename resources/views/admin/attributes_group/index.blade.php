@@ -17,7 +17,7 @@
                 <tr>
                     <th>#</th>
                     <th class="fw-normal fs-18">عنوان ویژگی</th>
-                    <th class="fw-normal fs-18">دسته بندی</th>
+                    <th class="fw-normal fs-18">نوع ویژگی</th>
                     <th class="fw-normal fs-18">تاریخ ایجاد</th>
                     <th class="fw-normal fs-18 d-flex align-items-center gap-1 justify-content-center">عملیات<small class="fs-12">(ویرایش - حذف)</small></th>
                 </tr>
@@ -27,7 +27,7 @@
                     <tr>
                         <td>{{$key+1}}</td>
                         <td>{{$attribute->title}}</td>
-                        <td>{{$attribute->categories->title}}</td>
+                        <td>{{$attribute->type}}</td>
                         <td>{{verta($attribute->created_at)->format('H:i:s')}} - {{verta($attribute->created_at)->format('Y/m/d')}}</td>
                         <td>
                             <div class="d-flex align-items-center justify-content-center gap-2 pt-1">

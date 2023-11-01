@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CreateCategoryRequest;
+use App\Models\AttributeGroup;
+use App\Models\AttributeGroupCategory;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
@@ -15,8 +18,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::with('children')->where('parent_id',null)->paginate(2);
-        return view('admin.categories.index',compact('categories'));
+        $categories = Category::with('children')->where('parent_id', null)->paginate(2);
+        return view('admin.categories.index', compact('categories'));
     }
 
     /**
@@ -24,8 +27,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::with('children')->where('parent_id',null)->get();
-        return view('admin.categories.create',compact('categories'));
+        $categories = Category::with('children')->where('parent_id', null)->get();
+        return view('admin.categories.create', compact('categories'));
     }
 
     /**
@@ -35,9 +38,9 @@ class CategoryController extends Controller
     {
         $category = new Category();
         $meta_description = null;
-        if($request->meta_description){
+        if ($request->meta_description) {
             $meta_description = $request->meta_description;
-        }else if(!$request->meta_description && $request->description){
+        } else if (!$request->meta_description && $request->description) {
             $meta_description = $request->description;
         }
         $category->title = $request->title;
@@ -47,7 +50,7 @@ class CategoryController extends Controller
         $category->meta_keywords = $request->meta_keywords;
         $category->parent_id = $request->parent_id;
         $category->save();
-        Session::flash('opration_category','دسته بندی '.$request->title.' با موفقیت اضافه شد');
+        Session::flash('opration_category', 'دسته بندی ' . $request->title . ' با موفقیت اضافه شد');
         return redirect(route('categories.index'));
     }
 
@@ -65,9 +68,9 @@ class CategoryController extends Controller
     public function edit(string $id)
     {
         $category = Category::findOrFail($id);
-        $categories = Category::with('children')->where('parent_id',null)->get();
+        $categories = Category::with('children')->where('parent_id', null)->get();
 
-        return view('admin.categories.edit',compact('category','categories'));
+        return view('admin.categories.edit', compact('category', 'categories'));
     }
 
     /**
@@ -77,9 +80,9 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
         $meta_description = null;
-        if($request->meta_description){
+        if ($request->meta_description) {
             $meta_description = $request->meta_description;
-        }else if(!$request->meta_description && $request->description){
+        } else if (!$request->meta_description && $request->description) {
             $meta_description = $request->description;
         }
         $category->title = $request->title;
@@ -89,7 +92,7 @@ class CategoryController extends Controller
         $category->meta_keywords = $request->meta_keywords;
         $category->parent_id = $request->parent_id;
         $category->save();
-        Session::flash('opration_category','دسته بندی '.$request->title.' با موفقیت ویرایش شد');
+        Session::flash('opration_category', 'دسته بندی ' . $request->title . ' با موفقیت ویرایش شد');
         return redirect(route('categories.index'));
     }
 
@@ -98,14 +101,51 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $category = Category::with('children')->where('id',$id)->first();
-        if(count($category->children) > 0){
-            Session::flash('error_category','دسته بندی '.$category->title.' دارای دسته های زیر مجموعه است و امکان حذف آن وجود ندارد');
+        $category = Category::with('children')->where('id', $id)->first();
+        if (count($category->children) > 0) {
+            Session::flash('error_category', 'دسته بندی ' . $category->title . ' دارای دسته های زیر مجموعه است و امکان حذف آن وجود ندارد');
             return redirect(route('categories.index'));
-        }else{
+        } else {
             $category->delete();
-            Session::flash('opration_category','دسته بندی '.$category->title.' با موفقیت حذف شد');
+            Session::flash('opration_category', 'دسته بندی ' . $category->title . ' با موفقیت حذف شد');
         }
         return redirect(route('categories.index'));
+    }
+
+
+    public function attributesList(Request $request)
+    {
+        $category = Category::with('attributesGroup')->where('id',$request->id)->first();
+        if($category){
+            $result = response()->json(['status' => 'success','attrGroupCategory'=>$category],Response::HTTP_OK);
+        }else{
+            $result = response()->json(['status' => 'error','attrGroupCategory'=>''],Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+        return $result;
+    }
+
+    public function attributesCreate(string $id)
+    {
+        $attributes_group = AttributeGroup::all();
+        $category = Category::findOrFail($id);
+        return view('admin.categories.attribute', compact(['attributes_group','category']));
+    }
+
+    public function attributesStore(Request $request, string $id)
+    {
+        $category = Category::findOrFail($id);
+        $attributesValuesProduct = new AttributeGroupCategory();
+        foreach ($request->attributes_id as $key => $value) {
+            $attributesValuesProduct->attribute_group_id = $value;
+            $attributesValuesProduct->category_id = $id;
+            $attributesValuesProduct->save();
+        }
+        Session::flash('opration_category', 'ویژگی های مدنظر با موفقیت به دسته بندی ' . $category->title . ' الحاق شد.');
+        return redirect(route('categories.index'));
+    }
+
+    public function attributesDestroy(Request $request)
+    {
+        return $request->all();
     }
 }

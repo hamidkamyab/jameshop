@@ -16,7 +16,7 @@ class AttributeGroupController extends Controller
      */
     public function index()
     {
-        $attributesGroup = AttributeGroup::with('categories')->paginate(20);
+        $attributesGroup = AttributeGroup::paginate(20);
         return view('admin.attributes_group.index',compact('attributesGroup'));
     }
 
@@ -25,8 +25,7 @@ class AttributeGroupController extends Controller
      */
     public function create()
     {
-        $categories = Category::with('children')->where('parent_id',null)->get();
-        return view('admin.attributes_group.create',compact('categories'));
+        return view('admin.attributes_group.create');
     }
 
     /**
@@ -37,7 +36,6 @@ class AttributeGroupController extends Controller
         $attributeGroup = new AttributeGroup();
         $attributeGroup->title = $request->title;
         $attributeGroup->type = $request->type;
-        $attributeGroup->category_id = $request->category_id;
         $attributeGroup->save();
         Session::flash('opration_attribute','ویژگی '.$request->title.' با موفقیت ثبت شد.');
         return redirect(route('attributes_group.index'));
@@ -57,8 +55,7 @@ class AttributeGroupController extends Controller
     public function edit(string $id)
     {
         $attributeGroup = AttributeGroup::with('categories')->findorFail($id);
-        $categories = Category::with('children')->where('parent_id',null)->get();
-        return view('admin.attributes_group.edit',compact(['attributeGroup','categories']));
+        return view('admin.attributes_group.edit',compact('attributeGroup'));
     }
 
     /**

@@ -619,6 +619,12 @@
       ]
     },
     {
+      "uid": "0d6ab6194c0eddda2b8c9cedf2ab248e",
+      "css": "attach",
+      "code": 59413,
+      "src": "fontawesome"
+    },
+    {
       "uid": "6a7eaaf87863aab5af8f7c7e0b09d87f",
       "css": "bag-4",
       "code": 59690,

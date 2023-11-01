@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('attributes_group', function (Blueprint $table) {
-            $table->unsignedBigInteger('category_id')->after('type');
+        Schema::create('attributes_group_categories', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('attribute_group_id');
+            $table->unsignedBigInteger('category_id');
+            $table->timestamps();
+
+            $table->foreign('attribute_group_id')->references('id')->on('attributes_group')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
@@ -22,8 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('attributes_group', function (Blueprint $table) {
-            $table->dropColumn('category_id');
-        });
+        Schema::dropIfExists('attributes_group_categories');
     }
 };

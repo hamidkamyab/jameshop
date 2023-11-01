@@ -5,7 +5,15 @@
         <td>{{ verta($category->created_at)->format('Y/m/d') }}</td>
         <td>
             <div class="d-flex align-items-center justify-content-center gap-2 pt-1">
-                <a href="{{ route('categories.edit', $category->id) }}" title="ویرایش دسته {{ $category->title }}">
+                <a href="{{ route('categories.attributes_create', $category->id) }}"
+                    title="الحاق ویژگی به دسته {{ $category->title }}" class="text-primary">
+                    <i class="icon-attach fs-6"></i>
+                </a>
+                <a
+                    title="نمایش ویژگی های دسته {{ $category->title }}" class="text-orange">
+                    <i class="icon-eye fs-6"></i>
+                </a>
+                <a href="{{ route('categories.edit', $category->id) }}" title="ویرایش دسته {{ $category->title }}"  class="text-success">
                     <i class="icon-edit-1 fs-6"></i>
                 </a>
                 <form action="{{ route('categories.destroy', $category->id) }}" method="Post" class="m-0">
