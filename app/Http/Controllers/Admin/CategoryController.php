@@ -134,8 +134,8 @@ class CategoryController extends Controller
     public function attributesStore(Request $request, string $id)
     {
         $category = Category::findOrFail($id);
-        $attributesValuesProduct = new AttributeGroupCategory();
         foreach ($request->attributes_id as $key => $value) {
+            $attributesValuesProduct = new AttributeGroupCategory();
             $attributesValuesProduct->attribute_group_id = $value;
             $attributesValuesProduct->category_id = $id;
             $attributesValuesProduct->save();

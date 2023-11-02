@@ -65,13 +65,33 @@ if (AttributeModalBtnTag) {
 /****************************/
 
 /*************deleteAttr***************/
-async function deleteAttr(attrId, catId) {
-    var newURL = urlAttrDestroy.replace("attrID/catID", attrId + "/" + catId)
-    const response = await fetch(newURL, { method: "GET" });
-    const res = await response.json();
-    if (res['status'] == 'success') {
-        var targetId = '#rowId-' + attrId;
-        $(targetId).fadeOut();
-    }
+function deleteAttr(attrId, catId) {
+    Swal.fire({
+        title: 'آیا مطمئن هستید؟',
+        text: "اگر از لغو این ویژگی مطمئن هستید ادامه دهید!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'بله!',
+        cancelButtonText: 'انصراف'
+    }).then(async(result) => {
+        if (result.isConfirmed) {
+            var newURL = urlAttrDestroy.replace("attrID/catID", attrId + "/" + catId)
+            const response = await fetch(newURL, { method: "GET" });
+            const res = await response.json();
+            if (res['status'] == 'success') {
+                Swal.fire({
+                    title: 'حذف شد!',
+                    text: 'ویژگی مورد نظر از دسته بندی مورد نظر حذف شد.',
+                    confirmButtonText: 'بستن!',
+                    icon: 'success',
+                })
+                var targetId = '#rowId-' + attrId;
+                $(targetId).fadeOut();
+            }
+        }
+    })
+
 }
 /****************************/
