@@ -126,9 +126,33 @@ class CategoryController extends Controller
 
     public function attributesCreate(string $id)
     {
-        $attributes_group = AttributeGroup::all();
-        $category = Category::findOrFail($id);
-        return view('admin.categories.attribute', compact(['attributes_group','category']));
+        $catsId = [];
+        $category = Category::with('parent','children')->where('id',$id)->first();
+        $catParentId = getParentID($category);
+        $catChildrenId = getChildrenID($category);
+
+        foreach ($catParentId as $key => $value) {
+            $catsId[] = $value;
+        }
+        foreach ($catChildrenId as $key => $value) {
+            $catsId[] = $value;
+        }
+
+        $attributes_group_category = AttributeGroupCategory::select('attribute_group_id')->whereIn('category_id',$catsId)->get();
+        $attributes_group_category = getOneFieldOfArray($attributes_group_category,'attribute_group_id');
+        $attributes_group_filter = AttributeGroup::whereIn('id',$attributes_group_category)->get();
+
+        $attributes_group_this_category = AttributeGroupCategory::select('attribute_group_id')->where('category_id',$id)->get();
+        $attributes_group_this_category = getOneFieldOfArray($attributes_group_this_category,'attribute_group_id');
+        $attributes_group_this_filter = AttributeGroup::whereIn('id',$attributes_group_this_category)->get();
+
+        foreach ($attributes_group_this_category as $key => $value) {
+            $attributes_group_category[] = $value;
+        }
+
+        $attributes_group = AttributeGroup::whereNotIn('id',$attributes_group_category)->get();
+
+        return view('admin.categories.attribute', compact(['attributes_group','attributes_group_filter','attributes_group_this_filter','category']));
     }
 
     public function attributesStore(Request $request, string $id)

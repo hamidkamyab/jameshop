@@ -16,7 +16,16 @@ class Category extends Model
         return $this->getChildren()->with('children');
     }
 
+    public function getParent(){
+        return $this->hasMany(Category::class,'id','parent_id');
+    }
+    public function parent(){
+        return $this->getParent()->with('parent');
+    }
+
     public function attributesGroup(){
         return $this->belongsToMany(AttributeGroup::class,'attributes_group_categories');
     }
+
+
 }
