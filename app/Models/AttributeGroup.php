@@ -10,7 +10,7 @@ class AttributeGroup extends Model
     use HasFactory;
     protected $table = 'attributes_group';
     public function attributes_value(){
-        return $this->hasMany(AttributeValue::class);
+        return $this->hasMany(AttributeValue::class,'attributes_group_id');
     }
     public function getTypeAttribute($value)
     {

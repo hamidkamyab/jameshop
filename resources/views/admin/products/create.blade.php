@@ -43,16 +43,20 @@
                 </div>
 
                 <div class="col-6">
-                    <label for="inputParent" class="form-label">دسته والد</label>
-                    <select class="form-select searchSelect mb-4" id="inputParent" name="parent_id">
+                    <label for="inputParent" class="form-label">دسته بندی <small class="text-danger fs-12">(دسته بندی دارای
+                            زیر مجموعه را نمیتوان انتخاب کرد!)</small></label>
+                    <select class="form-select searchSelect mb-4" id="inputParent" name="parent_id" data-id="categoriesList"
+                        onchange="getAttrCat(event)">
                         <option selected disabled>انتخاب کنید...</option>
                         @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->title }}</option>
+                            <option value="{{ $category->id }}" @if (count($category->children) > 0) disabled @endif>
+                                {{ $category->title }}</option>
                             @if ($category->children)
                                 @include('admin.partials.CategoryChildren', [
                                     'categories' => $category->children,
                                     'level' => 1,
                                     'toltipTitle' => $category->title,
+                                    'disableParent' => true,
                                 ])
                             @endif
                         @endforeach
@@ -80,11 +84,20 @@
         </div>
     </div>
 
-    <div class="col-3 bg-white p-2 pe-3 border-start border-4 border-info left-box">
-        <div class="row justify-content-center">
+    <div class="col-3 left-box d-flex flex-wrap gap-3">
+        <div class="justify-content-center bg-white py-3 ps-2 pe-3 border-start border-4 border-info w-100">
             <div class="col-12 d-flex justify-content-between">
                 <button type="submit" class="btn btn-primary">ثبت محصول</button>
                 <a href="{{ route('products.index') }}" class="btn btn-outline-danger">انصراف</a>
+            </div>
+        </div>
+
+        <div class="justify-content-center bg-white py-3 ps-2 pe-3 border-start border-4 border-info w-100">
+            <div class="col-12 d-flex justify-content-between flex-wrap">
+                <h6 class="border-bottom border-1 py-2 mb-3 w-100">ویژگی های دسته بندی</h6>
+                <div id="categoryAttr" class="col-12 d-flex flex-column gap-2">
+
+                </div>
             </div>
         </div>
     </div>
@@ -107,4 +120,11 @@
                 console.error(err.stack);
             });
     </script>
+
+    <script>
+        var getAttrUrl = "{{ route('products.attributes', 'id') }}";
+    </script>
+    <script src="{{ asset('js/ajax.js') }}"></script>
+
+
 @endsection

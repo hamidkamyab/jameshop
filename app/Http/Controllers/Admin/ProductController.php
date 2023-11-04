@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AttributeGroup;
+use App\Models\AttributeGroupCategory;
 use App\Models\Brand;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ProductController extends Controller
 {
@@ -65,5 +68,19 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function attributes(string $id)
+    {
+        $categories = Category::with('parent')->where('id',$id)->first();
+        $catParentId = getParentID($categories);
+        $catParentId[] = intval($id);
+        $attributes_group_category = AttributeGroupCategory::select('attribute_group_id')->whereIn('category_id',$catParentId)->get();
+        $attributes = AttributeGroup::with('attributes_value')->whereIn('id',$attributes_group_category)->get();
+        return  response()->json(['status' => 'success','attributes' => $attributes],Response::HTTP_OK);
     }
 }

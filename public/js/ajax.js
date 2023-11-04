@@ -95,3 +95,36 @@ function deleteAttr(attrId, catId) {
 
 }
 /****************************/
+
+
+
+/*************Get Category Attributes***************/
+async function getAttrCat(event) {
+    var catId = event.target.value;
+    url = getAttrUrl.replace("id", catId);
+    document.getElementById('categoryAttr').innerHTML = '';
+    const response = await fetch(url, { method: 'GET' });
+    const result = await response.json();
+    if (result['status'] == 'success') {
+        result['attributes'].forEach((value, key) => {
+            var newSelect = document.createElement('select');
+            newSelect.id = 'selectAttr-' + key;
+            value['attributes_value'].forEach(attr => {
+                var option = document.createElement('option');
+                option.value = attr['id'];
+                option.text = attr['title'];
+                newSelect.appendChild(option);
+            });
+
+            var titleTag = document.createElement('h6');
+            titleTag.textContent = value['title'] + ":";
+
+            var container = document.getElementById('categoryAttr');
+            container.appendChild(titleTag);
+            container.appendChild(newSelect);
+            $(newSelect).select2();
+            console.log(newSelect);
+        });
+    }
+}
+/****************************/
