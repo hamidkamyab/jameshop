@@ -26,7 +26,7 @@
                 <div class="col-6">
                     <label for="inputParent" class="form-label">دسته والد</label>
                     <select class="form-select searchSelect mb-4" id="inputParent" name="parent_id">
-                        <option selected disabled>انتخاب کنید...</option>
+                        <option selected disabled value="choose">انتخاب کنید...</option>
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->title }}</option>
                             @if ($category->children)

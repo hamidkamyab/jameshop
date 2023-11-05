@@ -20,7 +20,7 @@
                 <div class="col-12">
                     <label for="inputSlug" class="form-label">ویژگی</label>
                     <select class="form-select searchSelect mb-4" id="inputParent" name="attributes_group_id">
-                        <option selected disabled>انتخاب کنید...</option>
+                        <option selected disabled value="choose">انتخاب کنید...</option>
                         @foreach ($attributesGroup as $attribute)
                             <option value="{{ $attribute->id }}">{{ $attribute->title }}</option>
                         @endforeach

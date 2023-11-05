@@ -47,7 +47,7 @@
                             زیر مجموعه را نمیتوان انتخاب کرد!)</small></label>
                     <select class="form-select searchSelect mb-4" id="inputParent" name="parent_id" data-id="categoriesList"
                         onchange="getAttrCat(event)">
-                        <option selected disabled>انتخاب کنید...</option>
+                        <option selected disabled value="choose">انتخاب کنید...</option>
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}" @if (count($category->children) > 0) disabled @endif>
                                 {{ $category->title }}</option>
@@ -92,11 +92,14 @@
             </div>
         </div>
 
-        <div class="justify-content-center bg-white py-3 ps-2 pe-3 border-start border-4 border-info w-100">
+        <div id="attrCategoryBox" class="justify-content-center bg-white py-3 ps-2 pe-3 border-start border-4 border-info w-100 hidden">
             <div class="col-12 d-flex justify-content-between flex-wrap">
                 <h6 class="border-bottom border-1 py-2 mb-3 w-100">ویژگی های دسته بندی</h6>
                 <div id="categoryAttr" class="col-12 d-flex flex-column gap-2">
-
+                    <div class="d-flex align-items-center gap-1 fs-14">
+                        <i class="icon-info-circled-alt text-muted"></i>
+                        <span class="text-muted">هنوز دسته ای انتخاب نکردید</span>
+                    </div>
                 </div>
             </div>
         </div>

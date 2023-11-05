@@ -7145,6 +7145,7 @@ window.onload = () => {
         $('.mediaFileBox > i').fadeOut(100)
         $('.mediaFileBox > img').fadeIn(350)
     }
+    $('.searchSelect').val('choose').trigger('change');
 }
 
 
