@@ -637,6 +637,24 @@
       "src": "entypo"
     },
     {
+      "uid": "14e9aa28bf2a3531274f85194e733b71",
+      "css": "color-adjust",
+      "code": 61472,
+      "src": "mfglabs"
+    },
+    {
+      "uid": "4efb719e797c54b3c58e5ae061d29d53",
+      "css": "droplet",
+      "code": 59677,
+      "src": "entypo"
+    },
+    {
+      "uid": "88e6faa0f633ee23667f815689e82af3",
+      "css": "eyedropper",
+      "code": 61947,
+      "src": "fontawesome"
+    },
+    {
       "uid": "6a7eaaf87863aab5af8f7c7e0b09d87f",
       "css": "bag-4",
       "code": 59690,

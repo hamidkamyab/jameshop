@@ -75,6 +75,7 @@
 .icon-upload { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe8e1;&nbsp;'); }
 .icon-play-2 { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe8ed;&nbsp;'); }
 .icon-pause-2 { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe8f0;&nbsp;'); }
+.icon-droplet { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe91d;&nbsp;'); }
 .icon-telegram-c1 { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe922;&nbsp;'); }
 .icon-android { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe930;&nbsp;'); }
 .icon-zoom-in { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe935;&nbsp;'); }
@@ -87,6 +88,7 @@
 .icon-right-open-3 { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf006;&nbsp;'); }
 .icon-left-open-2 { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf007;&nbsp;'); }
 .icon-menu-3 { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf008;&nbsp;'); }
+.icon-color-adjust { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf020;&nbsp;'); }
 .icon-upload-1 { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf02f;&nbsp;'); }
 .icon-info-circled-alt { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf086;&nbsp;'); }
 .icon-twitter { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf099;&nbsp;'); }
@@ -98,6 +100,7 @@
 .icon-dropbox { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf16b;&nbsp;'); }
 .icon-instagram { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf16d;&nbsp;'); }
 .icon-copyright { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf1f9;&nbsp;'); }
+.icon-eyedropper { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf1fb;&nbsp;'); }
 .icon-whatsapp { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf232;&nbsp;'); }
 .icon-server { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf233;&nbsp;'); }
 .icon-wikipedia-w { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf266;&nbsp;'); }

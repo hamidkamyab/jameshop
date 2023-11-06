@@ -7146,6 +7146,12 @@ window.onload = () => {
         $('.mediaFileBox > img').fadeIn(350)
     }
     $('.searchSelect').val('choose').trigger('change');
+
+    $('.ClearLoad').val('');
+
+    if ($('#HexCode').hasClass('ClearLoad')) {
+        $('#HexCode').val('#42445A');
+    }
 }
 
 

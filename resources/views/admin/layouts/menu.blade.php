@@ -129,7 +129,33 @@
                     </li>
                 </ul>
             </li>
-
+            <li class="itemLi">
+                <a href="javascript:void(0)" class="item px-2 d-flex align-items-center justify-content-between gap-1 text-white toggle_menu">
+                    <div class="d-flex align-items-center gap-2 ">
+                        <i class=" icon-droplet"></i>
+                        <span class="BYekan hiddenItem">رنگ ها</span>
+                    </div>
+                    <i class="icon-down-open icon-open"></i>
+                </a>
+                <ul class="sub-menu list-unstyled">
+                    <li class="itemLi active">
+                        <a href="{{route('colors.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
+                            <div class="d-flex align-items-center gap-2 ">
+                                <i class="icon-color-adjust"></i>
+                                <span class="BYekan hiddenItem">لیست رنگ ها</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="itemLi">
+                        <a href="{{route('colors.create')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
+                            <div class="d-flex align-items-center gap-2 ">
+                                <i class="icon-eyedropper"></i>
+                                <span class="BYekan hiddenItem">ثبت رنگ</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
             <li class="itemLi">
                 <a href="javascript:void(0)" class="item px-2 d-flex align-items-center justify-content-between gap-1 text-white toggle_menu">
                     <div class="d-flex align-items-center gap-2 ">

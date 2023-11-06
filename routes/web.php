@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AttributeGroupController;
 use App\Http\Controllers\Admin\AttributeValueController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MediaFileController;
 use App\Http\Controllers\Admin\ProductController;
@@ -44,6 +45,7 @@ Route::prefix('admin')->group(function(){
     Route::post('mediafiles/remove',[MediaFileController::class,'remove'])
     ->name('mediafiles.remove');
     Route::resource('mediafiles',MediaFileController::class);
+    Route::resource('colors',ColorController::class);
     Route::get('attributes/{id}',[ProductController::class,'attributes'])->name('products.attributes');
     Route::resource('products',ProductController::class);
 });
