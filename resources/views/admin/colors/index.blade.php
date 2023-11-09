@@ -28,7 +28,7 @@
                         <td>{{$key+1}}</td>
                         <td>{{$color->name}}</td>
                         <td class="text-center">
-                            <span class="colorPreview" style="background-color: {{$color->code}}"></span>
+                            <span class="colorPreview border border-1 border-secondary" style="background-color: {{$color->code}}"></span>
                         </td>
                         <td>{{verta($color->created_at)->format('H:i:s')}} - {{verta($color->created_at)->format('Y/m/d')}}</td>
                         <td>

@@ -7160,3 +7160,23 @@ function sendForm(target) {
     document.getElementById(target).submit();
 }
 /************************** */
+let colorsId = [];
+$('.colorItem').on('click', (e) => {
+    const element = e.target;
+    if ($(element).hasClass('colorItem')) {
+        if ($(element).hasClass('active')) {
+            $(element).removeClass('active');
+            colorsId = colorsId.filter(item => item !== $(element).attr('id'));
+        } else {
+            $(element).addClass('active')
+            colorsId.push($(element).attr('id'));
+        }
+        $('#colors').val(colorsId);
+    }
+})
+
+function clearColors() {
+    $('.colorItem').removeClass('active');
+    colorsId = [];
+    $('#colors').val(colorsId);
+}

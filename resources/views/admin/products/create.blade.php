@@ -1,5 +1,9 @@
 ﻿@extends('admin.layouts.master')
 
+@section('head')
+<link rel="stylesheet" href="{{ asset('css/dropzone.min.css') }}">
+@endsection
+
 @section('navigation')
     ایجاد محصول جدید
 @endsection
@@ -77,6 +81,43 @@
 
                 </div>
 
+                <div class="col-12">
+                    <label for="" class="mb-1">رنگ بندی محصول</label>
+                    <div class="border border-1 border-gray-500 p-2 d-flex mCustomScrollbar" data-mcs-theme="dark"
+                        style="height:80px;">
+                        <div class="d-flex flex-wrap p-1 gap-2">
+                            @foreach ($colors as $color)
+                                <span id="{{ $color->id }}" class="position-relative colorItem d-inline-block NoSelect"
+                                    style="background-color: {{ $color->code }}" title="{{ $color->name }}">
+                                    <span
+                                        class="position-absolute top-0 start-100 translate-middle p-1 bg-primary border border-light rounded-circle">
+                                    </span>
+                                </span>
+                            @endforeach
+                        </div>
+                    </div>
+                    <input type="hidden" class="form-control ClearLoad" name="colors" id="colors">
+                    <a href="javascript:void(0);" onclick="clearColors()" class="btn btn-danger btn-sm m-1">لغو رنگ</a>
+                </div>
+
+                <div class="col-12">
+                    <label for="" class="mb-1">تصاویر محصول</label>
+
+                    <div id="productImgBox">
+                        <input type="hidden" id="photos" name="photos" class="ClearLoad">
+                        <div class="border border-1 border-gray-500 dropzone" id="dropzoneTag">
+                            <div class="dz-message">
+                                <div class="d-flex flex-column">
+                                    <i class="icon-upload m-1 fs-2"></i>
+                                    <span class="fs-5">فایل‌های خود را کشیده و اینجا رها کنید</span>
+                                    <span class="fs-5">یا اینجا کلیک کنید</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <input type="hidden" name="attribute_value" />
 
             </form>
@@ -92,7 +133,8 @@
             </div>
         </div>
 
-        <div id="attrCategoryBox" class="justify-content-center bg-white py-3 ps-2 pe-3 border-start border-4 border-info w-100 hidden">
+        <div id="attrCategoryBox"
+            class="justify-content-center bg-white py-3 ps-2 pe-3 border-start border-4 border-info w-100 hidden">
             <div class="col-12 d-flex justify-content-between flex-wrap">
                 <h6 class="border-bottom border-1 py-2 mb-3 w-100">ویژگی های دسته بندی</h6>
                 <div id="categoryAttr" class="col-12 d-flex flex-column gap-2">
@@ -107,6 +149,7 @@
 @endsection
 @section('footer')
     <script src="{{ asset('js/ckeditor.js') }}"></script>
+    <script src="{{ asset('js/dropzone.min.js') }}"></script>
     <script>
         ClassicEditor
             .create(document.querySelector('#inputDiscription'), {
@@ -127,7 +170,56 @@
     <script>
         var getAttrUrl = "{{ route('products.attributes', 'id') }}";
     </script>
+
+    <script>
+        const dateTime = new Date();
+        const subFolder = "p_"+dateTime.getTime();
+        let photsId = [];
+
+        $("div#dropzoneTag").dropzone({
+            addRemoveLinks: true,
+            uploadMultiple: false,
+            url: "{{route('mediafiles.upload')}}",
+            sending: function(file, xhr, formData) {
+                formData.append("_token", "{{ csrf_token() }}")
+                formData.append("type",'image')
+                formData.append("folder","products/"+subFolder)
+                formData.append("mimesFile", "jpg,jpeg,png")
+                formData.append("thumbnail", "true")
+            },
+            init: function() {
+                this.on("success", (file, responseText) => {
+                    photsId.push(responseText['mediafile_id']);
+                    $('#photos').val(photsId);
+                });
+                this.on("error", function(file, responseText) {
+                    $('.uploadError').fadeIn(1500);
+                    $('.uploadError .errorBody').text(responseText['errors']['file']);
+
+                });
+                this.on("removedfile", async (file, responseText) => {
+                    var response = JSON.parse(file['xhr']['responseText']);
+
+                    const id = response['mediafile_id'];
+                    var formData = new FormData()
+                    formData.append("_token", "{{ csrf_token() }}");
+                    formData.append("id", id);
+
+                    if (id) {
+                        const response = await fetch("{{ route('mediafiles.remove') }}", {
+                            method: "POST",
+                            body: formData
+                        })
+                        const result = await response.json();
+                        if(result['status'] == 'success'){
+                            photsId = photsId.filter(item => item !== id);
+                            $('#photos').val(photsId);
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+
     <script src="{{ asset('js/ajax.js') }}"></script>
-
-
 @endsection

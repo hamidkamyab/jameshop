@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\MediaFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Facades\Image;
 
 class MediaFileController extends Controller
 {
@@ -39,6 +41,7 @@ class MediaFileController extends Controller
         $file = $request->file('file');
         $type = $file->getMimeType();
         $parts = explode('/', $type);
+
         if ($request->type != "all") {
             $validator = Validator::make($request->file(), [
                 'file' => [
@@ -53,6 +56,9 @@ class MediaFileController extends Controller
                 ], 422);
             }
         } else if ($request->type == "all") {
+
+            //
+
         } else {
             return response()->json([
                 'errors' => 'پسوند فایل غیر مجاز است!',
@@ -60,11 +66,25 @@ class MediaFileController extends Controller
         }
 
         $fileName = time() . '_' . $file->getClientOriginalName();
-        $dir = 'public/brands';
+        $dir = 'public/' . $request->folder;
+
         Storage::disk('local')->putFileAs($dir, $file, $fileName);
         $mediafile = new MediaFile();
+
+        if (@$request->thumbnail == 'true') {
+            $path = str_replace("public/", "app/public/",$dir);
+            $thumbnailPath = storage_path($path.'/thumbnail/');
+            File::makeDirectory($thumbnailPath, $mode = 0775, true, true);
+            // ایجاد تصویر از تصویر اصلی
+            $image = Image::make($file);
+            // ایجاد تصویر thumbnail
+            $image->fit(200, 200)->save($thumbnailPath.$fileName);
+            $thumbnail = $request->folder.'/thumbnail/'.$fileName;
+            $mediafile->thumbnail = $thumbnail;
+        }
+
         $mediafile->name = $fileName;
-        $mediafile->path = 'brands/' . $fileName;
+        $mediafile->path = $request->folder . '/' . $fileName;
         $mediafile->type = $parts[0];
         // $photo->user_id = Auth::user()->id; //////////////////////////////////// Auth
         $mediafile->user_id = 1;
@@ -106,7 +126,19 @@ class MediaFileController extends Controller
     {
         $File = MediaFile::findOrFail($request->id);
         $disk = 'public';
-        Storage::disk($disk)->delete($File->path);
+        $path = str_replace("/storage/", "", $File->path);
+        Storage::disk($disk)->delete($path);
+        if($File->thumbnail != null){
+            $thumbnailPath = str_replace("/storage/", "", $File->thumbnail);
+            Storage::disk($disk)->delete($thumbnailPath);
+        }
+        $dir = $disk . '/' . str_replace($File->name, "", $path);
+        if (Storage::exists($dir)) {
+            $files = Storage::allFiles($dir);
+            if (count($files) == 0) {
+                Storage::deleteDirectory($dir);
+            }
+        }
         $File->delete();
         return response()->json([
             'status' => 'success'

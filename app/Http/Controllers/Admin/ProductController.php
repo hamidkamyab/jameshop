@@ -7,6 +7,7 @@ use App\Models\AttributeGroup;
 use App\Models\AttributeGroupCategory;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Color;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -27,7 +28,8 @@ class ProductController extends Controller
     {
         $categories = Category::with('children')->where('parent_id',null)->get();
         $brands = Brand::all();
-        return view('admin.products.create',compact(['categories','brands']));
+        $colors = Color::all();
+        return view('admin.products.create',compact(['categories','brands','colors']));
     }
 
     /**

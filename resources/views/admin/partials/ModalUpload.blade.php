@@ -28,7 +28,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 </div>
-                <div class="dropzone" id="dropzoneTag">
+                <div class="dropzone border border-1 border-gray-500" id="dropzoneTag">
                     <div class="dz-message">
                         <div class="d-flex flex-column">
                             <i class="icon-upload m-1 fs-2"></i>
@@ -48,10 +48,6 @@
 @section('footer')
     <script src="{{ asset('js/dropzone.min.js') }}"></script>
     <script>
-        // const url = "{{ $upload }}";
-        // const _token = "{{ csrf_token() }}";
-        // const type = "{{ $type }}";
-        // const removeRoute = "{{ route('mediafiles.remove') }}";
 
         /***********Modal Upload************* */
         $("div#dropzoneTag").dropzone({
@@ -61,6 +57,7 @@
             sending: function(file, xhr, formData) {
                 formData.append("_token", "{{ csrf_token() }}")
                 formData.append("type", "{{ $type }}")
+                formData.append('folder',"{{$folder}}")
                 formData.append("mimesFile", "jpg,jpeg,png")
             },
             init: function() {
