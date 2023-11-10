@@ -92,6 +92,7 @@ class MediaFileController extends Controller
         return response()->json([
             'mediafile_id' => $mediafile->id,
             'path' => $mediafile->path,
+            'thumbnail' => $mediafile->thumbnail,
         ]);
     }
 

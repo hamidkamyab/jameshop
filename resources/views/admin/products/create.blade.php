@@ -1,7 +1,7 @@
 ﻿@extends('admin.layouts.master')
 
 @section('head')
-<link rel="stylesheet" href="{{ asset('css/dropzone.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dropzone.min.css') }}">
 @endsection
 
 @section('navigation')
@@ -115,9 +115,16 @@
 
                             </div>
                         </div>
+
+                        <label for="" class="productImgChooseLabel my-1 d-none">انتخاب تصویر اول <small
+                                class="text-danger">(برای نمایش به عنوان تصویر اصلی محصول)</small></label>
+                        <ul class="productImgChoose list-unstyled my-2 d-flex gap-1 p-1">
+
+                        </ul>
+
                     </div>
                 </div>
-
+                <input type="hidden" name="first_pic" id="inputFirstPicId" />
                 <input type="hidden" name="attribute_value" />
 
             </form>
@@ -173,17 +180,17 @@
 
     <script>
         const dateTime = new Date();
-        const subFolder = "p_"+dateTime.getTime();
+        const subFolder = "p_" + dateTime.getTime();
         let photsId = [];
 
         $("div#dropzoneTag").dropzone({
             addRemoveLinks: true,
             uploadMultiple: false,
-            url: "{{route('mediafiles.upload')}}",
+            url: "{{ route('mediafiles.upload') }}",
             sending: function(file, xhr, formData) {
                 formData.append("_token", "{{ csrf_token() }}")
-                formData.append("type",'image')
-                formData.append("folder","products/"+subFolder)
+                formData.append("type", 'image')
+                formData.append("folder", "products/" + subFolder)
                 formData.append("mimesFile", "jpg,jpeg,png")
                 formData.append("thumbnail", "true")
             },
@@ -191,6 +198,13 @@
                 this.on("success", (file, responseText) => {
                     photsId.push(responseText['mediafile_id']);
                     $('#photos').val(photsId);
+                    const tag =
+                        '<li class="p-1 productImgItem" onClick="selectFirstImage(this)" id="PI-' +
+                        responseText['mediafile_id'] + '">' +
+                        '<img src="' + responseText['thumbnail'] + '" class="rounded-3">' +
+                        '</li>';
+                    $('.productImgChoose').append(tag);
+                    $('.productImgChooseLabel').removeClass('d-none');
                 });
                 this.on("error", function(file, responseText) {
                     $('.uploadError').fadeIn(1500);
@@ -211,9 +225,22 @@
                             body: formData
                         })
                         const result = await response.json();
-                        if(result['status'] == 'success'){
+                        if (result['status'] == 'success') {
                             photsId = photsId.filter(item => item !== id);
                             $('#photos').val(photsId);
+                            $("#PI-" + id).fadeOut(250);
+
+                            if ($("#PI-" + id).hasClass('active')) {
+                                $('#inputFirstPicId').val('');
+                            }
+                            setTimeout(() => {
+                                $("#PI-" + id).remove();
+                                if (document.getElementsByClassName("productImgItem")
+                                    .length == 0) {
+                                    $('.productImgChooseLabel').addClass('d-none');
+                                    $('#inputFirstPicId').val('');
+                                }
+                            }, 300);
                         }
                     }
                 });

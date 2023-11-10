@@ -7180,3 +7180,10 @@ function clearColors() {
     colorsId = [];
     $('#colors').val(colorsId);
 }
+
+function selectFirstImage(element) {
+    $('.productImgItem').removeClass('active');
+    $(element).addClass('active');
+    const id = $(element).attr('id').replace("PI-", "");
+    $('#inputFirstPicId').val(id)
+}
