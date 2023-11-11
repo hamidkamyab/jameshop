@@ -52,7 +52,7 @@
             @include('admin.partials.ModalUpload', [
                 'title' => 'تصویر برند',
                 'upload' => route('mediafiles.upload'),
-                'folder' => 'brands'
+                'folder' => 'brands',
                 'type' => 'image',
             ])
         </div>

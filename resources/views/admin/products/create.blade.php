@@ -36,7 +36,7 @@
                 <div class="col-6">
                     <label for="inputBrand" class="form-label">برند</label>
                     <select class="form-select searchSelect mb-4" id="inputBrand" name="brand_id">
-                        <option selected disabled>انتخاب کنید...</option>
+                        <option selected disabled value="choose">انتخاب کنید...</option>
                         <option value="null">متفرقه</option>
                         @foreach ($brands as $brand)
                             <option value="{{ $brand->id }}">
@@ -65,6 +65,16 @@
                             @endif
                         @endforeach
                     </select>
+                </div>
+
+                <div class="col-6">
+                    <label for="inputParent" class="form-label">قیمت محصول  <small class="text-danger fs-12">(قیمت به ریال می باشد)</small></label>
+                    <input type="text" class="form-control" name="price" value="{{old('price')}}" placeholder="برای مثال: 1000000">
+                </div>
+
+                <div class="col-6">
+                    <label for="inputParent" class="form-label">تخفیف <small class="text-danger fs-12">(%)</small></label>
+                    <input type="number" class="form-control" name="discount_price" value="{{old('discount_price')}}" min="0" max="100" placeholder="0">
                 </div>
 
                 <div class="col-12">

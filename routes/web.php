@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MediaFileController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\SizeController;
 use App\Models\AttributeValue;
 use Illuminate\Support\Facades\Route;
 
@@ -46,6 +47,7 @@ Route::prefix('admin')->group(function(){
     ->name('mediafiles.remove');
     Route::resource('mediafiles',MediaFileController::class);
     Route::resource('colors',ColorController::class);
+    Route::resource('sizes',SizeController::class);
     Route::get('attributes/{id}',[ProductController::class,'attributes'])->name('products.attributes');
     Route::resource('products',ProductController::class);
 });

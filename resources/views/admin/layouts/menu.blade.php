@@ -159,6 +159,33 @@
             <li class="itemLi">
                 <a href="javascript:void(0)" class="item px-2 d-flex align-items-center justify-content-between gap-1 text-white toggle_menu">
                     <div class="d-flex align-items-center gap-2 ">
+                        <i class="icon-size"></i>
+                        <span class="BYekan hiddenItem">سایز ها</span>
+                    </div>
+                    <i class="icon-down-open icon-open"></i>
+                </a>
+                <ul class="sub-menu list-unstyled">
+                    <li class="itemLi active">
+                        <a href="{{route('sizes.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
+                            <div class="d-flex align-items-center gap-2 ">
+                                <i class="icon-ruler"></i>
+                                <span class="BYekan hiddenItem">لیست سایز ها</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="itemLi">
+                        <a href="{{route('sizes.create')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
+                            <div class="d-flex align-items-center gap-2 ">
+                                <i class="icon-tapelineplus"></i>
+                                <span class="BYekan hiddenItem">ثبت سایز</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="itemLi">
+                <a href="javascript:void(0)" class="item px-2 d-flex align-items-center justify-content-between gap-1 text-white toggle_menu">
+                    <div class="d-flex align-items-center gap-2 ">
                         <i class="icon-product-hunt"></i>
                         <span class="BYekan hiddenItem">محصولات</span>
                     </div>
