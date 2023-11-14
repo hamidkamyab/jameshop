@@ -7145,40 +7145,40 @@ window.onload = () => {
         $('.mediaFileBox > i').fadeOut(100)
         $('.mediaFileBox > img').fadeIn(350)
     }
-    $('.searchSelect').val('choose').trigger('change');
+    $('.select-cl').val('choose').trigger('change');
 
     $('.ClearLoad').val('');
+
+    $('.un-selc option').prop('selected', false);
 
     if ($('#HexCode').hasClass('ClearLoad')) {
         $('#HexCode').val('#42445A');
     }
 }
 
-
 /*********SendForm******** */
 function sendForm(target) {
     document.getElementById(target).submit();
 }
 /************************** */
-let colorsId = [];
+
 $('.colorItem').on('click', (e) => {
     const element = e.target;
     if ($(element).hasClass('colorItem')) {
+        var option = '#color-' + $(element).attr('id');
         if ($(element).hasClass('active')) {
             $(element).removeClass('active');
-            colorsId = colorsId.filter(item => item !== $(element).attr('id'));
+            $(option).prop('selected', false);
         } else {
-            $(element).addClass('active')
-            colorsId.push($(element).attr('id'));
+            $(element).addClass('active');
+            $(option).prop('selected', true);
         }
-        $('#colors').val(colorsId);
     }
 })
 
 function clearColors() {
     $('.colorItem').removeClass('active');
-    colorsId = [];
-    $('#colors').val(colorsId);
+    $('#colorsFakeSelector option').prop('selected', false);
 }
 
 function selectFirstImage(element) {

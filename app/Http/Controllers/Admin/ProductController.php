@@ -47,7 +47,6 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-
         $product = new Product();
         $meta_description = '';
         $product->title = $request->title;
@@ -123,7 +122,16 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::with('sizes','colors','photos')->findOrFail($id);
+
+        $sizesId = get_Id($product->sizes);
+        unset($product->sizes);
+        $product->sizes = $sizesId;
+
+        $colorsId = get_Id($product->colors);
+        unset($product->colors);
+        $product->colors = $colorsId;
+
         $categories = Category::with('children')->where('parent_id',null)->get();
         $brands = Brand::all();
         $colors = Color::all();
@@ -136,7 +144,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        return $request->all();
     }
 
     /**

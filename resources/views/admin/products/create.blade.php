@@ -2,6 +2,14 @@
 
 @section('head')
     <link rel="stylesheet" href="{{ asset('css/dropzone.min.css') }}">
+    <script>
+        $(document).ready(function() {
+            $('.searchSelect').select2({
+                placeholder: "انتخاب کنید...",
+                allowClear: false // این گزینه به کاربر این امکان را می‌دهد که گزینه انتخاب شده را پاک کند
+            });
+        });
+    </script>
 @endsection
 
 @section('navigation')
@@ -35,7 +43,7 @@
 
                 <div class="col-6">
                     <label for="inputBrand" class="form-label">برند</label>
-                    <select class="form-select searchSelect mb-4" id="inputBrand" name="brand_id">
+                    <select class="form-select searchSelect select-cl mb-4" id="inputBrand" name="brand_id">
                         <option selected disabled value="choose">انتخاب کنید...</option>
                         <option value="null">متفرقه</option>
                         @foreach ($brands as $brand)
@@ -49,7 +57,7 @@
                 <div class="col-6">
                     <label for="inputParent" class="form-label">دسته بندی <small class="text-danger fs-12">(دسته بندی دارای
                             زیر مجموعه را نمیتوان انتخاب کرد!)</small></label>
-                    <select class="form-select searchSelect mb-4" id="inputParent" name="category_id"
+                    <select class="form-select searchSelect select-cl mb-4" id="inputParent" name="category_id"
                         data-id="categoriesList" onchange="getAttrCat(event)">
                         <option selected disabled value="choose">انتخاب کنید...</option>
                         @foreach ($categories as $category)
@@ -82,7 +90,7 @@
 
                 <div class="col-6">
                     <label for="inputSize" class="form-label">سایزبندی <small class="text-danger fs-12">(%)</small></label>
-                    <select class="form-select searchSelect mb-4" id="inputSize" name="size_id[]" multiple>
+                    <select class="form-select searchSelect select-cl mb-4" id="inputSize" name="size_id[]" multiple>
                         <option value=""></option>
                         @foreach ($sizes as $size)
                             <option value="{{ $size->id }}">
@@ -92,16 +100,19 @@
                     </select>
                 </div>
                 <div class="col-6">
-                    <label for="inputSize" class="form-label">وضعیت انتشار <small class="text-danger fs-12">(برای نمایش در سایت گزینه انتشار را انتخاب کنید)</small></label>
+                    <label for="inputSize" class="form-label">وضعیت انتشار <small class="text-danger fs-12">(برای نمایش در
+                            سایت گزینه انتشار را انتخاب کنید)</small></label>
                     <div class="d-flex gap-4 mt-1">
                         <div class="form-check">
-                            <input type="radio" class="form-check-input" name="status" value="0" checked id="radioBtnSpread">
+                            <input type="radio" class="form-check-input" name="status" value="0" checked
+                                id="radioBtnSpread">
                             <label class="form-check-label" for="radioBtnSpread" role="button">
-                                 عدم انتشار
+                                عدم انتشار
                             </label>
                         </div>
                         <div class="form-check">
-                            <input type="radio" class="form-check-input" name="status" value="1" id="radioBtnNonSpread">
+                            <input type="radio" class="form-check-input" name="status" value="1"
+                                id="radioBtnNonSpread">
                             <label class="form-check-label" for="radioBtnNonSpread" role="button">
                                 انتشار
                             </label>
@@ -111,7 +122,8 @@
                 <div class="col-12">
                     <label for="inputMetaDescription" class="form-label">متا توضیحات</label>
                     <small class="text-danger">(برای افزایش سئو سایت)</small>
-                    <textarea class="form-control" id="inputMetaDescription" name="meta_description" placeholder="توضیحات متاتگ محصول...">{{ old('meta_description') }}</textarea>
+                    <textarea class="form-control" id="inputMetaDescription" name="meta_description"
+                        placeholder="توضیحات متاتگ محصول...">{{ old('meta_description') }}</textarea>
                 </div>
                 <div class="col-12">
                     <label for="inputKeywords" class="form-label">کلمات کلیدی</label>
@@ -138,7 +150,11 @@
                             @endforeach
                         </div>
                     </div>
-                    <input type="hidden" class="form-control ClearLoad" name="colors" id="colors">
+                    <select name="colors[]" id="colorsFakeSelector" class="un-selc d-none" multiple>
+                        @foreach ($colors as $color)
+                            <option id="color-{{$color->id}}" value="{{ $color->id }}">{{ $color->name }}</option>
+                        @endforeach
+                    </select>
                     <a href="javascript:void(0);" onclick="clearColors()" class="btn btn-danger btn-sm m-1">لغو رنگ</a>
                 </div>
 
@@ -241,13 +257,14 @@
                     photosId.push(responseText['mediafile_id']);
                     $('#photos').val(photosId);
                     let active = '';
-                    if(c == 0){
+                    if (c == 0) {
                         active = 'active';
                         $('#inputFirstPicId').val(responseText['mediafile_id']);
                     }
                     c++;
                     const tag =
-                        '<li class="p-1 productImgItem '+active+'" onClick="selectFirstImage(this)" id="PI-' +
+                        '<li class="p-1 productImgItem ' + active +
+                        '" onClick="selectFirstImage(this)" id="PI-' +
                         responseText['mediafile_id'] + '">' +
                         '<img src="' + responseText['thumbnail'] + '" class="rounded-3">' +
                         '</li>';

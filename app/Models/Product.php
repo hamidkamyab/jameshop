@@ -28,4 +28,12 @@ class Product extends Model
     public function photo(){
         return $this->belongsToMany(MediaFile::class,'media_files_products')->wherePivot('first',1);
     }
+
+    public function sizes(){
+        return $this->belongsToMany(Size::class,'products_sizes');
+    }
+    public function colors(){
+        return $this->belongsToMany(Color::class,'colors_products');
+    }
+
 }

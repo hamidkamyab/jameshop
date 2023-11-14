@@ -12,6 +12,17 @@ function short_str($string,$maxLen)
     }
     return $result;
 }
+
+function get_Id($data)
+{
+    $result =  [];
+    foreach ($data as $key => $value) {
+        $result[] = $value->id;
+    }
+    return $result;
+}
+
+
 function getParentID($data, &$idList = [], $count = 0)
 {
     if (isset($data['id']) && $count > 0) {

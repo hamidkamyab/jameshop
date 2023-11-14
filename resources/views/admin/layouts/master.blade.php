@@ -18,10 +18,7 @@
 
     <script>
         $(document).ready(function() {
-            $('.searchSelect').select2({
-                placeholder: "انتخاب کنید...",
-                allowClear: false // این گزینه به کاربر این امکان را می‌دهد که گزینه انتخاب شده را پاک کند
-            });
+            $('.searchSelect').select2();
         });
     </script>
 

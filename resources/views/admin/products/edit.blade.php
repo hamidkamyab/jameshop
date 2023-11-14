@@ -14,8 +14,9 @@
             @include('admin.partials.Alert', ['msg' => $errors->all(), 'status' => 'danger'])
         @endif
         <div class="row justify-content-center">
-            <form class="row m-0 g-4" action="{{ route('products.store') }}" method="post" id="formTarget">
+            <form class="row m-0 g-4" action="{{ route('products.update',$product->id) }}" method="POST" id="formTarget">
                 @csrf
+                @method('PATCH')
                 <div class="col-12">
                     <label for="inputTitle" class="form-label">عنوان</label>
                     <input type="text" class="form-control" id="inputTitle" name="title" placeholder="عنوان محصول..."
@@ -36,10 +37,10 @@
                 <div class="col-6">
                     <label for="inputBrand" class="form-label">برند</label>
                     <select class="form-select searchSelect mb-4" id="inputBrand" name="brand_id">
-                        <option selected disabled value="choose">انتخاب کنید...</option>
+                        <option selected disabled>انتخاب کنید...</option>
                         <option value="null">متفرقه</option>
                         @foreach ($brands as $brand)
-                            <option value="{{ $brand->id }}">
+                            <option value="{{ $brand->id }}" @if ($brand->id == $product->brand->id) selected @endif>
                                 {{ $brand->title }}
                             </option>
                         @endforeach
@@ -53,13 +54,15 @@
                         data-id="categoriesList" onchange="getAttrCat(event)">
                         <option selected disabled value="choose">انتخاب کنید...</option>
                         @foreach ($categories as $category)
-                            <option value="{{ $category->id }}" @if (count($category->children) > 0) disabled @endif>
+                            <option value="{{ $category->id }}" @if (count($category->children) > 0) disabled @endif
+                                @if ($category->id == $product->category->id) selected @endif>
                                 {{ $category->title }}</option>
                             @if ($category->children)
                                 @include('admin.partials.CategoryChildren', [
                                     'categories' => $category->children,
                                     'level' => 1,
                                     'toltipTitle' => $category->title,
+                                    'selectedId' => $product->category->id,
                                     'disableParent' => true,
                                 ])
                             @endif
@@ -80,28 +83,36 @@
                         min="0" max="100" placeholder="0">
                 </div>
 
-                <div class="col-6">
+                <div class="col-6">{{ gettype($product->sizes) }}
                     <label for="inputSize" class="form-label">سایزبندی <small class="text-danger fs-12">(%)</small></label>
                     <select class="form-select searchSelect mb-4" id="inputSize" name="size_id[]" multiple>
-                        <option value=""></option>
+                        {{-- <option value=""></option> --}}
                         @foreach ($sizes as $size)
-                            <option value="{{ $size->id }}">
-                                {{ $size->title }}
-                            </option>
+                            @if (in_array($size->id, $product->sizes))
+                                <option value="{{ $size->id }}" selected>
+                                    {{ $size->title }}
+                                </option>
+                            @else
+                                <option value="{{ $size->id }}">
+                                    {{ $size->title }}
+                                </option>
+                            @endif
                         @endforeach
                     </select>
                 </div>
                 <div class="col-6">
-                    <label for="inputSize" class="form-label">وضعیت انتشار <small class="text-danger fs-12">(برای نمایش در سایت گزینه انتشار را انتخاب کنید)</small></label>
+                    <label for="inputSize" class="form-label">وضعیت انتشار <small class="text-danger fs-12">(برای نمایش در
+                            سایت گزینه انتشار را انتخاب کنید)</small></label>
                     <div class="d-flex gap-4 mt-1">
                         <div class="form-check">
-                            <input type="radio" class="form-check-input" name="status" value="0" checked id="radioBtnSpread">
+                            <input type="radio" class="form-check-input" name="status" value="0" @if ($product->status == 0) checked @endif id="radioBtnSpread">
                             <label class="form-check-label" for="radioBtnSpread" role="button">
-                                 عدم انتشار
+                                عدم انتشار
                             </label>
                         </div>
                         <div class="form-check">
-                            <input type="radio" class="form-check-input" name="status" value="1" id="radioBtnNonSpread">
+                            <input type="radio" class="form-check-input" name="status" value="1" @if ($product->status == 1) checked @endif
+                                id="radioBtnNonSpread">
                             <label class="form-check-label" for="radioBtnNonSpread" role="button">
                                 انتشار
                             </label>
@@ -111,7 +122,8 @@
                 <div class="col-12">
                     <label for="inputMetaDescription" class="form-label">متا توضیحات</label>
                     <small class="text-danger">(برای افزایش سئو سایت)</small>
-                    <textarea class="form-control" id="inputMetaDescription" name="meta_description" placeholder="توضیحات متاتگ محصول...">{{ $product->meta_description }}</textarea>
+                    <textarea class="form-control" id="inputMetaDescription" name="meta_description"
+                        placeholder="توضیحات متاتگ محصول...">{{ $product->meta_description }}</textarea>
                 </div>
                 <div class="col-12">
                     <label for="inputKeywords" class="form-label">کلمات کلیدی</label>
@@ -128,17 +140,23 @@
                         style="height:80px;">
                         <div class="d-flex flex-wrap p-1 gap-2">
                             @foreach ($colors as $color)
+
                                 <span id="{{ $color->id }}"
-                                    class="position-relative colorItem d-inline-block NoSelect"
+                                    class="position-relative colorItem d-inline-block NoSelect @if (in_array($color->id, $product->colors)) active @endif"
                                     style="background-color: {{ $color->code }}" title="{{ $color->name }}">
                                     <span
                                         class="position-absolute top-0 start-100 translate-middle p-1 bg-primary border border-light rounded-circle">
                                     </span>
                                 </span>
+
                             @endforeach
                         </div>
                     </div>
-                    <input type="hidden" class="form-control ClearLoad" name="colors" id="colors">
+                    <select name="colors[]" id="colorsFakeSelector" class="d-none" multiple>
+                        @foreach ($colors as $color)
+                            <option id="color-{{$color->id}}" value="{{ $color->id }}" @if (in_array($color->id, $product->colors)) selected @endif>{{ $color->name }}</option>
+                        @endforeach
+                    </select>
                     <a href="javascript:void(0);" onclick="clearColors()" class="btn btn-danger btn-sm m-1">لغو رنگ</a>
                 </div>
 
@@ -242,13 +260,14 @@
                     photosId.push(responseText['mediafile_id']);
                     $('#photos').val(photosId);
                     let active = '';
-                    if(c == 0){
+                    if (c == 0) {
                         active = 'active';
                         $('#inputFirstPicId').val(responseText['mediafile_id']);
                     }
                     c++;
                     const tag =
-                        '<li class="p-1 productImgItem '+active+'" onClick="selectFirstImage(this)" id="PI-' +
+                        '<li class="p-1 productImgItem ' + active +
+                        '" onClick="selectFirstImage(this)" id="PI-' +
                         responseText['mediafile_id'] + '">' +
                         '<img src="' + responseText['thumbnail'] + '" class="rounded-3">' +
                         '</li>';
