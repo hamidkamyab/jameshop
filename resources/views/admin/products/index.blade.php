@@ -6,51 +6,56 @@
 @section('content')
     <div class="col-12 d-flex flex-wrap justify-content-center px-2 mb-5">
         <div class="col-12">
-            @if(Session::has('opration_category'))
-                @include('admin.partials.Alert',['msg'=>[session('opration_category')],'status'=>'success'])
+            @if(Session::has('opration_product'))
+                @include('admin.partials.Alert',['msg'=>[session('opration_product')],'status'=>'success'])
             @endif
-            @if(Session::has('error_category'))
+            {{-- @if(Session::has('error_category'))
                 @include('admin.partials.Alert',['msg'=>[session('error_category')],'status'=>'danger'])
-            @endif
+            @endif --}}
         </div>
         <table class="table">
             <thead class="bg-dark text-white">
                 <tr>
                     <th>#</th>
-                    <th class="fw-normal fs-18">عنوان دسته</th>
+                    <th class="fw-normal fs-18">تصویر محصول</th>
+                    <th class="fw-normal fs-18">عنوان محصول</th>
+                    <th class="fw-normal fs-18">برند محصول</th>
+                    <th class="fw-normal fs-18">دسته بندی</th>
                     <th class="fw-normal fs-18">تاریخ ایجاد</th>
                     <th class="fw-normal fs-18 d-flex align-items-center gap-1 justify-content-center">عملیات<small class="fs-12">(ویرایش - حذف)</small></th>
                 </tr>
             </thead>
             <tbody>
-                {{session(['count' => 0])}}
-                @foreach ($categories as $key=>$category)
+                @foreach ($products as $key=>$product)
                     <tr class="bg-light-gray">
-                        <td>{{(session('count')+1)}}{{session(['count' => session('count') + 1])}}</td>
-                        <td>{{$category->title}}</td>
-                        <td>{{verta($category->created_at)->format('Y/m/d')}}</td>
+                        <td>{{$key+1}}</td>
                         <td>
+                            <div class="productListImg">
+                                <img src="{{asset($product->photo[0]->path)}}" class="w-100" ></td>
+                            </div>
+                        <td class="align-middle">{{short_str($product->title,30)}}</td>
+                        <td class="align-middle">{{$product->brand->title}}</td>
+                        <td class="align-middle">{{$product->category->title}}</td>
+                        <td class="align-middle">{{verta($product->created_at)->format('Y/m/d')}}</td>
+                        <td class="align-middle">
                             <div class="d-flex align-items-center justify-content-center gap-2 pt-1">
-                                <a href="{{ route('categories.edit', $category->id) }}" title="ویرایش دسته {{ $category->title }}">
+                                <a href="{{ route('products.edit', $product->id) }}" title="ویرایش دسته {{ $product->title }}">
                                     <i class="icon-edit-1 fs-6"></i>
                                 </a>
-                                <form action="{{route('categories.destroy',$category->id)}}" method="Post"  class="m-0">
+                                <form action="{{route('products.destroy',$product->id)}}" method="Post"  class="m-0">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-danger border-0 p-0 bg-transparent" title="حذف دسته {{$category->title}}">
+                                    <button type="submit" class="text-danger border-0 p-0 bg-transparent" title="حذف دسته {{$product->title}}">
                                         <i class="icon-trash fs-6"></i>
                                     </button>
                                 </form>
                             </div>
                         </td>
                     </tr>
-                    @if($category->children)
-                        @include('admin.partials.CategoryList',['categories'=>$category->children,'level'=>1])
-                    @endif
                 @endforeach
             </tbody>
         </table>
-        <div>{{$categories->links()}}</div>
+        <div>{{$products->links()}}</div>
 
     </div>
 @endsection

@@ -19,4 +19,7 @@ class MediaFile extends Model
     public function getThumbnailAttribute($media){
         return $this->mediaThumbnail . $media;
     }
+    public function products(){
+        return $this->belongsToMany(Product::class);
+    }
 }

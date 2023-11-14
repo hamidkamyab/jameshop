@@ -4,7 +4,14 @@ function make_slug($string)
     $slug =  preg_replace('/\s+/u', '-', trim($string));
     return $slug;
 }
-
+function short_str($string,$maxLen)
+{
+    $result =  mb_substr($string, 0, $maxLen, 'utf-8');
+    if(mb_strlen($string, 'UTF-8') > $maxLen){
+        $result = $result.'...';
+    }
+    return $result;
+}
 function getParentID($data, &$idList = [], $count = 0)
 {
     if (isset($data['id']) && $count > 0) {

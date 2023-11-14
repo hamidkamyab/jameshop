@@ -15,7 +15,7 @@
                 @method('PATCH')
                 <div class="col-12">
                     <label for="inputTitle" class="form-label">عنوان</label>
-                    <input type="text" class="form-control" id="inputTitle" name="title" placeholder="عنوان سایز..."
+                    <input type="text" class="form-control vazir" id="inputTitle" name="title" placeholder="عنوان سایز..."
                         value="{{ $size->title }}">
                 </div>
             </form>

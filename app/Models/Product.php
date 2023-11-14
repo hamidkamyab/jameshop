@@ -20,4 +20,12 @@ class Product extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    public function photos(){
+        return $this->belongsToMany(MediaFile::class,'media_files_products');
+    }
+
+    public function photo(){
+        return $this->belongsToMany(MediaFile::class,'media_files_products')->wherePivot('first',1);
+    }
 }

@@ -26,7 +26,7 @@
                 @foreach ($sizes as $key => $size)
                     <tr class="align-middle">
                         <td>{{ $key + 1 }}</td>
-                        <td>{{ $size->title }}</td>
+                        <td class="vazir">{{ $size->title }}</td>
                         <td>{{ verta($size->created_at)->format('H:i:s') }} -
                             {{ verta($size->created_at)->format('Y/m/d') }}</td>
                         <td>

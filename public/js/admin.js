@@ -7187,3 +7187,20 @@ function selectFirstImage(element) {
     const id = $(element).attr('id').replace("PI-", "");
     $('#inputFirstPicId').val(id)
 }
+
+
+let objAttrVal = {};
+
+function selectAttrValue(index) {
+    const value = index.value;
+    const id = index.id;
+    objAttrVal[id] = value;
+    let attrId = [];
+    for (var key in objAttrVal) {
+        if (objAttrVal.hasOwnProperty(key)) {
+            attrId.push(objAttrVal[key]);
+        }
+    }
+    $('#attribute_value').val(attrId);
+
+}
