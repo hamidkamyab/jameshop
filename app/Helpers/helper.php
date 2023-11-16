@@ -13,14 +13,14 @@ function short_str($string,$maxLen)
     return $result;
 }
 
-function get_Id($data)
-{
-    $result =  [];
-    foreach ($data as $key => $value) {
-        $result[] = $value->id;
-    }
-    return $result;
-}
+// function get_Id($data)
+// {
+//     $result =  [];
+//     foreach ($data as $key => $value) {
+//         $result[] = $value->id;
+//     }
+//     return $result;
+// }
 
 
 function getParentID($data, &$idList = [], $count = 0)
@@ -28,8 +28,10 @@ function getParentID($data, &$idList = [], $count = 0)
     if (isset($data['id']) && $count > 0) {
         $idList[] = $data['id'];
     }
-    if (sizeof( $data['parent']) > 0) {
-        getParentID($data['parent'][0], $idList, 1);
+    if(isset($data['parent'])){
+        if (sizeof(@$data['parent']) > 0) {
+            getParentID($data['parent'][0], $idList, 1);
+        }
     }
     return $idList;
 }
@@ -39,9 +41,12 @@ function getChildrenID($data, &$idList = [], $count = 0)
     if (isset($data['id']) && $count > 0) {
         $idList[] = $data['id'];
     }
-    if (sizeof( $data['children']) > 0) {
-        getChildrenID($data['children'][0], $idList, 1);
+    if(isset($data['children'])){
+        if (sizeof( $data['children']) > 0) {
+            getChildrenID($data['children'][0], $idList, 1);
+        }
     }
+
     return $idList;
 }
 

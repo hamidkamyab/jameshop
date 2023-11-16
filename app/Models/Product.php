@@ -36,4 +36,8 @@ class Product extends Model
         return $this->belongsToMany(Color::class,'colors_products');
     }
 
+    public function attributes_values(){
+        return $this->belongsToMany(AttributeValue::class,'attributes_values_products');
+    }
+
 }

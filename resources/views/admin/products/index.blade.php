@@ -4,7 +4,7 @@
     دسته بندی ها
 @endsection
 @section('content')
-    <div class="col-12 d-flex flex-wrap justify-content-center px-2 mb-5">
+    <div class="bg-white col-12 p-3 pb-5 border-start border-4 border-info right-box">
         <div class="col-12">
             @if(Session::has('opration_product'))
                 @include('admin.partials.Alert',['msg'=>[session('opration_product')],'status'=>'success'])
@@ -27,12 +27,17 @@
             </thead>
             <tbody>
                 @foreach ($products as $key=>$product)
-                    <tr class="bg-light-gray">
+                    <tr>
                         <td>{{$key+1}}</td>
                         <td>
-                            <div class="productListImg">
-                                <img src="{{asset($product->photo[0]->path)}}" class="w-100" ></td>
+                            <div class="productListImg bg-white align-items-center">
+                                @if(count($product->photo) == 1)
+                                    <img src="{{asset($product->photo[0]->path)}}" class="w-100" >
+                                @else
+                                <img src="{{asset('imgs/admin/product-icon.png')}}" class="w-100" >
+                                @endif
                             </div>
+                        </td>
                         <td class="align-middle">{{short_str($product->title,30)}}</td>
                         <td class="align-middle">{{$product->brand->title}}</td>
                         <td class="align-middle">{{$product->category->title}}</td>

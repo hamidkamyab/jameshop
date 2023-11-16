@@ -83,9 +83,9 @@
                 </div>
 
                 <div class="col-6">
-                    <label for="inputParent" class="form-label">تخفیف <small class="text-danger fs-12">(%)</small></label>
-                    <input type="number" class="form-control" name="discount_price" value="{{ old('discount_price') }}"
-                        min="0" max="100" placeholder="0">
+                    <label for="inputDiscountPrice" class="form-label">تخفیف <small class="text-danger fs-12">(%)</small></label>
+                    <input type="number" class="form-control clear" name="discount_price" value="{{ old('discount_price') }}"
+                        min="0" max="100" placeholder="0" id="inputDiscountPrice">
                 </div>
 
                 <div class="col-6">
@@ -232,6 +232,7 @@
     </script>
 
     <script>
+        let objAttrVal = {};
         var getAttrUrl = "{{ route('products.attributes', 'id') }}";
     </script>
 
@@ -251,6 +252,7 @@
                 formData.append("folder", "products/" + subFolder)
                 formData.append("mimesFile", "jpg,jpeg,png")
                 formData.append("thumbnail", "true")
+
             },
             init: function() {
                 this.on("success", (file, responseText) => {

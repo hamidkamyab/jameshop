@@ -76,8 +76,7 @@ class ProductController extends Controller
             $productSize->save();
         }
 
-        $colors = explode(',', $request->colors);
-        foreach ($colors as $key => $id) {
+        foreach ($request->colors as $key => $id) {
             $productColor = new ColorProduct();
             $productColor->product_id = $productId;
             $productColor->color_id = $id;
@@ -105,7 +104,7 @@ class ProductController extends Controller
             $productAttrValues->save();
         }
         Session::flash('opration_product', 'محصول ' . $request->title . ' با موفقیت ایجاد شد');
-        return redirect(route('product.index'));
+        return redirect(route('products.index'));
 
     }
 
@@ -122,13 +121,31 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        $product = Product::with('sizes','colors','photos')->findOrFail($id);
+        $product = Product::with('sizes','colors','photos','attributes_values:id')->where('id',$id)->first();
 
-        $sizesId = get_Id($product->sizes);
+        $category = Category::with('parent','children')->where('id',$product->category->id)->first();
+
+        $catParentId = getParentID($category);
+        $catChildrenId = getChildrenID($category);
+        $catsId = [$product->category->id];
+        foreach ($catParentId as $key => $value) {
+            $catsId[] = $value;
+        }
+        foreach ($catChildrenId as $key => $value) {
+            $catsId[] = $value;
+        }
+
+        $attributesValues = $product->attributes_values()->pluck('attributes_values.id')->toArray();
+
+        $attributes_group_category = AttributeGroupCategory::select('attribute_group_id')->whereIn('category_id',$catsId)->get();
+        $attributes_group_category = getOneFieldOfArray($attributes_group_category,'attribute_group_id');
+        $attributesGroup = AttributeGroup::with('attributes_value')->whereIn('id',$attributes_group_category)->get();
+
+        $sizesId = getOneFieldOfArray($product->sizes,'id');
         unset($product->sizes);
         $product->sizes = $sizesId;
 
-        $colorsId = get_Id($product->colors);
+        $colorsId = getOneFieldOfArray($product->colors,'id');
         unset($product->colors);
         $product->colors = $colorsId;
 
@@ -136,7 +153,7 @@ class ProductController extends Controller
         $brands = Brand::all();
         $colors = Color::all();
         $sizes = Size::all();
-        return view('admin.products.edit',compact(['product','categories','brands','colors','sizes']));
+        return view('admin.products.edit',compact(['product','categories','brands','colors','sizes','attributesGroup','attributesValues']));
     }
 
     /**
@@ -167,5 +184,11 @@ class ProductController extends Controller
         $attributes_group_category = AttributeGroupCategory::select('attribute_group_id')->whereIn('category_id',$catParentId)->get();
         $attributes = AttributeGroup::with('attributes_value')->whereIn('id',$attributes_group_category)->get();
         return  response()->json(['status' => 'success','attributes' => $attributes],Response::HTTP_OK);
+    }
+
+    public function photos(string $id)
+    {
+        $product = Product::with('photos')->findOrFail($id);
+        return  response()->json(['status' => 'success','photos' => $product->photos],Response::HTTP_OK);
     }
 }

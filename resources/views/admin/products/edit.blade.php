@@ -14,7 +14,7 @@
             @include('admin.partials.Alert', ['msg' => $errors->all(), 'status' => 'danger'])
         @endif
         <div class="row justify-content-center">
-            <form class="row m-0 g-4" action="{{ route('products.update',$product->id) }}" method="POST" id="formTarget">
+            <form class="row m-0 g-4" action="{{ route('products.update', $product->id) }}" method="POST" id="formTarget">
                 @csrf
                 @method('PATCH')
                 <div class="col-12">
@@ -78,9 +78,9 @@
                 </div>
 
                 <div class="col-6">
-                    <label for="inputParent" class="form-label">تخفیف <small class="text-danger fs-12">(%)</small></label>
+                    <label for="inputDiscountPrice" class="form-label">تخفیف <small class="text-danger fs-12">(%)</small></label>
                     <input type="number" class="form-control" name="discount_price" value="{{ $product->discount_price }}"
-                        min="0" max="100" placeholder="0">
+                        min="0" max="100" placeholder="0" id="inputDiscountPrice">
                 </div>
 
                 <div class="col-6">{{ gettype($product->sizes) }}
@@ -105,14 +105,15 @@
                             سایت گزینه انتشار را انتخاب کنید)</small></label>
                     <div class="d-flex gap-4 mt-1">
                         <div class="form-check">
-                            <input type="radio" class="form-check-input" name="status" value="0" @if ($product->status == 0) checked @endif id="radioBtnSpread">
+                            <input type="radio" class="form-check-input" name="status" value="0"
+                                @if ($product->status == 0) checked @endif id="radioBtnSpread">
                             <label class="form-check-label" for="radioBtnSpread" role="button">
                                 عدم انتشار
                             </label>
                         </div>
                         <div class="form-check">
-                            <input type="radio" class="form-check-input" name="status" value="1" @if ($product->status == 1) checked @endif
-                                id="radioBtnNonSpread">
+                            <input type="radio" class="form-check-input" name="status" value="1"
+                                @if ($product->status == 1) checked @endif id="radioBtnNonSpread">
                             <label class="form-check-label" for="radioBtnNonSpread" role="button">
                                 انتشار
                             </label>
@@ -140,7 +141,6 @@
                         style="height:80px;">
                         <div class="d-flex flex-wrap p-1 gap-2">
                             @foreach ($colors as $color)
-
                                 <span id="{{ $color->id }}"
                                     class="position-relative colorItem d-inline-block NoSelect @if (in_array($color->id, $product->colors)) active @endif"
                                     style="background-color: {{ $color->code }}" title="{{ $color->name }}">
@@ -148,13 +148,13 @@
                                         class="position-absolute top-0 start-100 translate-middle p-1 bg-primary border border-light rounded-circle">
                                     </span>
                                 </span>
-
                             @endforeach
                         </div>
                     </div>
                     <select name="colors[]" id="colorsFakeSelector" class="d-none" multiple>
                         @foreach ($colors as $color)
-                            <option id="color-{{$color->id}}" value="{{ $color->id }}" @if (in_array($color->id, $product->colors)) selected @endif>{{ $color->name }}</option>
+                            <option id="color-{{ $color->id }}" value="{{ $color->id }}"
+                                @if (in_array($color->id, $product->colors)) selected @endif>{{ $color->name }}</option>
                         @endforeach
                     </select>
                     <a href="javascript:void(0);" onclick="clearColors()" class="btn btn-danger btn-sm m-1">لغو رنگ</a>
@@ -185,7 +185,7 @@
                     </div>
                 </div>
                 <input type="hidden" name="first_pic" id="inputFirstPicId" />
-                <input type="hidden" name="attribute_value" id="attribute_value" />
+                <input type="text" name="attribute_value" id="attribute_value" value="{{implode(',',$attributesValues)}}" />
             </form>
 
         </div>
@@ -201,13 +201,20 @@
 
         <div id="attrCategoryBox"
             class="justify-content-center bg-white py-3 ps-2 pe-3 border-start border-4 border-info w-100 hidden">
+            {{-- {{dd(json_decode($product->attributes_values))}} --}}
             <div class="col-12 d-flex justify-content-between flex-wrap">
                 <h6 class="border-bottom border-1 py-2 mb-3 w-100" onclick="selectAttrValue()">ویژگی های دسته بندی</h6>
                 <div id="categoryAttr" class="col-12 d-flex flex-column gap-2">
-                    <div class="d-flex align-items-center gap-1 fs-14">
-                        <i class="icon-info-circled-alt text-muted"></i>
-                        <span class="text-muted">هنوز دسته ای انتخاب نکردید</span>
-                    </div>
+                    @foreach ($attributesGroup as $key => $attrGroup)
+                        <h6>{{ $attrGroup->title }}</h6>
+                        <select id="selectAttr-{{ $key }}" onchange="selectAttrValue(this,true)"
+                            class="searchSelect">
+                            <option value="" selected disabled>انتخاب کنید...</option>
+                            @foreach ($attrGroup->attributes_value as $key => $attrValue)
+                                <option value="{{$attrValue->id}}" @if (in_array($attrValue->id,$attributesValues)) selected @endif>{{$attrValue->title}}</option>
+                            @endforeach
+                        </select>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -235,6 +242,7 @@
     </script>
 
     <script>
+        let objAttrVal = {};
         var getAttrUrl = "{{ route('products.attributes', 'id') }}";
     </script>
 
@@ -280,9 +288,14 @@
 
                 });
                 this.on("removedfile", async (file, responseText) => {
-                    var response = JSON.parse(file['xhr']['responseText']);
-
-                    const id = response['mediafile_id'];
+                    let id;
+                    $('.dz-message').addClass('d-none');
+                    if (responseText != null) {
+                        var response = JSON.parse(file['xhr']['responseText']);
+                        id = response['mediafile_id'];
+                    } else {
+                        id = file.id;
+                    }
                     var formData = new FormData()
                     formData.append("_token", "{{ csrf_token() }}");
                     formData.append("id", id);
@@ -301,6 +314,7 @@
                             if ($("#PI-" + id).hasClass('active')) {
                                 $('#inputFirstPicId').val('');
                             }
+                            // $('.dz-message').addClass('d-none');
                             setTimeout(() => {
                                 $("#PI-" + id).remove();
                                 if (document.getElementsByClassName("productImgItem")
@@ -310,9 +324,57 @@
                                     c = 0;
                                 }
                             }, 300);
+                            if (document.getElementsByClassName("dz-preview").length == 0) {
+                                $('.dz-message').removeClass('d-none')
+                            }
                         }
                     }
                 });
+            }
+        });
+
+        var myDropzone = $("div#dropzoneTag").get(0).dropzone;
+
+        var getPhotosUrl = "{{ route('products.photos', 'id') }}";
+        $.ajax({
+            url: getPhotosUrl.replace("id", {{ $product->id }}),
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                data.photos.forEach(function(val) {
+                    var mockFile = {
+                        id: val.id,
+                        name: val.path,
+                        size: val.size,
+                    }; // اطلاعات جعلی برای فایل
+                    myDropzone.emit("addedfile", mockFile);
+                    myDropzone.emit("thumbnail", mockFile, val.thumbnail);
+                    var myElement = document.getElementsByClassName("dz-progress");
+                    // تغییر display به "none"
+                    myElement.forEach((tag) => {
+                        tag.style.display = "none";
+                    })
+
+                    photosId.push(val.id);
+                    let active = '';
+                    if (c == 0) {
+                        active = 'active';
+                        $('#inputFirstPicId').val(val.id);
+                    }
+                    c++;
+                    const tag =
+                        '<li class="p-1 productImgItem ' + active +
+                        '" onClick="selectFirstImage(this)" id="PI-' +
+                        val.id + '">' +
+                        '<img src="' + val.thumbnail + '" class="rounded-3">' +
+                        '</li>';
+                    $('.productImgChoose').append(tag);
+                    $('.productImgChooseLabel').removeClass('d-none');
+                });
+                $('#photos').val(photosId);
+            },
+            error: function(error) {
+                console.log('Error fetching image data: ', error.status);
             }
         });
     </script>
