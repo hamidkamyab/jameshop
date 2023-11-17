@@ -58,3 +58,15 @@ function getOneFieldOfArray($data,$index = '')
     }
     return $idList;
 }
+function getManyFieldOfArray($data,$index = [])
+{
+    $itemList = array();
+    $count = 0;
+    foreach ($data as $key => $value) {
+        foreach ($index as $key => $i) {
+            $itemList[$count][] = $value[$i];
+        }
+        $count++;
+    }
+    return $itemList;
+}

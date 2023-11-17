@@ -22,7 +22,7 @@ class Product extends Model
     }
 
     public function photos(){
-        return $this->belongsToMany(MediaFile::class,'media_files_products');
+        return $this->belongsToMany(MediaFile::class,'media_files_products')->withPivot('id','first');
     }
 
     public function photo(){
@@ -30,14 +30,14 @@ class Product extends Model
     }
 
     public function sizes(){
-        return $this->belongsToMany(Size::class,'products_sizes');
+        return $this->belongsToMany(Size::class,'products_sizes')->withPivot('id');
     }
     public function colors(){
-        return $this->belongsToMany(Color::class,'colors_products');
+        return $this->belongsToMany(Color::class,'colors_products')->withPivot('id');
     }
 
     public function attributes_values(){
-        return $this->belongsToMany(AttributeValue::class,'attributes_values_products');
+        return $this->belongsToMany(AttributeValue::class,'attributes_values_products')->withPivot('id');
     }
 
 }

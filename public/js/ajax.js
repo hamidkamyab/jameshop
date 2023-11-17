@@ -110,13 +110,14 @@ async function getAttrCat(event) {
             result['attributes'].forEach((value, key) => {
                 var newSelect = document.createElement('select');
                 newSelect.id = 'selectAttr-' + key;
+                $(newSelect).addClass('attrSelect');
                 $(newSelect).attr('onChange', 'selectAttrValue(this)');
 
                 var option = document.createElement('option');
                 option.text = 'انتخاب کنید...';
                 option.disabled = true;
                 option.selected = true;
-
+                option.value = 0;
                 newSelect.appendChild(option);
                 value['attributes_value'].forEach(attr => {
                     var option = document.createElement('option');

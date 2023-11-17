@@ -208,8 +208,8 @@
                     @foreach ($attributesGroup as $key => $attrGroup)
                         <h6>{{ $attrGroup->title }}</h6>
                         <select id="selectAttr-{{ $key }}" onchange="selectAttrValue(this,true)"
-                            class="searchSelect">
-                            <option value="" selected disabled>انتخاب کنید...</option>
+                            class="searchSelect attrSelect">
+                            <option value="0" selected disabled>انتخاب کنید...</option>
                             @foreach ($attrGroup->attributes_value as $key => $attrValue)
                                 <option value="{{$attrValue->id}}" @if (in_array($attrValue->id,$attributesValues)) selected @endif>{{$attrValue->title}}</option>
                             @endforeach
@@ -242,7 +242,6 @@
     </script>
 
     <script>
-        let objAttrVal = {};
         var getAttrUrl = "{{ route('products.attributes', 'id') }}";
     </script>
 
@@ -357,7 +356,7 @@
 
                     photosId.push(val.id);
                     let active = '';
-                    if (c == 0) {
+                    if (val.pivot.first == 1) {
                         active = 'active';
                         $('#inputFirstPicId').val(val.id);
                     }

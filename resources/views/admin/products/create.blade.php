@@ -232,7 +232,6 @@
     </script>
 
     <script>
-        let objAttrVal = {};
         var getAttrUrl = "{{ route('products.attributes', 'id') }}";
     </script>
 

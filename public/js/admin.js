@@ -7192,28 +7192,12 @@ function selectFirstImage(element) {
 
 
 function selectAttrValue(index, edit = false) {
-    if (edit && Object.keys(objAttrVal).length == 0) {
-        let str = $('#attribute_value').val();
-        let arr = str.split(',');
-        arr = arr.reverse();
-        arr.reduce(function(acc, val, index) {
-            acc[index] = parseInt(val);
-            objAttrVal['selectAttr-' + index] = parseInt(val);
-            return acc;
-        }, {});
-        console.log(objAttrVal);
-    }
-    const value = index.value;
-    const id = index.id;
-    console.log('value', value)
-    console.log('id', id)
-    objAttrVal[id] = value;
     let attrId = [];
-    for (var key in objAttrVal) {
-        if (objAttrVal.hasOwnProperty(key)) {
-            attrId.push(objAttrVal[key]);
+    var elements = document.querySelectorAll('.attrSelect');
+    elements.forEach(function(element) {
+        if (element.value != 0) {
+            attrId.push(element.value);
         }
-    }
+    });
     $('#attribute_value').val(attrId);
-
 }
