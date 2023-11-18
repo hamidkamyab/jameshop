@@ -178,6 +178,7 @@
 
                         <label for="" class="productImgChooseLabel my-1 d-none">انتخاب تصویر اول <small
                                 class="text-danger">(برای نمایش به عنوان تصویر اصلی محصول)</small></label>
+
                         <ul class="productImgChoose list-unstyled my-2 d-flex gap-1 p-1">
 
                         </ul>
@@ -247,7 +248,8 @@
 
     <script>
         const dateTime = new Date();
-        const subFolder = "p_" + dateTime.getTime();
+        const subFolder = "{{$product->photos[0]->is_dir}}";
+
         let photosId = [];
         var c = 0;
 
@@ -259,6 +261,7 @@
                 formData.append("_token", "{{ csrf_token() }}")
                 formData.append("type", 'image')
                 formData.append("folder", "products/" + subFolder)
+                formData.append("is_dir", subFolder)
                 formData.append("mimesFile", "jpg,jpeg,png")
                 formData.append("thumbnail", "true")
             },

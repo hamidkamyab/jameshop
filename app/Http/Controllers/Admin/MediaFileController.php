@@ -87,6 +87,9 @@ class MediaFileController extends Controller
         $mediafile->path = $request->folder . '/' . $fileName;
         $mediafile->type = $parts[0];
         $mediafile->size = $file->getSize();
+        if($request->is_dir){
+            $mediafile->is_dir = $request->is_dir;
+        }
         // $photo->user_id = Auth::user()->id; //////////////////////////////////// Auth
         $mediafile->user_id = 1;
         $mediafile->save();

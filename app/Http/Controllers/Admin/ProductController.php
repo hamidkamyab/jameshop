@@ -11,6 +11,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\ColorProduct;
+use App\Models\MediaFile;
 use App\Models\MediaFileProduct;
 use App\Models\Product;
 use App\Models\ProductSize;
@@ -18,6 +19,7 @@ use App\Models\Size;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -228,12 +230,12 @@ class ProductController extends Controller
                 }
                 $productPhoto->save();
             }
-        }else{
-            $oldMFP = MediaFileProduct::where('product_id',$id)->where('first',1)->first();
-            if($oldMFP && $oldMFP->media_file_id != $request->first_pic){
+        } else {
+            $oldMFP = MediaFileProduct::where('product_id', $id)->where('first', 1)->first();
+            if ($oldMFP && $oldMFP->media_file_id != $request->first_pic) {
                 $oldMFP->first = 0;
                 $oldMFP->save();
-                $newMFP = MediaFileProduct::where('media_file_id',$request->first_pic)->first();
+                $newMFP = MediaFileProduct::where('media_file_id', $request->first_pic)->first();
                 $newMFP->first = 1;
                 $newMFP->save();
             }
@@ -266,7 +268,26 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::with('photos')->findOrFail($id);
+        $disk = 'public';
+        $photosId = [];
+        foreach ($product->photos as $key => $value) {
+            $path = str_replace("/storage/", "", $value->path);
+            Storage::disk($disk)->delete($path);
+            if ($value->thumbnail != null) {
+                $thumbnailPath = str_replace("/storage/", "", $value->thumbnail);
+                Storage::disk($disk)->delete($thumbnailPath);
+            }
+            array_push($photosId,$value->id);
+            $dir = $disk . '/' . str_replace($value->name, "", $path);
+            Storage::deleteDirectory($dir);
+        }
+
+        MediaFile::whereIn('id',$photosId)->delete();
+        $product->delete();
+
+        Session::flash('opration_product', 'محصول ' . $product->title . ' با موفقیت حذف شد');
+        return redirect(route('products.index'));
     }
 
 

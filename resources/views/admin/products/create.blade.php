@@ -249,9 +249,9 @@
                 formData.append("_token", "{{ csrf_token() }}")
                 formData.append("type", 'image')
                 formData.append("folder", "products/" + subFolder)
+                formData.append("is_dir", subFolder)
                 formData.append("mimesFile", "jpg,jpeg,png")
                 formData.append("thumbnail", "true")
-
             },
             init: function() {
                 this.on("success", (file, responseText) => {
