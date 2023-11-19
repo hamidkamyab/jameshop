@@ -1,7 +1,7 @@
 ﻿@extends('admin.layouts.master')
 
 @section('navigation')
-    ایجاد دسته بندی
+    ویرایش مقدار ویژگی
 @endsection
 
 @section('content')
@@ -34,10 +34,10 @@
         </div>
     </div>
 
-    <div class="col-3 bg-white p-2 pe-3 border-start border-4 border-info left-box">
-        <div class="row justify-content-center">
+    <div class="col-3 left-box d-flex flex-wrap gap-3">
+        <div class="justify-content-center bg-white py-3 ps-2 pe-3 border-start border-4 border-info w-100">
             <div class="col-12 d-flex justify-content-between">
-                <button type="submit" class="btn btn-primary" onclick="sendForm('formTarget')">ویرایش مقدار</button>
+                <button type="submit" class="btn btn-primary" onclick="sendForm('formTarget')">ویرایش مقدار ویژگی</button>
                 <a href="{{ route('attributes_value.index') }}" class="btn btn-outline-danger">انصراف</a>
             </div>
         </div>
