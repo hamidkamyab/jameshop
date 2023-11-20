@@ -45,7 +45,6 @@
                     <label for="inputBrand" class="form-label">برند</label>
                     <select class="form-select searchSelect select-cl mb-4" id="inputBrand" name="brand_id">
                         <option selected disabled value="choose">انتخاب کنید...</option>
-                        <option value="null">متفرقه</option>
                         @foreach ($brands as $brand)
                             <option value="{{ $brand->id }}">
                                 {{ $brand->title }}

@@ -71,19 +71,23 @@ class ProductController extends Controller
         $product->save();
         $productId = $product->id;
 
-        foreach ($request->size_id as $key => $id) {
-            $productSize = new ProductSize();
-            $productSize->product_id = $productId;
-            $productSize->size_id = $id;
-            $productSize->save();
-        }
+        // foreach ($request->size_id as $key => $id) {
+        //     $productSize = new ProductSize();
+        //     $productSize->product_id = $productId;
+        //     $productSize->size_id = $id;
+        //     $productSize->save();
+        // }
 
-        foreach ($request->colors as $key => $id) {
-            $productColor = new ColorProduct();
-            $productColor->product_id = $productId;
-            $productColor->color_id = $id;
-            $productColor->save();
-        }
+        $product->sizes()->sync($request->size_id);
+
+        // foreach ($request->colors as $key => $id) {
+        //     $productColor = new ColorProduct();
+        //     $productColor->product_id = $productId;
+        //     $productColor->color_id = $id;
+        //     $productColor->save();
+        // }
+
+        $product->colors()->sync($request->colors);
 
         $photos = explode(',', $request->photos);
         foreach ($photos as $key => $id) {
@@ -99,12 +103,15 @@ class ProductController extends Controller
         }
 
         $attrValues = explode(',', $request->attribute_value);
-        foreach ($attrValues as $key => $id) {
-            $productAttrValues = new AttributeValueProduct();
-            $productAttrValues->product_id = $productId;
-            $productAttrValues->attribute_value_id = $id;
-            $productAttrValues->save();
-        }
+        // foreach ($attrValues as $key => $id) {
+        //     $productAttrValues = new AttributeValueProduct();
+        //     $productAttrValues->product_id = $productId;
+        //     $productAttrValues->attribute_value_id = $id;
+        //     $productAttrValues->save();
+        // }
+
+        $product->attributes_values()->sync($attrValues);
+
         Session::flash('opration_product', 'محصول ' . $request->title . ' با موفقیت ایجاد شد');
         return redirect(route('products.index'));
     }
