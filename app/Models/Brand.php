@@ -10,8 +10,7 @@ class Brand extends Model
     use HasFactory;
 
     public function photo(){
-        $photo = MediaFile::findOrFail($this->photo_id);
-        return $photo;
+        return $this->hasOne(MediaFile::class,'id','photo_id');
     }
 
     public function products(){

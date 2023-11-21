@@ -71,21 +71,7 @@ class ProductController extends Controller
         $product->save();
         $productId = $product->id;
 
-        // foreach ($request->size_id as $key => $id) {
-        //     $productSize = new ProductSize();
-        //     $productSize->product_id = $productId;
-        //     $productSize->size_id = $id;
-        //     $productSize->save();
-        // }
-
         $product->sizes()->sync($request->size_id);
-
-        // foreach ($request->colors as $key => $id) {
-        //     $productColor = new ColorProduct();
-        //     $productColor->product_id = $productId;
-        //     $productColor->color_id = $id;
-        //     $productColor->save();
-        // }
 
         $product->colors()->sync($request->colors);
 
@@ -103,12 +89,6 @@ class ProductController extends Controller
         }
 
         $attrValues = explode(',', $request->attribute_value);
-        // foreach ($attrValues as $key => $id) {
-        //     $productAttrValues = new AttributeValueProduct();
-        //     $productAttrValues->product_id = $productId;
-        //     $productAttrValues->attribute_value_id = $id;
-        //     $productAttrValues->save();
-        // }
 
         $product->attributes_values()->sync($attrValues);
 
@@ -167,108 +147,108 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ProductRequest $request, string $id)
-    {
-        $product = Product::with('sizes', 'colors', 'photos', 'attributes_values:id')->where('id', $id)->first();
-        $meta_description = '';
-        $product->title = $request->title;
-        $product->slug = $request->slug;
-        $product->price = $request->price;
-        $product->discount_price = $request->discount_price;
-        $product->description = $request->description;
-        $product->status = $request->status;
-        if ($request->meta_description) {
-            $meta_description = $request->meta_description;
-        } else if (!$request->meta_description && $request->description) {
-            $meta_description = $request->description;
-        }
-        $product->meta_description = $meta_description;
-        $product->meta_keywords = $request->meta_keywords;
-        $product->brand_id  = $request->brand_id;
-        $product->category_id  = $request->category_id;
+    // public function update(ProductRequest $request, string $id)
+    // {
+    //     $product = Product::with('sizes', 'colors', 'photos', 'attributes_values:id')->where('id', $id)->first();
+    //     $meta_description = '';
+    //     $product->title = $request->title;
+    //     $product->slug = $request->slug;
+    //     $product->price = $request->price;
+    //     $product->discount_price = $request->discount_price;
+    //     $product->description = $request->description;
+    //     $product->status = $request->status;
+    //     if ($request->meta_description) {
+    //         $meta_description = $request->meta_description;
+    //     } else if (!$request->meta_description && $request->description) {
+    //         $meta_description = $request->description;
+    //     }
+    //     $product->meta_description = $meta_description;
+    //     $product->meta_keywords = $request->meta_keywords;
+    //     $product->brand_id  = $request->brand_id;
+    //     $product->category_id  = $request->category_id;
 
-        $sizesId = getOneFieldOfArray($product->sizes, 'id');
-        if ($sizesId != $request->size_id) {
-            $pSizesId = [];
-            foreach ($product->sizes as $key => $pSize) {
-                array_push($pSizesId, $pSize->pivot->id);
-            }
-            ProductSize::whereIn('id', $pSizesId)->delete();
-            foreach ($request->size_id as $key => $sizeId) {
-                $productSize = new ProductSize();
-                $productSize->product_id = $id;
-                $productSize->size_id = $sizeId;
-                $productSize->save();
-            }
-        }
+    //     $sizesId = getOneFieldOfArray($product->sizes, 'id');
+    //     if ($sizesId != $request->size_id) {
+    //         $pSizesId = [];
+    //         foreach ($product->sizes as $key => $pSize) {
+    //             array_push($pSizesId, $pSize->pivot->id);
+    //         }
+    //         ProductSize::whereIn('id', $pSizesId)->delete();
+    //         foreach ($request->size_id as $key => $sizeId) {
+    //             $productSize = new ProductSize();
+    //             $productSize->product_id = $id;
+    //             $productSize->size_id = $sizeId;
+    //             $productSize->save();
+    //         }
+    //     }
 
-        $colorsId = getOneFieldOfArray($product->colors, 'id');
-        if ($colorsId != $request->colors) {
-            $pColorsId = [];
-            foreach ($product->colors as $key => $pColor) {
-                array_push($pColorsId, $pColor->pivot->id);
-            }
-            ColorProduct::whereIn('id', $pColorsId)->delete();
-            foreach ($request->colors as $key => $colorId) {
-                $productColor = new ColorProduct();
-                $productColor->product_id = $id;
-                $productColor->color_id = $colorId;
-                $productColor->save();
-            }
-        }
+    //     $colorsId = getOneFieldOfArray($product->colors, 'id');
+    //     if ($colorsId != $request->colors) {
+    //         $pColorsId = [];
+    //         foreach ($product->colors as $key => $pColor) {
+    //             array_push($pColorsId, $pColor->pivot->id);
+    //         }
+    //         ColorProduct::whereIn('id', $pColorsId)->delete();
+    //         foreach ($request->colors as $key => $colorId) {
+    //             $productColor = new ColorProduct();
+    //             $productColor->product_id = $id;
+    //             $productColor->color_id = $colorId;
+    //             $productColor->save();
+    //         }
+    //     }
 
-        $photos = explode(',', $request->photos);
-        $photosId = getOneFieldOfArray($product->photos, 'id');
-        if ($photosId != $photos) {
-            $pPhotosId = [];
-            foreach ($product->photos as $key => $pPhoto) {
-                array_push($pPhotosId, $pPhoto->pivot->id);
-            }
-            MediaFileProduct::whereIn('id', $pPhotosId)->delete();
+    //     $photos = explode(',', $request->photos);
+    //     $photosId = getOneFieldOfArray($product->photos, 'id');
+    //     if ($photosId != $photos) {
+    //         $pPhotosId = [];
+    //         foreach ($product->photos as $key => $pPhoto) {
+    //             array_push($pPhotosId, $pPhoto->pivot->id);
+    //         }
+    //         MediaFileProduct::whereIn('id', $pPhotosId)->delete();
 
-            foreach ($photos as $key => $photoId) {
-                $productPhoto = new MediaFileProduct();
-                $productPhoto->product_id = $id;
-                $productPhoto->media_file_id = $photoId;
-                if ($request->first_pic == $photoId) {
-                    $productPhoto->first = 1;
-                } else {
-                    $productPhoto->first = 0;
-                }
-                $productPhoto->save();
-            }
-        } else {
-            $oldMFP = MediaFileProduct::where('product_id', $id)->where('first', 1)->first();
-            if ($oldMFP && $oldMFP->media_file_id != $request->first_pic) {
-                $oldMFP->first = 0;
-                $oldMFP->save();
-                $newMFP = MediaFileProduct::where('media_file_id', $request->first_pic)->first();
-                $newMFP->first = 1;
-                $newMFP->save();
-            }
-        }
+    //         foreach ($photos as $key => $photoId) {
+    //             $productPhoto = new MediaFileProduct();
+    //             $productPhoto->product_id = $id;
+    //             $productPhoto->media_file_id = $photoId;
+    //             if ($request->first_pic == $photoId) {
+    //                 $productPhoto->first = 1;
+    //             } else {
+    //                 $productPhoto->first = 0;
+    //             }
+    //             $productPhoto->save();
+    //         }
+    //     } else {
+    //         $oldMFP = MediaFileProduct::where('product_id', $id)->where('first', 1)->first();
+    //         if ($oldMFP && $oldMFP->media_file_id != $request->first_pic) {
+    //             $oldMFP->first = 0;
+    //             $oldMFP->save();
+    //             $newMFP = MediaFileProduct::where('media_file_id', $request->first_pic)->first();
+    //             $newMFP->first = 1;
+    //             $newMFP->save();
+    //         }
+    //     }
 
-        $attrValues = explode(',', $request->attribute_value);
-        $attrValuesId = getOneFieldOfArray($product->attributes_values, 'id');
+    //     $attrValues = explode(',', $request->attribute_value);
+    //     $attrValuesId = getOneFieldOfArray($product->attributes_values, 'id');
 
-        if ($attrValues != $attrValuesId) {
-            $pAttrValuesId = [];
-            foreach ($product->attributes_values as $key => $pAttrValues) {
-                array_push($pAttrValuesId, $pAttrValues->pivot->id);
-            }
-            AttributeValueProduct::whereIn('id', $pAttrValuesId)->delete();
-            foreach ($attrValues as $key => $attrValueId) {
-                $attrValueProduct = new AttributeValueProduct();
-                $attrValueProduct->product_id = $id;
-                $attrValueProduct->attribute_value_id = $attrValueId;
-                $attrValueProduct->save();
-            }
-        }
+    //     if ($attrValues != $attrValuesId) {
+    //         $pAttrValuesId = [];
+    //         foreach ($product->attributes_values as $key => $pAttrValues) {
+    //             array_push($pAttrValuesId, $pAttrValues->pivot->id);
+    //         }
+    //         AttributeValueProduct::whereIn('id', $pAttrValuesId)->delete();
+    //         foreach ($attrValues as $key => $attrValueId) {
+    //             $attrValueProduct = new AttributeValueProduct();
+    //             $attrValueProduct->product_id = $id;
+    //             $attrValueProduct->attribute_value_id = $attrValueId;
+    //             $attrValueProduct->save();
+    //         }
+    //     }
 
-        $product->save();
-        Session::flash('opration_product', 'محصول ' . $request->title . ' با موفقیت ویرایش شد');
-        return redirect(route('products.index'));
-    }
+    //     $product->save();
+    //     Session::flash('opration_product', 'محصول ' . $request->title . ' با موفقیت ویرایش شد');
+    //     return redirect(route('products.index'));
+    // }
 
     /**
      * Remove the specified resource from storage.

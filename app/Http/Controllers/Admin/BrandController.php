@@ -18,8 +18,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brands = Brand::paginate(30);
-
+        $brands = Brand::with('photo')->paginate(30);
         return view('admin.brands.index', compact('brands'));
     }
 
@@ -93,8 +92,8 @@ class BrandController extends Controller
         $disk = 'public';
         $path = str_replace("/storage/", "", $photo->path);
         Storage::disk($disk)->delete($path);
-        $photo->delete();
         $brand->delete();
+        $photo->delete();
         Session::flash('opration_brand', 'برند ' . $brand->title . ' با موفقیت حذف شد.');
         return redirect(route('brands.index'));
     }

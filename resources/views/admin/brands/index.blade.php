@@ -28,7 +28,7 @@
                     <tr class="align-middle">
                         <td>{{ $key + 1 }}
                         </td>
-                        <td class="text-center"><img src="{{ $brand->photo()->path }}" alt="" class="brandImgTbl">
+                        <td class="text-center"><img src="{{ $brand->photo->path }}" alt="" class="brandImgTbl">
                         </td>
                         <td>{{ $brand->title }}</td>
                         <td>{{ verta($brand->created_at)->format('H:i:s') }} -
