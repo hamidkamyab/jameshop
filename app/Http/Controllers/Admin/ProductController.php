@@ -167,39 +167,10 @@ class ProductController extends Controller
         $product->brand_id  = $request->brand_id;
         $product->category_id  = $request->category_id;
 
-        // $sizesId = getOneFieldOfArray($product->sizes, 'id');
-        // if ($sizesId != $request->size_id) {
-        //     $pSizesId = [];
-        //     foreach ($product->sizes as $key => $pSize) {
-        //         array_push($pSizesId, $pSize->pivot->id);
-        //     }
-        //     ProductSize::whereIn('id', $pSizesId)->delete();
-        //     foreach ($request->size_id as $key => $sizeId) {
-        //         $productSize = new ProductSize();
-        //         $productSize->product_id = $id;
-        //         $productSize->size_id = $sizeId;
-        //         $productSize->save();
-        //     }
-        // }
-
         $product->sizes()->sync($request->size_id);
 
         $product->colors()->sync($request->colors);
 
-        // $colorsId = getOneFieldOfArray($product->colors, 'id');
-        // if ($colorsId != $request->colors) {
-        //     $pColorsId = [];
-        //     foreach ($product->colors as $key => $pColor) {
-        //         array_push($pColorsId, $pColor->pivot->id);
-        //     }
-        //     ColorProduct::whereIn('id', $pColorsId)->delete();
-        //     foreach ($request->colors as $key => $colorId) {
-        //         $productColor = new ColorProduct();
-        //         $productColor->product_id = $id;
-        //         $productColor->color_id = $colorId;
-        //         $productColor->save();
-        //     }
-        // }
 
         $photos = explode(',', $request->photos);
         $photosId = getOneFieldOfArray($product->photos, 'id');
@@ -232,23 +203,6 @@ class ProductController extends Controller
             }
         }
 
-        // $attrValues = explode(',', $request->attribute_value);
-        // $attrValuesId = getOneFieldOfArray($product->attributes_values, 'id');
-
-        // if ($attrValues != $attrValuesId) {
-        //     $pAttrValuesId = [];
-        //     foreach ($product->attributes_values as $key => $pAttrValues) {
-        //         array_push($pAttrValuesId, $pAttrValues->pivot->id);
-        //     }
-        //     AttributeValueProduct::whereIn('id', $pAttrValuesId)->delete();
-        //     foreach ($attrValues as $key => $attrValueId) {
-        //         $attrValueProduct = new AttributeValueProduct();
-        //         $attrValueProduct->product_id = $id;
-        //         $attrValueProduct->attribute_value_id = $attrValueId;
-        //         $attrValueProduct->save();
-        //     }
-        // }
-
         $attrValues = explode(',', $request->attribute_value);
         $product->attributes_values()->sync($attrValues);
 
@@ -262,26 +216,33 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
+        //
+    }
+    public function delete(Request $request, string $id)
+    {
         $product = Product::with('photos')->findOrFail($id);
         $disk = 'public';
         $photosId = [];
-        foreach ($product->photos as $key => $value) {
-            $path = str_replace("/storage/", "", $value->path);
-            Storage::disk($disk)->delete($path);
-            if ($value->thumbnail != null) {
-                $thumbnailPath = str_replace("/storage/", "", $value->thumbnail);
-                Storage::disk($disk)->delete($thumbnailPath);
+
+        if($request->trash == 'true'){
+            $product->delete();
+        }else{
+            foreach ($product->photos as $key => $value) {
+                $path = str_replace("/storage/", "", $value->path);
+                Storage::disk($disk)->delete($path);
+                if ($value->thumbnail != null) {
+                    $thumbnailPath = str_replace("/storage/", "", $value->thumbnail);
+                    Storage::disk($disk)->delete($thumbnailPath);
+                }
+                array_push($photosId,$value->id);
+                $dir = $disk . '/' . str_replace($value->name, "", $path);
+                Storage::deleteDirectory($dir);
             }
-            array_push($photosId,$value->id);
-            $dir = $disk . '/' . str_replace($value->name, "", $path);
-            Storage::deleteDirectory($dir);
+
+            MediaFile::whereIn('id',$photosId)->delete();
+            $product->forceDelete();
         }
-
-        MediaFile::whereIn('id',$photosId)->delete();
-        $product->delete();
-
-        Session::flash('opration_product', 'محصول ' . $product->title . ' با موفقیت حذف شد');
-        return redirect(route('products.index'));
+        return response()->json(['status' => 'success'], Response::HTTP_OK);
     }
 
 

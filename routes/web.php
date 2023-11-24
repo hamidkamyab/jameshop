@@ -50,5 +50,6 @@ Route::prefix('admin')->group(function(){
     Route::resource('sizes',SizeController::class);
     Route::get('attributes/{id}',[ProductController::class,'attributes'])->name('products.attributes');
     Route::get('photos/{id}',[ProductController::class,'photos'])->name('products.photos');
+    Route::post('products/delete/{product}',[ProductController::class,'delete'])->name('products.delete');
     Route::resource('products',ProductController::class);
 });

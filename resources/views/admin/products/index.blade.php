@@ -6,10 +6,13 @@
 @section('content')
     <div class="bg-white col-12 p-3 pb-5 border-start border-4 border-info right-box">
         <div class="col-12">
-            @if(Session::has('opration_product'))
-                @include('admin.partials.Alert',['msg'=>[session('opration_product')],'status'=>'success'])
+            @if (Session::has('opration_product'))
+                @include('admin.partials.Alert', [
+                    'msg' => [session('opration_product')],
+                    'status' => 'success',
+                ])
             @endif
-            {{-- @if(Session::has('error_category'))
+            {{-- @if (Session::has('error_category'))
                 @include('admin.partials.Alert',['msg'=>[session('error_category')],'status'=>'danger'])
             @endif --}}
         </div>
@@ -22,45 +25,97 @@
                     <th class="fw-normal fs-18">برند محصول</th>
                     <th class="fw-normal fs-18">دسته بندی</th>
                     <th class="fw-normal fs-18">تاریخ ایجاد</th>
-                    <th class="fw-normal fs-18 d-flex align-items-center gap-1 justify-content-center">عملیات<small class="fs-12">(ویرایش - حذف)</small></th>
+                    <th class="fw-normal fs-18 d-flex align-items-center gap-1 justify-content-center">عملیات<small
+                            class="fs-12">(ویرایش - حذف)</small></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($products as $key=>$product)
-                    <tr>
-                        <td class="align-middle">{{$key+1}}</td>
+                @foreach ($products as $key => $product)
+                    <tr id="row-{{ $product->id }}">
+                        <td class="align-middle">{{ $key + 1 }}</td>
                         <td class="align-middle">
                             <div class="productListImg bg-white align-items-center">
-                                @if(count($product->photo) == 1)
-                                    <img src="{{asset($product->photo[0]->path)}}" class="w-100" >
+                                @if (count($product->photo) == 1)
+                                    <img src="{{ asset($product->photo[0]->path) }}" class="w-100">
                                 @else
-                                <img src="{{asset('imgs/admin/product-icon.png')}}" class="w-100" >
+                                    <img src="{{ asset('imgs/admin/product-icon.png') }}" class="w-100">
                                 @endif
                             </div>
                         </td>
-                        <td class="align-middle">{{short_str($product->title,30)}}</td>
-                        <td class="align-middle">{{$product->brand->title}}</td>
-                        <td class="align-middle">{{$product->category->title}}</td>
-                        <td class="align-middle">{{verta($product->created_at)->format('Y/m/d')}}</td>
+                        <td class="align-middle">{{ short_str($product->title, 30) }}</td>
+                        <td class="align-middle">{{ $product->brand->title }}</td>
+                        <td class="align-middle">{{ $product->category->title }}</td>
+                        <td class="align-middle">{{ verta($product->created_at)->format('Y/m/d') }}</td>
                         <td class="align-middle">
                             <div class="d-flex align-items-center justify-content-center gap-2 pt-1">
-                                <a href="{{ route('products.edit', $product->id) }}" title="ویرایش دسته {{ $product->title }}">
+                                <a href="{{ route('products.edit', $product->id) }}"
+                                    title="ویرایش دسته {{ $product->title }}">
                                     <i class="icon-edit-1 fs-6"></i>
                                 </a>
-                                <form action="{{route('products.destroy',$product->id)}}" method="Post"  class="m-0">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-danger border-0 p-0 bg-transparent" title="حذف دسته {{$product->title}}">
-                                        <i class="icon-trash fs-6"></i>
-                                    </button>
-                                </form>
+                                <button type="submit" class="text-danger border-0 p-0 bg-transparent"
+                                    title="حذف دسته {{ $product->title }}"
+                                    onclick="deleteAlert(event,{{ $product->id }})">
+                                    <i class="icon-trash fs-6"></i>
+                                </button>
                             </div>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-        <div>{{$products->links()}}</div>
+        <div>{{ $products->links() }}</div>
 
     </div>
+@endsection
+
+@section('footer')
+    <script>
+        var url = "{{ route('products.delete', 'id') }}";
+
+        function deleteAlert(event, id) {
+
+            event.preventDefault();
+            let newUrl = url.replace('id', id);
+            var formData = new FormData()
+            formData.append("_token", "{{ csrf_token() }}");
+
+            Swal.fire({
+                title: "آیا از حذف محصول اطمینان دارید؟",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "حذف",
+                denyButtonText: `انتقال به سطل زباله`,
+                cancelButtonText: 'لغو عملیات'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    formData.append("trash", false);
+                    const response = await fetch(newUrl, {
+                        method: "POST",
+                        body: formData
+                    })
+                    let result = await response.json()
+
+                    if (result['status'] == 'success') {
+                        let tag = '#row-' + id;
+                        $(tag).fadeOut();
+                        Swal.fire("محصول با موفقیت حذ شد!", "", "success");
+                    }
+
+                } else if (result.isDenied) {
+                    formData.append("trash", true);
+                    const response = await fetch(newUrl, {
+                        method: "POST",
+                        body: formData
+                    })
+                    let result = await response.json()
+
+                    if (result['status'] == 'success') {
+                        let tag = '#row-' + id;
+                        $(tag).fadeOut();
+                        Swal.fire("محصول با موفقیت به سطل زباله منتقل شد", "", "success");
+                    }
+                }
+            });
+        }
+    </script>
 @endsection
