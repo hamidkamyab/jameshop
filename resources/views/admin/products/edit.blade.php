@@ -185,7 +185,7 @@
                     </div>
                 </div>
                 <input type="hidden" name="first_pic" id="inputFirstPicId" />
-                <input type="text" name="attribute_value" id="attribute_value" value="{{implode(',',$attributesValues)}}" />
+                <input type="hidden" name="attribute_value" id="attribute_value" value="{{implode(',',$attributesValues)}}" />
             </form>
 
         </div>

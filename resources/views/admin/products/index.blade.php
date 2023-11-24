@@ -28,8 +28,8 @@
             <tbody>
                 @foreach ($products as $key=>$product)
                     <tr>
-                        <td>{{$key+1}}</td>
-                        <td>
+                        <td class="align-middle">{{$key+1}}</td>
+                        <td class="align-middle">
                             <div class="productListImg bg-white align-items-center">
                                 @if(count($product->photo) == 1)
                                     <img src="{{asset($product->photo[0]->path)}}" class="w-100" >
