@@ -6,7 +6,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\MediaFileController;
+use App\Http\Controllers\Admin\FileController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Models\AttributeValue;
@@ -41,11 +41,11 @@ Route::prefix('admin')->group(function(){
     Route::resource('attributes_group',AttributeGroupController::class);
     Route::resource('attributes_value',AttributeValueController::class);
     Route::resource('brands', BrandController::class);
-    Route::post('mediafiles/upload',[MediaFileController::class,'upload'])
-    ->name('mediafiles.upload');
-    Route::post('mediafiles/remove',[MediaFileController::class,'remove'])
-    ->name('mediafiles.remove');
-    Route::resource('mediafiles',MediaFileController::class);
+    Route::post('files/upload',[FileController::class,'upload'])
+    ->name('files.upload');
+    Route::post('files/remove',[FileController::class,'remove'])
+    ->name('files.remove');
+    Route::resource('files',FileController::class);
     Route::resource('colors',ColorController::class);
     Route::resource('sizes',SizeController::class);
     Route::get('attributes/{id}',[ProductController::class,'attributes'])->name('products.attributes');

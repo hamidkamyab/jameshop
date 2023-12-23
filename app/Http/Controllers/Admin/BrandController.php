@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BrandRequest;
 use App\Models\Brand;
+use App\Models\File;
 use App\Models\MediaFile;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\Exists;
 
 class BrandController extends Controller
 {
@@ -16,7 +18,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brands = Brand::with('photo')->paginate(30);
+        $brands = Brand::with('media.file')->paginate(30);
         return view('admin.brands.index', compact('brands'));
     }
 
@@ -36,8 +38,10 @@ class BrandController extends Controller
         $brand = new Brand();
         $brand->title = $request->title;
         $brand->description = $request->description;
-        $brand->photo_id = $request->photo_id;
         $brand->save();
+        $brand->media()->create([
+            'file_id' => $request->photo_id
+        ]);
         Session::flash('opration_brand', 'برند ' . $request->title . ' با موفقیت ثبت شد.');
         return redirect(route('brands.index'));
     }
@@ -55,7 +59,8 @@ class BrandController extends Controller
      */
     public function edit(string $id)
     {
-        $brand = Brand::findOrFail($id);
+        $brand = Brand::with('media.file')->findOrFail($id);
+        $brand['photo']=@$brand->media[0]->file;
         return view('admin.brands.edit', compact('brand'));
     }
 
@@ -64,18 +69,26 @@ class BrandController extends Controller
      */
     public function update(BrandRequest $request, string $id)
     {
-        $brand = Brand::findOrFail($id);
+        $brand = Brand::with('media.file')->findOrFail($id);
         $brand->title = $request->title;
         $brand->description = $request->description;
-        if ($request->photo_id != $brand->photo_id) {
-            $photo = MediaFile::findOrFail($brand->photo_id);
+        $brand->save();
+        if(@$brand->media[0]){
+            $brand->media()->update([
+                'file_id' => $request->photo_id
+            ]);
+        }else{
+            $brand->media()->create([
+                'file_id' => $request->photo_id
+            ]);
+        }
+        if (@$brand->media[0]->file->id && $request->photo_id != $brand->media[0]->file->id) {
+            $photo = $brand->media[0]->file;
             $disk = 'public';
             $path = str_replace("/storage/", "", $photo->path);
             Storage::disk($disk)->delete($path);
             $photo->delete();
-            $brand->photo_id = $request->photo_id;
         }
-        $brand->save();
         Session::flash('opration_brand', 'برند ' . $request->title . ' با موفقیت ویرایش شد.');
         return redirect(route('brands.index'));
     }
@@ -85,8 +98,8 @@ class BrandController extends Controller
      */
     public function destroy(string $id)
     {
-        $brand = Brand::findOrFail($id);
-        $photo = MediaFile::findOrFail($brand->photo_id);
+        $brand = Brand::with('media.file')->findOrFail($id);
+        $photo = $brand->media[0]->file;
         $disk = 'public';
         $path = str_replace("/storage/", "", $photo->path);
         Storage::disk($disk)->delete($path);

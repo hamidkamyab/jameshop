@@ -35,8 +35,12 @@
                         <td class="align-middle">{{ $key + 1 }}</td>
                         <td class="align-middle">
                             <div class="productListImg bg-white align-items-center">
-                                @if (count($product->photo) == 1)
-                                    <img src="{{ asset($product->photo[0]->path) }}" class="w-100">
+                                @if(count($product->media) > 0)
+                                    @foreach ($product->media as $photo)
+                                        @if ($photo->file->id == $product->first_pic)
+                                            <img src="{{ asset($photo->file->path) }}" class="w-100">
+                                        @endif
+                                    @endforeach
                                 @else
                                     <img src="{{ asset('imgs/admin/product-icon.png') }}" class="w-100">
                                 @endif

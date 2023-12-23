@@ -48,7 +48,7 @@
 @section('footer')
     <script src="{{ asset('js/dropzone.min.js') }}"></script>
     <script>
-
+        Dropzone.autoDiscover = false;
         /***********Modal Upload************* */
         $("div#dropzoneTag").dropzone({
             addRemoveLinks: true,
@@ -62,11 +62,11 @@
             },
             init: function() {
                 this.on("success", (file, responseText) => {
-                    $('#mediafile_id').val(responseText['mediafile_id']);
-                    $('.mediaFileBox > i').fadeOut(0);
-                    $('#mediaFileImg').attr('src', responseText['path'])
-                    $('#mediafile_path').val(responseText['path'])
-                    $('#mediaFileImg').fadeIn(500);
+                    $('#file_id').val(responseText['file_id']);
+                    $('.FileBox > i').fadeOut(0);
+                    $('#FileImg').attr('src', responseText['path'])
+                    $('#file_path').val(responseText['path'])
+                    $('#FileImg').fadeIn(500);
                 });
                 this.on("error", function(file, responseText) {
                     $('.uploadError').fadeIn(1500);
@@ -74,14 +74,14 @@
 
                 });
                 this.on("removedfile", async (file, responseText) => {
-
                     var response = JSON.parse(file['xhr']['responseText']);
                     var formData = new FormData()
-                    formData.append("_token", _token);
-                    formData.append("id", response['mediafile_id']);
-
-                    if (response['mediafile_id']) {
-                        await fetch("{{ route('mediafiles.remove') }}", {
+                    formData.append("_token", "{{ csrf_token() }}");
+                    formData.append("id", response['file_id']);
+                    console.log("{{ csrf_token() }}")
+                    console.log(response['file_id'])
+                    if (response['file_id']) {
+                        await fetch("{{ route('files.remove') }}", {
                             method: "POST",
                             body: formData
                         })

@@ -243,7 +243,7 @@
         $("div#dropzoneTag").dropzone({
             addRemoveLinks: true,
             uploadMultiple: false,
-            url: "{{ route('mediafiles.upload') }}",
+            url: "{{ route('files.upload') }}",
             sending: function(file, xhr, formData) {
                 formData.append("_token", "{{ csrf_token() }}")
                 formData.append("type", 'image')
@@ -254,18 +254,18 @@
             },
             init: function() {
                 this.on("success", (file, responseText) => {
-                    photosId.push(responseText['mediafile_id']);
+                    photosId.push(responseText['file_id']);
                     $('#photos').val(photosId);
                     let active = '';
                     if (c == 0) {
                         active = 'active';
-                        $('#inputFirstPicId').val(responseText['mediafile_id']);
+                        $('#inputFirstPicId').val(responseText['file_id']);
                     }
                     c++;
                     const tag =
                         '<li class="p-1 productImgItem ' + active +
                         '" onClick="selectFirstImage(this)" id="PI-' +
-                        responseText['mediafile_id'] + '">' +
+                        responseText['file_id'] + '">' +
                         '<img src="' + responseText['thumbnail'] + '" class="rounded-3">' +
                         '</li>';
                     $('.productImgChoose').append(tag);
@@ -279,13 +279,13 @@
                 this.on("removedfile", async (file, responseText) => {
                     var response = JSON.parse(file['xhr']['responseText']);
 
-                    const id = response['mediafile_id'];
+                    const id = response['file_id'];
                     var formData = new FormData()
                     formData.append("_token", "{{ csrf_token() }}");
                     formData.append("id", id);
 
                     if (id) {
-                        const response = await fetch("{{ route('mediafiles.remove') }}", {
+                        const response = await fetch("{{ route('files.remove') }}", {
                             method: "POST",
                             body: formData
                         })

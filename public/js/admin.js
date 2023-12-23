@@ -7140,10 +7140,10 @@ window.onload = () => {
         $('.main').removeClass('wid')
     }
 
-    var brandSRC = $('.mediaFileBox > img').attr('src');
+    var brandSRC = $('.FileBox > img').attr('src');
     if (brandSRC) {
-        $('.mediaFileBox > i').fadeOut(100)
-        $('.mediaFileBox > img').fadeIn(350)
+        $('.FileBox > i').fadeOut(100)
+        $('.FileBox > img').fadeIn(350)
     }
     $('.select-cl').val('choose').trigger('change');
 

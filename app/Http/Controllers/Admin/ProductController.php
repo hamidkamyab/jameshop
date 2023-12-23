@@ -28,7 +28,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('category', 'brand', 'photo')->paginate(30);
+        $products = Product::with('category', 'brand', 'media.file')->paginate(30);
         return view('admin.products.index', compact('products'));
     }
 
@@ -51,8 +51,9 @@ class ProductController extends Controller
     {
         $product = new Product();
         $meta_description = '';
+        $sku = 'JS-' . time();
         $product->title = $request->title;
-        $product->sku = 'JS-' . time();
+        $product->sku =  $sku;
         $product->slug = $request->slug;
         $product->price = $request->price;
         $product->discount_price = $request->discount_price;
@@ -68,26 +69,17 @@ class ProductController extends Controller
         $product->brand_id = $request->brand_id;
         $product->category_id = $request->category_id;
         $product->user_id = 1;
+        $product->first_pic = $request->first_pic;
         $product->save();
-        $productId = $product->id;
-
         $product->sizes()->sync($request->size_id);
-
         $product->colors()->sync($request->colors);
 
         $photos = explode(',', $request->photos);
         foreach ($photos as $key => $id) {
-            $productPhoto = new MediaFileProduct();
-            $productPhoto->product_id = $productId;
-            $productPhoto->media_file_id = $id;
-            if ($request->first_pic == $id) {
-                $productPhoto->first = 1;
-            } else {
-                $productPhoto->first = 0;
-            }
-            $productPhoto->save();
+            $product->media()->create([
+                'file_id' => $id
+            ]);
         }
-
         $attrValues = explode(',', $request->attribute_value);
 
         $product->attributes_values()->sync($attrValues);
@@ -109,7 +101,7 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        $product = Product::with('sizes', 'colors', 'photos', 'attributes_values:id')->where('id', $id)->first();
+        $product = Product::with('sizes', 'colors', 'media.file', 'attributes_values:id')->where('id', $id)->first();
 
         $category = Category::with('parent', 'children')->where('id', $product->category->id)->first();
 
@@ -141,6 +133,7 @@ class ProductController extends Controller
         $brands = Brand::all();
         $colors = Color::all();
         $sizes = Size::all();
+
         return view('admin.products.edit', compact(['product', 'categories', 'brands', 'colors', 'sizes', 'attributesGroup', 'attributesValues']));
     }
 
@@ -261,7 +254,7 @@ class ProductController extends Controller
 
     public function photos(string $id)
     {
-        $product = Product::with('photos')->findOrFail($id);
-        return  response()->json(['status' => 'success', 'photos' => $product->photos], Response::HTTP_OK);
+        $product = Product::with('media.file')->findOrFail($id);
+        return  response()->json(['status' => 'success', 'photos' => $product->media], Response::HTTP_OK);
     }
 }

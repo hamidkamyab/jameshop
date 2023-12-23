@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('files', function (Blueprint $table) {
-            $table->string('is_dir')->nullable()->default('null')->after('thumbnail');
+        Schema::create('media', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('file_id');
+            $table->morphs('mediable');
+            $table->timestamps();
+
+            $table->foreign('file_id')->references('id')->on('files')->onDelete('cascade');
         });
     }
 
@@ -21,8 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('files', function (Blueprint $table) {
-            $table->dropColumn('is_dir');
-        });
+        Schema::dropIfExists('media');
     }
 };

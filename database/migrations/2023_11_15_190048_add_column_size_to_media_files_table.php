@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('media_files', function (Blueprint $table) {
+        Schema::table('files', function (Blueprint $table) {
             $table->string('size')->after('type');
         });
     }
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('media_files', function (Blueprint $table) {
+        Schema::table('files', function (Blueprint $table) {
             $table->drop('size');
         });
     }

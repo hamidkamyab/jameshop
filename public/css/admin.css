@@ -358,13 +358,13 @@ a {
 
 /************************/
 
-.mediaFileBox {
+.FileBox {
     width: 158px;
     height: 158px;
     background-color: rgb(228, 226, 226)
 }
 
-.mediaFileBox img {
+.FileBox img {
     display: none;
     max-width: 100%;
     max-height: 100%;

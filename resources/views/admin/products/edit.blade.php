@@ -179,7 +179,11 @@
                                 class="text-danger">(برای نمایش به عنوان تصویر اصلی محصول)</small></label>
 
                         <ul class="productImgChoose list-unstyled my-2 d-flex gap-1 p-1">
-
+                            @foreach ($product->media as $key=>$photo)
+                                <li class="p-1 productImgItem @if($photo->file->id ==$product->first_pic) active @endif" onClick="selectFirstImage(this)" id="PI-{{$photo->file->id}}">
+                                    <img src="{{$photo->file->path}}" class="rounded-3">
+                                </li>
+                            @endforeach
                         </ul>
 
                     </div>
@@ -247,18 +251,20 @@
 
     <script>
         const dateTime = new Date();
-        const subFolder = "{{$product->photos[0]->is_dir}}";
-
+        const subFolder = "{{@$product->media[0]->file->is_dir}}";
+        //////////////////////////////SKU
         let photosId = [];
         var c = 0;
+        Dropzone.autoDiscover = false;
 
         $("div#dropzoneTag").dropzone({
             addRemoveLinks: true,
             uploadMultiple: false,
-            url: "{{ route('mediafiles.upload') }}",
+            url: "{{ route('files.upload') }}",
             sending: function(file, xhr, formData) {
                 formData.append("_token", "{{ csrf_token() }}")
                 formData.append("type", 'image')
+
                 formData.append("folder", "products/" + subFolder)
                 formData.append("is_dir", subFolder)
                 formData.append("mimesFile", "jpg,jpeg,png")
@@ -266,18 +272,18 @@
             },
             init: function() {
                 this.on("success", (file, responseText) => {
-                    photosId.push(responseText['mediafile_id']);
+                    photosId.push(responseText['file_id']);
                     $('#photos').val(photosId);
                     let active = '';
                     if (c == 0) {
                         active = 'active';
-                        $('#inputFirstPicId').val(responseText['mediafile_id']);
+                        $('#inputFirstPicId').val(responseText['file_id']);
                     }
                     c++;
                     const tag =
                         '<li class="p-1 productImgItem ' + active +
                         '" onClick="selectFirstImage(this)" id="PI-' +
-                        responseText['mediafile_id'] + '">' +
+                        responseText['file_id'] + '">' +
                         '<img src="' + responseText['thumbnail'] + '" class="rounded-3">' +
                         '</li>';
                     $('.productImgChoose').append(tag);
@@ -288,34 +294,35 @@
                     $('.uploadError .errorBody').text(responseText['errors']['file']);
 
                 });
-                this.on("removedfile", async (file, responseText) => {
+                this.on("removedfile", async (file=null, responseText) => {
                     let id;
                     $('.dz-message').addClass('d-none');
-                    if (responseText != null) {
+                    if (file.id == null || file.id == undefined) {
                         var response = JSON.parse(file['xhr']['responseText']);
-                        id = response['mediafile_id'];
+                        id = response['file_id'];
                     } else {
                         id = file.id;
                     }
+
                     var formData = new FormData()
                     formData.append("_token", "{{ csrf_token() }}");
                     formData.append("id", id);
 
                     if (id) {
-                        const response = await fetch("{{ route('mediafiles.remove') }}", {
+                        const response = await fetch("{{ route('files.remove') }}", {
                             method: "POST",
                             body: formData
                         })
+
                         const result = await response.json();
                         if (result['status'] == 'success') {
                             photosId = photosId.filter(item => item !== id);
                             $('#photos').val(photosId);
                             $("#PI-" + id).fadeOut(250);
-
                             if ($("#PI-" + id).hasClass('active')) {
                                 $('#inputFirstPicId').val('');
                             }
-                            // $('.dz-message').addClass('d-none');
+
                             setTimeout(() => {
                                 $("#PI-" + id).remove();
                                 if (document.getElementsByClassName("productImgItem")
@@ -344,33 +351,20 @@
             success: function(data) {
                 data.photos.forEach(function(val) {
                     var mockFile = {
-                        id: val.id,
-                        name: val.path,
-                        size: val.size,
+                        id: val.file.id,
+                        name: val.file.path,
+                        size: val.file.size,
                     }; // اطلاعات جعلی برای فایل
                     myDropzone.emit("addedfile", mockFile);
-                    myDropzone.emit("thumbnail", mockFile, val.thumbnail);
+                    myDropzone.emit("thumbnail", mockFile, val.file.thumbnail);
                     var myElement = document.getElementsByClassName("dz-progress");
                     // تغییر display به "none"
                     myElement.forEach((tag) => {
                         tag.style.display = "none";
                     })
 
-                    photosId.push(val.id);
-                    let active = '';
-                    if (val.pivot.first == 1) {
-                        active = 'active';
-                        $('#inputFirstPicId').val(val.id);
-                    }
+                    photosId.push(val.file.id);
                     c++;
-                    const tag =
-                        '<li class="p-1 productImgItem ' + active +
-                        '" onClick="selectFirstImage(this)" id="PI-' +
-                        val.id + '">' +
-                        '<img src="' + val.thumbnail + '" class="rounded-3">' +
-                        '</li>';
-                    $('.productImgChoose').append(tag);
-                    $('.productImgChooseLabel').removeClass('d-none');
                 });
                 $('#photos').val(photosId);
             },

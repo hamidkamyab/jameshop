@@ -21,9 +21,9 @@
                 <div class="col-12">
                     <label for="inputTitle" class="form-label">تصویر برند</label>
                     <div class=" d-flex align-items-end justify-content-start gap-3 noSelect">
-                        <div class="mediaFileBox d-flex align-items-center justify-content-center rounded-3 p-1">
+                        <div class="FileBox d-flex align-items-center justify-content-center rounded-3 p-1">
                             <i class="icon-picture text-muted fs-1"></i>
-                            <img src="{{ $brand->photo()->path }}" id="mediaFileImg" />
+                            <img src="{{ @$brand->media[0]->file->path }}" id="FileImg" />
                         </div>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">
                             آپلود تصویر برند
@@ -34,19 +34,16 @@
                     <label for="inputDescription" class="form-label">توضیحات</label>
                     <textarea type="text" class="form-control" id="inputDescription" name="description" placeholder="توضیحات برند...">{{ $brand->description }}</textarea>
                 </div>
-
-                <input type="hidden" name="photo_id" id="mediafile_id" value="{{ $brand->photo()->id }}">
-
+                <input type="hidden" name="photo_id" id="file_id" value="{{ @$brand->photo->id }}">
             </form>
             @include('admin.partials.ModalUpload', [
                 'title' => 'تصویر برند',
-                'upload' => route('mediafiles.upload'),
+                'upload' => route('files.upload'),
                 'folder' => 'brands',
                 'type' => 'image',
             ])
         </div>
     </div>
-
     <div class="col-3 left-box d-flex flex-wrap gap-3">
         <div class="justify-content-center bg-white py-3 ps-2 pe-3 border-start border-4 border-info w-100">
             <div class="col-12 d-flex justify-content-between">

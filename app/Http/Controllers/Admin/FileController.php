@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\MediaFile;
+use App\Models\File as M_File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 
-class MediaFileController extends Controller
+class FileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -69,7 +69,7 @@ class MediaFileController extends Controller
         $dir = 'public/' . $request->folder;
 
         Storage::disk('local')->putFileAs($dir, $file, $fileName);
-        $mediafile = new MediaFile();
+        $m_file = new M_File();
 
         if (@$request->thumbnail == 'true') {
             $path = str_replace("public/", "app/public/",$dir);
@@ -80,23 +80,23 @@ class MediaFileController extends Controller
             // ایجاد تصویر thumbnail
             $image->fit(200, 200)->save($thumbnailPath.$fileName);
             $thumbnail = $request->folder.'/thumbnail/'.$fileName;
-            $mediafile->thumbnail = $thumbnail;
+            $m_file->thumbnail = $thumbnail;
         }
 
-        $mediafile->name = $fileName;
-        $mediafile->path = $request->folder . '/' . $fileName;
-        $mediafile->type = $parts[0];
-        $mediafile->size = $file->getSize();
+        $m_file->name = $fileName;
+        $m_file->path = $request->folder . '/' . $fileName;
+        $m_file->type = $parts[0];
+        $m_file->size = $file->getSize();
         if($request->is_dir){
-            $mediafile->is_dir = $request->is_dir;
+            $m_file->is_dir = $request->is_dir;
         }
         // $photo->user_id = Auth::user()->id; //////////////////////////////////// Auth
-        $mediafile->user_id = 1;
-        $mediafile->save();
+        $m_file->user_id = 1;
+        $m_file->save();
         return response()->json([
-            'mediafile_id' => $mediafile->id,
-            'path' => $mediafile->path,
-            'thumbnail' => $mediafile->thumbnail,
+            'file_id' => $m_file->id,
+            'path' => $m_file->path,
+            'thumbnail' => $m_file->thumbnail,
         ]);
     }
 
@@ -129,7 +129,7 @@ class MediaFileController extends Controller
      */
     public function remove(Request $request)
     {
-        $File = MediaFile::findOrFail($request->id);
+        $File = M_File::findOrFail($request->id);
         $disk = 'public';
         $path = str_replace("/storage/", "", $File->path);
         Storage::disk($disk)->delete($path);

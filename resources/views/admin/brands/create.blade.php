@@ -21,12 +21,12 @@
                 <div class="col-12">
                     <label for="inputTitle" class="form-label">تصویر برند</label>
                     <div class=" d-flex align-items-end justify-content-start gap-3 noSelect">
-                        <div class="mediaFileBox d-flex align-items-center justify-content-center rounded-3 p-1">
+                        <div class="FileBox d-flex align-items-center justify-content-center rounded-3 p-1">
                             <i class="icon-picture text-muted fs-1"></i>
                             @if (old('photo_path'))
-                                <img src="{{ old('photo_path') }}" id="mediaFileImg" class="w-100" />
+                                <img src="{{ old('photo_path') }}" id="FileImg" class="w-100" />
                             @else
-                                <img src="" class="w-100" id="mediaFileImg" />
+                                <img src="" class="w-100" id="FileImg" />
                             @endif
                         </div>
                         <button type="button" class="btn btn-primary @if (old('photo_path')) disabled @endif"
@@ -45,13 +45,13 @@
                     <textarea name="description" id="inputDescription" class="form-control" placeholder="توضیحات برند...." cols="10"
                         rows="5">{{ old('description') }}</textarea>
                 </div>
-                <input type="hidden" name="photo_path" id="mediafile_path">
-                <input type="hidden" name="photo_id" id="mediafile_id" value="{{ old('photo_id') }}">
+                <input type="hidden" name="photo_path" id="file_path">
+                <input type="hidden" name="photo_id" id="file_id" value="{{ old('photo_id') }}">
             </form>
 
             @include('admin.partials.ModalUpload', [
                 'title' => 'تصویر برند',
-                'upload' => route('mediafiles.upload'),
+                'upload' => route('files.upload'),
                 'folder' => 'brands',
                 'type' => 'image',
             ])

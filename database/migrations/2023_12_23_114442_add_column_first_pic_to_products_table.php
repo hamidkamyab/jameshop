@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('brands', function (Blueprint $table) {
-            $table->foreign('photo_id')->references('id')->on('media_files')->noActionOnDelete();
+        Schema::table('products', function (Blueprint $table) {
+            $table->unsignedBigInteger('first_pic')->after('brand_id');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('brands', function (Blueprint $table) {
-
+        Schema::table('products', function (Blueprint $table) {
+            $table->dropColumn('first_pic');
         });
     }
 };
