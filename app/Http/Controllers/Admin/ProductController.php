@@ -6,15 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductRequest;
 use App\Models\AttributeGroup;
 use App\Models\AttributeGroupCategory;
-use App\Models\AttributeValueProduct;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Color;
-use App\Models\ColorProduct;
 use App\Models\MediaFile;
-use App\Models\MediaFileProduct;
 use App\Models\Product;
-use App\Models\ProductSize;
 use App\Models\Size;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -41,7 +37,8 @@ class ProductController extends Controller
         $brands = Brand::all();
         $colors = Color::all();
         $sizes = Size::all();
-        return view('admin.products.create', compact(['categories', 'brands', 'colors', 'sizes']));
+        $sku = 'JS-' . time();
+        return view('admin.products.create', compact(['categories', 'brands', 'colors', 'sizes','sku']));
     }
 
     /**
@@ -51,9 +48,9 @@ class ProductController extends Controller
     {
         $product = new Product();
         $meta_description = '';
-        $sku = 'JS-' . time();
+
         $product->title = $request->title;
-        $product->sku =  $sku;
+        $product->sku =  $request->sku;
         $product->slug = $request->slug;
         $product->price = $request->price;
         $product->discount_price = $request->discount_price;
@@ -142,7 +139,7 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, string $id)
     {
-        $product = Product::with('sizes', 'colors', 'photos', 'attributes_values:id')->where('id', $id)->first();
+        $product = Product::with('sizes', 'colors', 'media.file', 'attributes_values:id')->where('id', $id)->first();
         $meta_description = '';
         $product->title = $request->title;
         $product->slug = $request->slug;
@@ -159,41 +156,20 @@ class ProductController extends Controller
         $product->meta_keywords = $request->meta_keywords;
         $product->brand_id  = $request->brand_id;
         $product->category_id  = $request->category_id;
-
+        $product->first_pic = $request->first_pic;
         $product->sizes()->sync($request->size_id);
 
         $product->colors()->sync($request->colors);
 
 
         $photos = explode(',', $request->photos);
-        $photosId = getOneFieldOfArray($product->photos, 'id');
-        if ($photosId != $photos) {
-            $pPhotosId = [];
-            foreach ($product->photos as $key => $pPhoto) {
-                array_push($pPhotosId, $pPhoto->pivot->id);
-            }
-            MediaFileProduct::whereIn('id', $pPhotosId)->delete();
-
-            foreach ($photos as $key => $photoId) {
-                $productPhoto = new MediaFileProduct();
-                $productPhoto->product_id = $id;
-                $productPhoto->media_file_id = $photoId;
-                if ($request->first_pic == $photoId) {
-                    $productPhoto->first = 1;
-                } else {
-                    $productPhoto->first = 0;
-                }
-                $productPhoto->save();
-            }
-        } else {
-            $oldMFP = MediaFileProduct::where('product_id', $id)->where('first', 1)->first();
-            if ($oldMFP && $oldMFP->media_file_id != $request->first_pic) {
-                $oldMFP->first = 0;
-                $oldMFP->save();
-                $newMFP = MediaFileProduct::where('media_file_id', $request->first_pic)->first();
-                $newMFP->first = 1;
-                $newMFP->save();
-            }
+        foreach ($product->media as $key => $val) {
+            $product->media()->delete($val->id);
+        }
+        foreach ($photos as $key => $val) {
+            $product->media()->create([
+                'file_id' => $val
+            ]);
         }
 
         $attrValues = explode(',', $request->attribute_value);

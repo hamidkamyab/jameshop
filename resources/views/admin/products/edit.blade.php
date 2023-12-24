@@ -163,7 +163,7 @@
                     <label for="" class="mb-1">تصاویر محصول</label>
 
                     <div id="productImgBox">
-                        <input type="hidden" id="photos" name="photos" class="ClearLoad">
+                        <input type="text" id="photos" name="photos" class="ClearLoad">
                         <div class="border border-1 border-gray-500 dropzone" id="dropzoneTag">
                             <div class="dz-message">
                                 <div class="d-flex flex-column">
@@ -251,7 +251,7 @@
 
     <script>
         const dateTime = new Date();
-        const subFolder = "{{@$product->media[0]->file->is_dir}}";
+        const subFolder = "{{$product->sku}}";
         //////////////////////////////SKU
         let photosId = [];
         var c = 0;

@@ -183,6 +183,7 @@
                 </div>
                 <input type="hidden" name="first_pic" id="inputFirstPicId" />
                 <input type="hidden" name="attribute_value" id="attribute_value" />
+                <input type="hidden" name="sku" id="sku" value="{{$sku}}" />
             </form>
 
         </div>
@@ -236,7 +237,7 @@
 
     <script>
         const dateTime = new Date();
-        const subFolder = "p_" + dateTime.getTime();
+        const subFolder = "{{$sku}}";
         let photosId = [];
         var c = 0;
 
