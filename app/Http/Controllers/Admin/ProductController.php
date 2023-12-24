@@ -9,6 +9,7 @@ use App\Models\AttributeGroupCategory;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Color;
+use App\Models\File;
 use App\Models\MediaFile;
 use App\Models\Product;
 use App\Models\Size;
@@ -189,26 +190,27 @@ class ProductController extends Controller
     }
     public function delete(Request $request, string $id)
     {
-        $product = Product::with('photos')->findOrFail($id);
+        $product = Product::with('media.file')->findOrFail($id);
         $disk = 'public';
         $photosId = [];
 
         if($request->trash == 'true'){
             $product->delete();
         }else{
-            foreach ($product->photos as $key => $value) {
-                $path = str_replace("/storage/", "", $value->path);
+            foreach ($product->media as $key => $value) {
+                $path = str_replace("/storage/", "", $value->file->path);
                 Storage::disk($disk)->delete($path);
-                if ($value->thumbnail != null) {
-                    $thumbnailPath = str_replace("/storage/", "", $value->thumbnail);
+                if ($value->file->thumbnail != null) {
+                    $thumbnailPath = str_replace("/storage/", "", $value->file->thumbnail);
                     Storage::disk($disk)->delete($thumbnailPath);
                 }
-                array_push($photosId,$value->id);
-                $dir = $disk . '/' . str_replace($value->name, "", $path);
+                array_push($photosId,$value->file_id);
+                $dir = $disk . '/' . str_replace($value->file->name, "", $path);
                 Storage::deleteDirectory($dir);
+                $product->media()->delete($value->id);
             }
 
-            MediaFile::whereIn('id',$photosId)->delete();
+            File::whereIn('id',$photosId)->delete();
             $product->forceDelete();
         }
         return response()->json(['status' => 'success'], Response::HTTP_OK);
