@@ -40,7 +40,7 @@
 @section('footer')
     <script src="{{ asset('js/pickr.min.js') }}"></script>
     <script>
-        const pickr = Pickr.create({
+        let pickr = Pickr.create({
             el: '.color-picker',
             theme: 'monolith', // or 'monolith', or 'nano'
             swatches: [
@@ -79,5 +79,6 @@
             const hexColor = color.toHEXA().toString();
             document.getElementById('HexCode').value = hexColor;
         });
+
     </script>
 @endsection

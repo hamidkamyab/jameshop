@@ -80,7 +80,7 @@
     },
     {
       "uid": "qqsxko9kqxh5g53lz33yonkpc2rpkvkn",
-      "css": "left",
+      "css": "left-1",
       "code": 59425,
       "src": "typicons"
     },
@@ -687,6 +687,36 @@
       "css": "ruler",
       "code": 61508,
       "src": "mfglabs"
+    },
+    {
+      "uid": "a66cdc7278e6b33b8bd44a141f5e1a8d",
+      "css": "plus-circled",
+      "code": 59438,
+      "src": "entypo"
+    },
+    {
+      "uid": "a66e72da83c98248ae3ef43808efc452",
+      "css": "plus-circle-1",
+      "code": 10133,
+      "src": "websymbols"
+    },
+    {
+      "uid": "3eb93689881ad0804f87052a53edc2b6",
+      "css": "minus-circled",
+      "code": 59415,
+      "src": "entypo"
+    },
+    {
+      "uid": "4062c0e99a3540f6c261bd08ef0fb63f",
+      "css": "minus-circle",
+      "code": 59416,
+      "src": "iconic"
+    },
+    {
+      "uid": "994eaa764b3f30721f3839c64c390ce3",
+      "css": "minus-circle-1",
+      "code": 59417,
+      "src": "websymbols"
     },
     {
       "uid": "6a7eaaf87863aab5af8f7c7e0b09d87f",

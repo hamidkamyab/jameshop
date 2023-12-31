@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Category extends Model
 {
@@ -29,5 +30,10 @@ class Category extends Model
 
     public function products(){
         return $this->hasMany(Product::class);
+    }
+
+    public function media():MorphMany
+    {
+        return $this->morphMany(Media::class,'mediable');
     }
 }

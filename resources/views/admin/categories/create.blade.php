@@ -40,6 +40,31 @@
                     </select>
                 </div>
                 <div class="col-12">
+                    <label for="inputTitle" class="form-label">تصویر دسته بندی</label>
+                    <small class="fs-10 text-danger">(افزودن تصویر اختیاری می باشد)</small>
+                    <div class=" d-flex align-items-end justify-content-start gap-3 noSelect">
+                        <div class="FileBox d-flex align-items-center justify-content-center rounded-3 p-1">
+                            <i class="icon-picture text-muted fs-1"></i>
+                            @if (old('photo_path'))
+                                <img src="{{ old('photo_path') }}" id="FileImg" class="w-100" />
+                            @else
+                                <img src="" class="w-100" id="FileImg" />
+                            @endif
+                        </div>
+                        <button type="button" class="btn btn-primary @if (old('photo_path')) disabled @endif"
+                            data-bs-toggle="modal" data-bs-target="#uploadModal" id="uploadModalBtn">
+                            آپلود تصویر برند
+                        </button>
+                        <button type="button"
+                            class="btn btn-danger @if (old('photo_path')) '' @else d-none @endif"
+                            id="deleteBrandImg">
+                            حذف تصویر برند
+                        </button>
+                    </div>
+                    <input type="hidden" name="photo_path" id="file_path">
+                    <input type="hidden" name="photo_id" id="file_id" value="{{ old('photo_id') }}">
+                </div>
+                <div class="col-12">
                     <label for="inputDescription" class="form-label">توضیحات</label>
                     <textarea class="form-control" id="inputDescription" name="description" placeholder="توضیحات دسته بندی...">{{ old('description') }}</textarea>
                 </div>
@@ -59,7 +84,12 @@
                 </div>
 
             </form>
-
+            @include('admin.partials.ModalUpload', [
+                'title' => 'تصویر دسته بندی',
+                'upload' => route('files.upload'),
+                'folder' => 'category',
+                'type' => 'image',
+            ])
         </div>
     </div>
 

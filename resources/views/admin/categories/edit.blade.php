@@ -43,6 +43,19 @@
                     </select>
                 </div>
                 <div class="col-12">
+                    <label for="inputTitle" class="form-label">تصویر برند</label>
+                    <div class=" d-flex align-items-end justify-content-start gap-3 noSelect">
+                        <div class="FileBox d-flex align-items-center justify-content-center rounded-3 p-1">
+                            <i class="icon-picture text-muted fs-1"></i>
+                            <img src="{{ @$category->media[0]->file->path }}" id="FileImg" />
+                        </div>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                            آپلود تصویر برند
+                        </button>
+                    </div>
+                    <input type="hidden" name="photo_id" id="file_id" value="{{ @$category->media[0]->file_id }}">
+                </div>
+                <div class="col-12">
                     <label for="inputDescription" class="form-label">توضیحات</label>
                     <textarea class="form-control" id="inputDescription" name="description" placeholder="توضیحات دسته بندی...">{{ $category->description }}</textarea>
                 </div>
@@ -62,7 +75,12 @@
                 </div>
 
             </form>
-
+            @include('admin.partials.ModalUpload', [
+                'title' => 'تصویر دسته بندی',
+                'upload' => route('files.upload'),
+                'folder' => 'category',
+                'type' => 'image',
+            ])
         </div>
     </div>
 

@@ -7151,9 +7151,13 @@ window.onload = () => {
 
     $('.un-selc option').prop('selected', false);
 
+    $('.def-select .defaultOption').prop('selected', true);
+
     if ($('#HexCode').hasClass('ClearLoad')) {
         $('#HexCode').val('#42445A');
     }
+
+    $('#selectParent').attr('disabled', true);
 }
 
 /*********SendForm******** */
@@ -7201,3 +7205,47 @@ function selectAttrValue(index, edit = false) {
     });
     $('#attribute_value').val(attrId);
 }
+
+
+$('#selectPosition').on('change', (e) => {
+    $('#selectParent').attr('disabled', false);
+    $('#selectParent .defaultOption').prop('selected', true);
+    if (e.target.value == 'Top') {
+        $('#SwitchCheckBest').attr('disabled', false)
+    } else {
+        $('#SwitchCheckBest').attr('disabled', true)
+        $('#SwitchCheckBest').prop('checked', false)
+        $('.imgBest').addClass('d-none')
+        $('.b-input-t').attr('disabled', true)
+        $('#selectParent').attr('disabled', true);
+    }
+})
+$('#SwitchCheckBest').on('change', (e) => {
+    if (e.target.checked) {
+        $('.imgBest').removeClass('d-none')
+        $('.b-input-t').attr('disabled', false)
+    } else {
+        $('.imgBest').addClass('d-none')
+        $('.b-input-t').attr('disabled', true)
+    }
+})
+
+$('#selectLink').on('change', (e) => {
+    if (e.target.value == 'categoryLink') {
+        $('#inputLink').attr('disabled', true);
+        $('#selectCategories').prop('disabled', false);
+    } else if (e.target.value == 'customLink') {
+        $('#inputLink').attr('disabled', false);
+        $('#selectCategories').prop('disabled', true);
+    } else {
+        $('#inputLink').attr('disabled', true);
+        $('#selectCategories').prop('disabled', true);
+    }
+})
+
+$('.toggleSTL').on('click', (e) => {
+    const id = $(e.target).attr('data-Id');
+    const parent = $(e.target).parent('.oc-box');
+    $('.st-' + id).slideToggle(500);
+    $(parent).toggleClass('open');
+})

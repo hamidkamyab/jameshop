@@ -10,6 +10,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -50,6 +51,11 @@ class CategoryController extends Controller
         $category->meta_keywords = $request->meta_keywords;
         $category->parent_id = $request->parent_id;
         $category->save();
+        if($request->photo_id){
+            $category->media()->create([
+                'file_id' => $request->photo_id
+            ]);
+        }
         Session::flash('opration_category', 'دسته بندی ' . $request->title . ' با موفقیت اضافه شد');
         return redirect(route('categories.index'));
     }
@@ -67,7 +73,7 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $category = Category::findOrFail($id);
+        $category = Category::with('media.file')->findOrFail($id);
         $categories = Category::with('children')->where('parent_id', null)->get();
 
         return view('admin.categories.edit', compact('category', 'categories'));
@@ -78,7 +84,7 @@ class CategoryController extends Controller
      */
     public function update(CreateCategoryRequest $request, string $id)
     {
-        $category = Category::findOrFail($id);
+        $category = Category::with('media.file')->findOrFail($id);
         $meta_description = null;
         if ($request->meta_description) {
             $meta_description = $request->meta_description;
@@ -92,6 +98,23 @@ class CategoryController extends Controller
         $category->meta_keywords = $request->meta_keywords;
         $category->parent_id = $request->parent_id;
         $category->save();
+        if(@$category->media[0]){
+            $category->media()->update([
+                'file_id' => $request->photo_id
+            ]);
+            if ($category->media[0]->file->id != intval($request->photo_id)) {
+                $photo = $category->media[0]->file;
+                $disk = 'public';
+                $path = str_replace("/storage/", "", $photo->path);
+                Storage::disk($disk)->delete($path);
+                $photo->delete();
+            }
+        }else{
+            $category->media()->create([
+                'file_id' => $request->photo_id
+            ]);
+        }
+
         Session::flash('opration_category', 'دسته بندی ' . $request->title . ' با موفقیت ویرایش شد');
         return redirect(route('categories.index'));
     }

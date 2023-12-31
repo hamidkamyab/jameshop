@@ -77,18 +77,19 @@ class BrandController extends Controller
             $brand->media()->update([
                 'file_id' => $request->photo_id
             ]);
+            if (intval($request->photo_id) != $brand->media[0]->file->id) {
+                $photo = $brand->media[0]->file;
+                $disk = 'public';
+                $path = str_replace("/storage/", "", $photo->path);
+                Storage::disk($disk)->delete($path);
+                $photo->delete();
+            }
         }else{
             $brand->media()->create([
                 'file_id' => $request->photo_id
             ]);
         }
-        if (@$brand->media[0]->file->id && $request->photo_id != $brand->media[0]->file->id) {
-            $photo = $brand->media[0]->file;
-            $disk = 'public';
-            $path = str_replace("/storage/", "", $photo->path);
-            Storage::disk($disk)->delete($path);
-            $photo->delete();
-        }
+
         Session::flash('opration_brand', 'برند ' . $request->title . ' با موفقیت ویرایش شد.');
         return redirect(route('brands.index'));
     }

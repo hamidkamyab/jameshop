@@ -63,7 +63,7 @@
         </div>
     </div>
 
-
+    @include('admin.partials.Toast')
 </body>
 
 <script src="{{ asset('js/admin.js') }}" type="text/javascript "></script>

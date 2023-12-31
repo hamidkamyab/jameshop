@@ -68,17 +68,12 @@ class FileController extends Controller
         $fileName = time() . '_' . $file->getClientOriginalName();
         $dir = 'public/' . $request->folder;
 
-        Storage::disk('local')->putFileAs($dir, $file, $fileName);
         $m_file = new M_File();
 
         if (@$request->thumbnail == 'true') {
             $path = str_replace("public/", "app/public/",$dir);
             $thumbnailPath = storage_path($path.'/thumbnail/');
-            File::makeDirectory($thumbnailPath, $mode = 0775, true, true);
-            // ایجاد تصویر از تصویر اصلی
-            $image = Image::make($file);
-            // ایجاد تصویر thumbnail
-            $image->fit(200, 200)->save($thumbnailPath.$fileName);
+
             $thumbnail = $request->folder.'/thumbnail/'.$fileName;
             $m_file->thumbnail = $thumbnail;
         }
@@ -92,7 +87,22 @@ class FileController extends Controller
         }
         // $photo->user_id = Auth::user()->id; //////////////////////////////////// Auth
         $m_file->user_id = 1;
-        $m_file->save();
+        $result = $m_file->save();
+
+        if($result){
+            ///////ذخیره تصویر اصلی و بند انگشتی//////
+            Storage::disk('local')->putFileAs($dir, $file, $fileName);
+            if (@$request->thumbnail == 'true') {
+                File::makeDirectory($thumbnailPath, $mode = 0775, true, true);
+                // ایجاد تصویر از تصویر اصلی
+                $image = Image::make($file);
+                // ایجاد تصویر thumbnail
+                $image->fit(200, 200)->save($thumbnailPath.$fileName);
+            }
+            ///////ذخیره تصویر اصلی و بند انگشتی//////
+        }
+
+
         return response()->json([
             'file_id' => $m_file->id,
             'path' => $m_file->path,

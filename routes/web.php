@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FileController;
+use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Models\AttributeValue;
@@ -40,6 +41,7 @@ Route::prefix('admin')->group(function(){
     Route::resource('categories',CategoryController::class);
     Route::resource('attributes_group',AttributeGroupController::class);
     Route::resource('attributes_value',AttributeValueController::class);
+    Route::resource('menus', MenuController::class);
     Route::resource('brands', BrandController::class);
     Route::post('files/upload',[FileController::class,'upload'])
     ->name('files.upload');
