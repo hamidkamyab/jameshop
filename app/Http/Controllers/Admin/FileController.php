@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\File as M_File;
+use App\Models\Media;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -139,24 +140,29 @@ class FileController extends Controller
      */
     public function remove(Request $request)
     {
-        $File = M_File::findOrFail($request->id);
-        $disk = 'public';
-        $path = str_replace("/storage/", "", $File->path);
-        Storage::disk($disk)->delete($path);
-        if($File->thumbnail != null){
-            $thumbnailPath = str_replace("/storage/", "", $File->thumbnail);
-            Storage::disk($disk)->delete($thumbnailPath);
-        }
-        $dir = $disk . '/' . str_replace($File->name, "", $path);
-        if (Storage::exists($dir)) {
-            $files = Storage::allFiles($dir);
-            if (count($files) == 0) {
-                Storage::deleteDirectory($dir);
+        $Ids = explode(",", $request->id);
+        foreach ($Ids as $key => $id) {
+            $File = M_File::findOrFail($id);
+            $Media = Media::where('file_id',$id)->get();
+            $disk = 'public';
+            $path = str_replace("/storage/", "", $File->path);
+            Storage::disk($disk)->delete($path);
+            if($File->thumbnail != null){
+                $thumbnailPath = str_replace("/storage/", "", $File->thumbnail);
+                Storage::disk($disk)->delete($thumbnailPath);
             }
+            $dir = $disk . '/' . str_replace($File->name, "", $path);
+            if (Storage::exists($dir)) {
+                $files = Storage::allFiles($dir);
+                if (count($files) == 0) {
+                    Storage::deleteDirectory($dir);
+                }
+            }
+            $File->delete();
         }
-        $File->delete();
         return response()->json([
-            'status' => 'success'
+            'status' => 'success',
+            'media' => $Media
         ]);
     }
 

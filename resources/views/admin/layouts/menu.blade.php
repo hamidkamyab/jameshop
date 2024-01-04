@@ -105,6 +105,33 @@
             <li class="itemLi">
                 <a href="javascript:void(0)" class="item px-2 d-flex align-items-center justify-content-between gap-1 text-white toggle_menu">
                     <div class="d-flex align-items-center gap-2 ">
+                        <i class="icon-menu-circle fs-18"></i>
+                        <span class="BYekan hiddenItem">منو</span>
+                    </div>
+                    <i class="icon-down-open icon-open"></i>
+                </a>
+                <ul class="sub-menu list-unstyled">
+                    <li class="itemLi active">
+                        <a href="{{route('menus.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
+                            <div class="d-flex align-items-center gap-2 ">
+                                <i class="icon-menu"></i>
+                                <span class="BYekan hiddenItem">لیست منوها</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="itemLi">
+                        <a href="{{route('menus.create')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
+                            <div class="d-flex align-items-center gap-2 ">
+                                <i class="icon-menu-add fs-14"></i>
+                                <span class="BYekan hiddenItem">ایجاد منو</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="itemLi">
+                <a href="javascript:void(0)" class="item px-2 d-flex align-items-center justify-content-between gap-1 text-white toggle_menu">
+                    <div class="d-flex align-items-center gap-2 ">
                         <i class=" icon-megaphone"></i>
                         <span class="BYekan hiddenItem">برند</span>
                     </div>

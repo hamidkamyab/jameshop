@@ -10,7 +10,6 @@
   /* font-size: 120%; */
 }
 
-.icon-plus-circle-1 { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#x2795;&nbsp;'); }
 .icon-lock { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe800;&nbsp;'); }
 .icon-lock-filled { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe801;&nbsp;'); }
 .icon-lock-2 { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe802;&nbsp;'); }
@@ -35,16 +34,19 @@
 .icon-attach { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe815;&nbsp;'); }
 .icon-info-circled { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe816;&nbsp;'); }
 .icon-minus-circled { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe817;&nbsp;'); }
-.icon-tag-add { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe818;&nbsp;'); }
 .icon-minus-circle { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe818;&nbsp;'); }
-.icon-product-add { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe819;&nbsp;'); }
 .icon-minus-circle-1 { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe819;&nbsp;'); }
-.icon-size { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe81a;&nbsp;'); }
-.icon-tapelineplus { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe81c;&nbsp;'); }
+.icon-tag-add { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe81a;&nbsp;'); }
+.icon-product-add { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe81b;&nbsp;'); }
+.icon-size { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe81c;&nbsp;'); }
 .icon-right-open-big { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe81d;&nbsp;'); }
 .icon-left-open-big { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe81e;&nbsp;'); }
+.icon-tapelineplus { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe81f;&nbsp;'); }
+.icon-plus-circle-1 { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe820;&nbsp;'); }
 .icon-left-1 { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe821;&nbsp;'); }
+.icon-menu-circle { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe822;&nbsp;'); }
 .icon-up-open-big { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe823;&nbsp;'); }
+.icon-menu-add { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe824;&nbsp;'); }
 .icon-right-open-2 { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe82c;&nbsp;'); }
 .icon-plus-circled { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe82e;&nbsp;'); }
 .icon-phone { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe830;&nbsp;'); }

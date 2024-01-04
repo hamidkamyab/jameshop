@@ -40,11 +40,11 @@
                 <div class="col-12 d-flex flex-wrap">
                     <div class="col-12"><label class="form-label">لینک</label></div>
                     <div class="form-group col-6 p-3">
-                        <select id="selectLink" class="form-control def-select vazir fs-12 fw-bold form-select" role="button" name="link_option">
+                        <select id="selectLink" class="form-control def-select vazir fs-12 fw-bold form-select" role="button" name="is_cat">
                             <option class="defaultOption" disabled>انتخاب کنید</option>
-                            <option value="noLink">بدون لینک</option>
-                            <option value="categoryLink">از دسته بندی</option>
-                            <option value="customLink">افزودن دستی</option>
+                            <option value="0">بدون لینک</option>
+                            <option value="1">از دسته بندی</option>
+                            <option value="2">افزودن دستی</option>
                         </select>
                     </div>
                     <div class="form-group col-6 p-3">
@@ -84,7 +84,7 @@
                 <div class="col-6">
                     <div class="form-group">
                         <label for="selectParent" class="form-label">والد</label>
-                        <select id="selectParent" class="form-control vazir fs-12 fw-bold def-select form-select" role="button" name="parent_id" disabled>
+                        <select id="selectParent" class="create form-control vazir fs-12 fw-bold def-select form-select" role="button" name="parent_id" disabled>
                             <option class="defaultOption" disabled>انتخاب کنید</option>
                             @foreach ($menus as $menu)
                                 <option value="{{ $menu->id }}" class="text-primary parent"> {{ $menu->title }}</option>
@@ -139,8 +139,7 @@
                                     </div>
                                 </div>
 
-                                <label for="" class="ImgChooseLabel my-1 d-none">انتخاب تصویر اول <small
-                                        class="text-danger">(برای نمایش به عنوان تصویر اصلی محصول)</small></label>
+                                <label for="" class="ImgChooseLabel my-1 d-none">لینک صفحه محصولات برند</label>
                                 <ul class="ImgChoose list-unstyled my-2 d-flex flex-column gap-1 p-1">
 
                                 </ul>

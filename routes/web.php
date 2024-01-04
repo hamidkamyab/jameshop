@@ -41,6 +41,8 @@ Route::prefix('admin')->group(function(){
     Route::resource('categories',CategoryController::class);
     Route::resource('attributes_group',AttributeGroupController::class);
     Route::resource('attributes_value',AttributeValueController::class);
+    Route::get('menus/photos/{id}',[MenuController::class,'photos'])->name('menus.photos');
+    Route::get('menus/best_menu/destroy/{id}/{status?}',[MenuController::class,'bestMenu_destroy'])->name('menus.bestMenu_destroy');
     Route::resource('menus', MenuController::class);
     Route::resource('brands', BrandController::class);
     Route::post('files/upload',[FileController::class,'upload'])

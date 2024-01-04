@@ -7157,7 +7157,7 @@ window.onload = () => {
         $('#HexCode').val('#42445A');
     }
 
-    $('#selectParent').attr('disabled', true);
+    $('#selectParent.create').attr('disabled', true);
 }
 
 /*********SendForm******** */
@@ -7231,10 +7231,10 @@ $('#SwitchCheckBest').on('change', (e) => {
 })
 
 $('#selectLink').on('change', (e) => {
-    if (e.target.value == 'categoryLink') {
+    if (e.target.value == '1') {
         $('#inputLink').attr('disabled', true);
         $('#selectCategories').prop('disabled', false);
-    } else if (e.target.value == 'customLink') {
+    } else if (e.target.value == '2') {
         $('#inputLink').attr('disabled', false);
         $('#selectCategories').prop('disabled', true);
     } else {
@@ -7248,4 +7248,17 @@ $('.toggleSTL').on('click', (e) => {
     const parent = $(e.target).parent('.oc-box');
     $('.st-' + id).slideToggle(500);
     $(parent).toggleClass('open');
+})
+
+$('.toast .close').on('click', (e) => {
+    $('.toast').toast('hide')
+    $('.toast').fadeOut(250);
+})
+
+$('.toast').on('show.bs.toast', function() {
+    $('.toast').fadeIn(250);
+})
+
+$('.toast').on('hide.bs.toast', function() {
+    $('.toast').fadeOut(250);
 })

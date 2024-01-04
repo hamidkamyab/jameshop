@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Menu extends Model
 {
     use HasFactory;
-
+    protected $appends = ['hamid'];
     public function getPositionAttribute($value)
     {
         if($value === 'Top'){
@@ -16,9 +16,9 @@ class Menu extends Model
         }else if ($value === 'Bottom'){
             $result = 'پایین سایت (فوتر)';
         }
+        $this->orginalPosition = $value;
         return $result;
     }
-
     public function getChildren(){
         return $this->hasMany(Menu::class,'parent_id');
     }
