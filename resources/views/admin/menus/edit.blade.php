@@ -114,7 +114,7 @@
                         <div class="form-check form-switch d-flex align-items-center justify-content-start">
                             <input
                                 class="form-check-input vazir fs-12 fw-bold @if ($menu->best == 0) disabled hamid @endif me-2"
-                                @if ($menu->best == 0) disabled @else checked @endif type="checkbox"
+                                @if ($menu->best != 0) checked @endif type="checkbox"
                                 id="SwitchCheckBest" name="best_status" role="button">
                             <label class="form-check-label" for="SwitchCheckBest">بهترین برند ها یا طراحان</label>
                             <small class="mx-1 text-danger">(برای منو بالای صفحه [هدر] می باشد)</small>
@@ -171,7 +171,7 @@
     <div class="col-3 left-box d-flex flex-wrap gap-3">
         <div class="justify-content-center bg-white py-3 ps-2 pe-3 border-start border-4 border-info w-100">
             <div class="col-12 d-flex justify-content-between">
-                <button type="submit" class="btn btn-primary" onclick="sendForm('formTarget')">ثبت منو</button>
+                <button type="submit" class="btn btn-primary" onclick="sendForm('formTarget')">ویرایش منو</button>
                 <a href="{{ route('menus.index') }}" class="btn btn-outline-danger">انصراف</a>
             </div>
         </div>

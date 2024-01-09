@@ -11,8 +11,13 @@ class BestMenu extends Model
     protected $table = 'best_menus';
     use HasFactory;
 
+    protected $dispatchesEvents = [
+        'deleting' => BestMenuDeleting::class,
+    ];
+
     public function media():MorphMany
     {
         return $this->morphMany(Media::class,'mediable');
     }
+
 }
