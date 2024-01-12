@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\CreateCategoryRequest;
 use App\Models\AttributeGroup;
 use App\Models\AttributeGroupCategory;
 use App\Models\Category;
+use App\Repositories\Category\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
@@ -14,12 +15,17 @@ use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
+    private $category;
+    public function __construct(CategoryRepositoryInterface $ICategoryRepository)
+    {
+        $this->category = $ICategoryRepository;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $categories = Category::with('children')->where('parent_id', null)->paginate(2);
+        $categories = $this->category->getPage(2);
         return view('admin.categories.index', compact('categories'));
     }
 
@@ -28,7 +34,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::with('children')->where('parent_id', null)->get();
+        $categories = $this->category->getAll();
         return view('admin.categories.create', compact('categories'));
     }
 
@@ -37,25 +43,7 @@ class CategoryController extends Controller
      */
     public function store(CreateCategoryRequest $request)
     {
-        $category = new Category();
-        $meta_description = null;
-        if ($request->meta_description) {
-            $meta_description = $request->meta_description;
-        } else if (!$request->meta_description && $request->description) {
-            $meta_description = $request->description;
-        }
-        $category->title = $request->title;
-        $category->slug = $request->slug;
-        $category->description = $request->description;
-        $category->meta_description = $meta_description;
-        $category->meta_keywords = $request->meta_keywords;
-        $category->parent_id = $request->parent_id;
-        $category->save();
-        if($request->photo_id){
-            $category->media()->create([
-                'file_id' => $request->photo_id
-            ]);
-        }
+        $this->category->store($request);
         Session::flash('opration_category', 'دسته بندی ' . $request->title . ' با موفقیت اضافه شد');
         return redirect(route('categories.index'));
     }
@@ -73,9 +61,8 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $category = Category::with('media.file')->findOrFail($id);
-        $categories = Category::with('children')->where('parent_id', null)->get();
-
+        $category =  $this->category->getById($id);
+        $categories = $this->category->getAll();
         return view('admin.categories.edit', compact('category', 'categories'));
     }
 
@@ -84,37 +71,7 @@ class CategoryController extends Controller
      */
     public function update(CreateCategoryRequest $request, string $id)
     {
-        $category = Category::with('media.file')->findOrFail($id);
-        $meta_description = null;
-        if ($request->meta_description) {
-            $meta_description = $request->meta_description;
-        } else if (!$request->meta_description && $request->description) {
-            $meta_description = $request->description;
-        }
-        $category->title = $request->title;
-        $category->slug = $request->slug;
-        $category->description = $request->description;
-        $category->meta_description = $meta_description;
-        $category->meta_keywords = $request->meta_keywords;
-        $category->parent_id = $request->parent_id;
-        $category->save();
-        if(@$category->media[0]){
-            $category->media()->update([
-                'file_id' => $request->photo_id
-            ]);
-            if ($category->media[0]->file->id != intval($request->photo_id)) {
-                $photo = $category->media[0]->file;
-                $disk = 'public';
-                $path = str_replace("/storage/", "", $photo->path);
-                Storage::disk($disk)->delete($path);
-                $photo->delete();
-            }
-        }else{
-            $category->media()->create([
-                'file_id' => $request->photo_id
-            ]);
-        }
-
+        $this->category->store($request,$id);
         Session::flash('opration_category', 'دسته بندی ' . $request->title . ' با موفقیت ویرایش شد');
         return redirect(route('categories.index'));
     }
@@ -124,13 +81,11 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $category = Category::with('children')->where('id', $id)->first();
-        if (count($category->children) > 0) {
-            Session::flash('error_category', 'دسته بندی ' . $category->title . ' دارای دسته های زیر مجموعه است و امکان حذف آن وجود ندارد');
-            return redirect(route('categories.index'));
-        } else {
-            $category->delete();
-            Session::flash('opration_category', 'دسته بندی ' . $category->title . ' با موفقیت حذف شد');
+        $result = $this->category->destroy($id);
+        if($result['status'] == 0){
+            Session::flash('error_category', 'دسته بندی ' . $result['title'] . ' دارای دسته های زیر مجموعه است و امکان حذف آن وجود ندارد');
+        }else{
+            Session::flash('opration_category', 'دسته بندی ' . $result['title'] . ' با موفقیت حذف شد');
         }
         return redirect(route('categories.index'));
     }

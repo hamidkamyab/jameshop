@@ -41,7 +41,7 @@ class CreateCategoryRequest extends FormRequest
             'description' => 'nullable|min:8|max:500',
             'meta_description' => 'nullable|min:8|max:500',
             'meta_keywords' => 'nullable|min:2|max:500',
-            'parent_id' => 'nullable|numeric',
+            'parent_id' => 'required|numeric',
         ];
     }
 }

@@ -27,6 +27,7 @@
                     <label for="inputParent" class="form-label">دسته والد</label>
                     <select class="form-select searchSelect mb-4" id="inputParent" name="parent_id">
                         <option selected disabled value="choose">انتخاب کنید...</option>
+                        <option value="0">بدون والد</option>
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->title }}</option>
                             @if ($category->children)
@@ -53,7 +54,7 @@
                         </div>
                         <button type="button" class="btn btn-primary @if (old('photo_path')) disabled @endif"
                             data-bs-toggle="modal" data-bs-target="#uploadModal" id="uploadModalBtn">
-                            آپلود تصویر برند
+                            آپلود تصویر
                         </button>
                         <button type="button"
                             class="btn btn-danger @if (old('photo_path')) '' @else d-none @endif"
