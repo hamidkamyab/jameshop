@@ -7,17 +7,29 @@ use App\Http\Requests\Admin\AttributeGroupRequest;
 use App\Http\Requests\Admin\AttributesValueRequest;
 use App\Models\AttributeGroup;
 use App\Models\AttributeValue;
+use App\Repositories\AttributeGroup\AttributeGroupRepositoryInterface;
+use App\Repositories\AttributeValue\AttributeValueRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class AttributeValueController extends Controller
 {
+
+    protected $attributeValue;
+    protected $attributeGroup;
+
+    public function __construct(AttributeValueRepositoryInterface $attributeValue, AttributeGroupRepositoryInterface $attributeGroup)
+    {
+        $this->attributeValue = $attributeValue;
+        $this->attributeGroup = $attributeGroup;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $attributesValue = AttributeValue::with('attributes_group')->paginate(20);
+        $attributesValue = $this->attributeValue->getAll(20);
         return view('admin.attributes_value.index',compact('attributesValue'));
     }
 
@@ -26,7 +38,7 @@ class AttributeValueController extends Controller
      */
     public function create()
     {
-        $attributesGroup = AttributeGroup::all();
+        $attributesGroup = $this->attributeGroup->getAll();
         return view('admin.attributes_value.create',compact('attributesGroup'));
     }
 
@@ -35,10 +47,7 @@ class AttributeValueController extends Controller
      */
     public function store(AttributesValueRequest $request)
     {
-        $attributes = new AttributeValue();
-        $attributes->title = $request->title;
-        $attributes->attributes_group_id = $request->attributes_group_id;
-        $attributes->save();
+        $this->attributeValue->store($request);
         Session::flash('operation_attribute_value','مقدار '.$request->title.' برای ویژگی مورد نظر با موفقیت ثبت شد.');
         return redirect(route('attributes_value.index'));
     }
@@ -56,8 +65,8 @@ class AttributeValueController extends Controller
      */
     public function edit(string $id)
     {
-        $attributeValue = AttributeValue::findOrFail($id);
-        $attributesGroup = AttributeGroup::all();
+        $attributeValue = $this->attributeValue->getById($id);
+        $attributesGroup = $this->attributeGroup->getAll();
         return view('admin.attributes_value.edit',compact('attributeValue','attributesGroup'));
     }
 
@@ -66,10 +75,7 @@ class AttributeValueController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $attributes = AttributeValue::findOrFail($id);
-        $attributes->title = $request->title;
-        $attributes->attributes_group_id = $request->attributes_group_id;
-        $attributes->save();
+        $this->attributeValue->update($request,$id);
         Session::flash('operation_attribute_value','مقدار '.$request->title.' برای ویژگی مورد نظر با موفقیت ویرایش شد.');
         return redirect(route('attributes_value.index'));
     }
@@ -79,9 +85,8 @@ class AttributeValueController extends Controller
      */
     public function destroy(string $id)
     {
-        $attributes = AttributeValue::findOrFail($id);
-        $attributes->delete();
-        Session::flash('operation_attribute_value','مقدار '.$attributes->title.' با موفقیت حذف شد.');
+        $result = $this->attributeValue->destroy($id);
+        Session::flash('operation_attribute_value','مقدار '.$result.' با موفقیت حذف شد.');
         return redirect(route('attributes_value.index'));
     }
 }

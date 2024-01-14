@@ -4,18 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AttributeGroupRequest;
-use App\Models\AttributeGroup;
 use App\Repositories\AttributeGroup\AttributeGroupRepositoryInterface;
 use Illuminate\Support\Facades\Session;
 
 class AttributeGroupController extends Controller
 {
 
-    protected $attributesGroup;
+    protected $attributeGroup;
 
     public function __construct(AttributeGroupRepositoryInterface $attrGRepositoryInterface)
     {
-        $this->attributesGroup = $attrGRepositoryInterface;
+        $this->attributeGroup = $attrGRepositoryInterface;
     }
 
     /**
@@ -23,7 +22,7 @@ class AttributeGroupController extends Controller
      */
     public function index()
     {
-        $attributesGroup = $this->attributesGroup->getAll(20);
+        $attributesGroup = $this->attributeGroup->getAll(20);
         return view('admin.attributes_group.index',compact('attributesGroup'));
     }
 
@@ -40,7 +39,7 @@ class AttributeGroupController extends Controller
      */
     public function store(AttributeGroupRequest $request)
     {
-        $this->attributesGroup->store($request);
+        $this->attributeGroup->store($request);
         Session::flash('opration_attribute','ویژگی '.$request->title.' با موفقیت ثبت شد.');
         return redirect(route('attributes_group.index'));
     }
@@ -58,7 +57,7 @@ class AttributeGroupController extends Controller
      */
     public function edit(string $id)
     {
-        $attributeGroup = $this->attributesGroup->getById($id);
+        $attributeGroup = $this->attributeGroup->getById($id);
         return view('admin.attributes_group.edit',compact('attributeGroup'));
     }
 
@@ -67,7 +66,7 @@ class AttributeGroupController extends Controller
      */
     public function update(AttributeGroupRequest $request, string $id)
     {
-        $this->attributesGroup->update($request,$id);
+        $this->attributeGroup->update($request,$id);
         Session::flash('opration_attribute','ویژگی '.$request->title.' با موفقیت ویرایش شد.');
         return redirect(route('attributes_group.index'));
     }
@@ -77,7 +76,7 @@ class AttributeGroupController extends Controller
      */
     public function destroy(string $id)
     {
-        $result = $this->attributesGroup->destroy($id);
+        $result = $this->attributeGroup->destroy($id);
         Session::flash('opration_attribute','ویژگی '.$result.' با موفقیت حذف شد.');
         return redirect(route('attributes_group.index'));
     }

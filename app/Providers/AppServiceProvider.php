@@ -31,6 +31,11 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\AttributeGroup\AttributeGroupRepositoryInterface',
             'App\Repositories\AttributeGroup\AttributeGroupRepository'
         );
+
+        $this->app->bind(
+            'App\Repositories\AttributeValue\AttributeValueRepositoryInterface',
+            'App\Repositories\AttributeValue\AttributeValueRepository'
+        );
     }
 
     /**
