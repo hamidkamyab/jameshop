@@ -7193,6 +7193,10 @@ function selectFirstImage(element) {
 }
 
 
+function clearAttrTbl() {
+    $("#loading").fadeIn(0);
+    $("#attrTable").fadeOut(0);
+}
 
 
 function selectAttrValue(index, edit = false) {

@@ -8,4 +8,9 @@ interface CategoryRepositoryInterface {
     public function store($data);
     public function update($data,$id);
     public function destroy($id);
+
+    public function attrCreate($id);
+    public function attrStore($data,$id);
+    public function attrDestroy($attrId,$catId);
+
 }

@@ -64,6 +64,10 @@ a {
     font-size: 11px;
 }
 
+.bg-notfund {
+    background-color: #fc9d9d !important;
+}
+
 .text-orange {
     color: #fd682d !important;
 }

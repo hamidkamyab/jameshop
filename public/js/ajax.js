@@ -32,13 +32,13 @@ const AttributeModalBtnTag = document.getElementsByClassName('AttributeModalBtn'
 if (AttributeModalBtnTag) {
     for (var i = 0; i < AttributeModalBtnTag.length; i++) {
         AttributeModalBtnTag[i].addEventListener('click', async(e) => {
+            clearAttrTbl();
             const Id = e.target.parentNode.id;
             const formData = new FormData();
             formData.append('_token', _token)
             formData.append('id', Id)
             const response = await fetch(url, { method: "POST", body: formData })
             const res = await response.json();
-
             if (res['status'] == 'success') {
                 var data = res['attrGroupCategory']['attributes_group'];
                 document.getElementById('AttributeModalLabel').innerText = "ویژگی های دسته بندی " + res["attrGroupCategory"]["title"];
@@ -54,6 +54,11 @@ if (AttributeModalBtnTag) {
                         '</td>' +
                         '</tr>';
                 })
+                document.getElementById('attrTbody').innerHTML = element;
+                $("#loading").fadeOut(250);
+                $("#attrTable").fadeIn(300);
+            } else {
+                element = '<tr><td colspan="2" class="bg-notfund text-center"> ویژگی الحاق نشده است! </td></tr>';
                 document.getElementById('attrTbody').innerHTML = element;
                 $("#loading").fadeOut(250);
                 $("#attrTable").fadeIn(300);

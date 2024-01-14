@@ -28,6 +28,7 @@
                     <label for="inputParent" class="form-label">دسته والد</label>
                     <select class="form-select searchSelect mb-4" id="inputParent" name="parent_id">
                         <option selected disabled>انتخاب کنید...</option>
+                        <option  @if ($category->parent_id == 0) selected @endif value="0">بدون والد</option>
                         @foreach ($categories as $category_children)
                             <option value="{{ $category_children->id }}" @if ($category->parent_id == $category_children->id) selected @endif>
                                 {{ $category_children->title }}</option>

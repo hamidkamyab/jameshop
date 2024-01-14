@@ -30,6 +30,7 @@ class CreateCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
             'title' => 'required|min:2|max:255',
             'slug' => [

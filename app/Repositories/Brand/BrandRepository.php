@@ -3,65 +3,67 @@
 namespace App\Repositories\Brand;
 
 use App\Models\Brand;
-use Illuminate\Support\Facades\Storage;
+use App\Repositories\File\FileRepository;
 
 class BrandRepository implements BrandRepositoryInterface
 {
 
+    protected $file;
+    protected $brand;
+
+    public function __construct(FileRepository $FileRepository, Brand $brand)
+    {
+        $this->file = $FileRepository;
+        $this->brand = $brand;
+    }
+
     public function getAll()
     {
-        return  Brand::with('media.file')->paginate(30);
+        return  $this->brand::with('media.file')->paginate(30);
     }
 
     public function getById($id)
     {
-        return  Brand::with('media.file')->findOrFail($id);
+        return  $this->brand::with('media.file')->findOrFail($id);
     }
 
     public function store($data){
-        $brand = new Brand();
-        $brand->title = $data->title;
-        $brand->description = $data->description;
-        $brand->save();
-        $brand->media()->create([
+        $newBrand = new $this->brand();
+        $newBrand->title = $data->title;
+        $newBrand->description = $data->description;
+        $newBrand->save();
+        $newBrand->media()->create([
             'file_id' => $data->photo_id
         ]);
-        return $brand;
+        return $newBrand;
     }
 
     public function update($data,$id){
-        $brand = $this->getById($id);
-        $brand->title = $data->title;
-        $brand->description = $data->description;
-        $brand->save();
-        if(@$brand->media[0]){
-            $brand->media()->update([
+        $isBrand = $this->getById($id);
+        $isBrand->title = $data->title;
+        $isBrand->description = $data->description;
+        $isBrand->save();
+        if(@$isBrand->media[0]){
+            $isBrand->media()->update([
                 'file_id' => $data->photo_id
             ]);
-            if (intval($data->photo_id) != $brand->media[0]->file->id) {
-                $photo = $brand->media[0]->file;
-                $disk = 'public';
-                $path = str_replace("/storage/", "", $photo->path);
-                Storage::disk($disk)->delete($path);
-                $photo->delete();
+            if (intval($data->photo_id) != $isBrand->media[0]->file->id) {
+                $photo = $isBrand->media[0]->file;
+                $this->file->destroy($photo->id);
             }
         }else{
-            $brand->media()->create([
+            $isBrand->media()->create([
                 'file_id' => $data->photo_id
             ]);
         }
-        return $brand;
+        return $isBrand;
     }
 
     public function destroy($id){
-        $brand = $this->getById($id);
-        $photo = $brand->media[0]->file;
-        $disk = 'public';
-        $path = str_replace("/storage/", "", $photo->path);
-        Storage::disk($disk)->delete($path);
-        $brand->delete();
-        $photo->delete();
-
-        return $brand->title;
+        $isBrand = $this->getById($id);
+        $photo = $isBrand->media[0]->file;
+        $this->file->destroy($photo->id);
+        $isBrand->delete();
+        return $isBrand->title;
     }
 }
