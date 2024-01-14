@@ -26,6 +26,11 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\File\FileRepositoryInterface',
             'App\Repositories\File\FileRepository'
         );
+
+        $this->app->bind(
+            'App\Repositories\AttributeGroup\AttributeGroupRepositoryInterface',
+            'App\Repositories\AttributeGroup\AttributeGroupRepository'
+        );
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php
-namespace App\Repositories\Brand;
+namespace App\Repositories\AttributeGroup;
 
-interface BrandRepositoryInterface {
+interface AttributeGroupRepositoryInterface {
     public function getAll($page = false);
     public function getById($id);
     public function store($data);

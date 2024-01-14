@@ -5,18 +5,25 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AttributeGroupRequest;
 use App\Models\AttributeGroup;
-use App\Models\Category;
-use Illuminate\Http\Request;
+use App\Repositories\AttributeGroup\AttributeGroupRepositoryInterface;
 use Illuminate\Support\Facades\Session;
 
 class AttributeGroupController extends Controller
 {
+
+    protected $attributesGroup;
+
+    public function __construct(AttributeGroupRepositoryInterface $attrGRepositoryInterface)
+    {
+        $this->attributesGroup = $attrGRepositoryInterface;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $attributesGroup = AttributeGroup::paginate(20);
+        $attributesGroup = $this->attributesGroup->getAll(20);
         return view('admin.attributes_group.index',compact('attributesGroup'));
     }
 
@@ -33,10 +40,7 @@ class AttributeGroupController extends Controller
      */
     public function store(AttributeGroupRequest $request)
     {
-        $attributeGroup = new AttributeGroup();
-        $attributeGroup->title = $request->title;
-        $attributeGroup->type = $request->type;
-        $attributeGroup->save();
+        $this->attributesGroup->store($request);
         Session::flash('opration_attribute','ویژگی '.$request->title.' با موفقیت ثبت شد.');
         return redirect(route('attributes_group.index'));
     }
@@ -54,7 +58,7 @@ class AttributeGroupController extends Controller
      */
     public function edit(string $id)
     {
-        $attributeGroup = AttributeGroup::with('categories')->findorFail($id);
+        $attributeGroup = $this->attributesGroup->getById($id);
         return view('admin.attributes_group.edit',compact('attributeGroup'));
     }
 
@@ -63,10 +67,7 @@ class AttributeGroupController extends Controller
      */
     public function update(AttributeGroupRequest $request, string $id)
     {
-        $attributeGroup = AttributeGroup::findOrFail($id);
-        $attributeGroup->title = $request->title;
-        $attributeGroup->type = $request->type;
-        $attributeGroup->save();
+        $this->attributesGroup->update($request,$id);
         Session::flash('opration_attribute','ویژگی '.$request->title.' با موفقیت ویرایش شد.');
         return redirect(route('attributes_group.index'));
     }
@@ -76,9 +77,8 @@ class AttributeGroupController extends Controller
      */
     public function destroy(string $id)
     {
-        $attributeGroup = AttributeGroup::findOrFail($id);
-        $attributeGroup->delete();
-        Session::flash('opration_attribute','ویژگی '.$attributeGroup->title.' با موفقیت حذف شد.');
+        $result = $this->attributesGroup->destroy($id);
+        Session::flash('opration_attribute','ویژگی '.$result.' با موفقیت حذف شد.');
         return redirect(route('attributes_group.index'));
     }
 }

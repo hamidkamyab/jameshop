@@ -22,7 +22,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brands = $this->brand->getAll();
+        $brands = $this->brand->getAll(20);
         return view('admin.brands.index', compact('brands'));
     }
 

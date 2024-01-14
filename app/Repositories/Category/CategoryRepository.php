@@ -24,14 +24,13 @@ class CategoryRepository implements CategoryRepositoryInterface
         $this->attributeGroupCategory = $attributeGroupCategory;
     }
 
-    public function getPage($page)
+    public function getAll($page = false)
     {
-        return  $this->category::with('children')->where('parent_id', 0)->paginate($page);
-    }
-
-    public function getAll()
-    {
-        return  $this->category::with('children')->where('parent_id', 0)->get();
+        if($page){
+            return  $this->category::with('children')->where('parent_id', 0)->paginate($page);
+        }else{
+            return  $this->category::with('children')->where('parent_id', 0)->get();
+        }
     }
 
     public function getById($id)

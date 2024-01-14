@@ -17,9 +17,13 @@ class BrandRepository implements BrandRepositoryInterface
         $this->brand = $brand;
     }
 
-    public function getAll()
+    public function getAll($page = false)
     {
-        return  $this->brand::with('media.file')->paginate(30);
+        if($page){
+            return  $this->brand::with('media.file')->paginate(30);
+        }else{
+            return  $this->brand::with('media.file')->get();
+        }
     }
 
     public function getById($id)
