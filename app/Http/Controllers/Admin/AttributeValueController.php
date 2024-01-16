@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Session;
 class AttributeValueController extends Controller
 {
 
-    protected $attributeValue;
-    protected $attributeGroup;
+    private $attributeValue;
+    private $attributeGroup;
 
     public function __construct(AttributeValueRepositoryInterface $attributeValue, AttributeGroupRepositoryInterface $attributeGroup)
     {

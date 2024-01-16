@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Session;
 class MenuController extends Controller
 {
 
-    protected $menu;
-    protected $bestMenu;
-    protected $category;
+    private $menu;
+    private $bestMenu;
+    private $category;
 
     public function __construct(MenuRepositoryInterface $menu, CategoryRepositoryInterface $category, BestMenuRepositoryInterface $bestMenu)
     {

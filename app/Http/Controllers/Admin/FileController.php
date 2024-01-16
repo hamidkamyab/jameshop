@@ -5,14 +5,23 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\File as M_File;
 use App\Models\Media;
+use App\Repositories\File\FileRepositoryInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Intervention\Image\Facades\Image;
+
 
 class FileController extends Controller
 {
+
+
+    private $file;
+
+    public function __construct(FileRepositoryInterface $file)
+    {
+        $this->file = $file;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -39,10 +48,6 @@ class FileController extends Controller
 
     public function upload(Request $request)
     {
-        $file = $request->file('file');
-        $type = $file->getMimeType();
-        $parts = explode('/', $type);
-
         if ($request->type != "all") {
             $validator = Validator::make($request->file(), [
                 'file' => [
@@ -66,48 +71,12 @@ class FileController extends Controller
             ], 422);
         }
 
-        $fileName = time() . '_' . $file->getClientOriginalName();
-        $dir = 'public/' . $request->folder;
 
-        $m_file = new M_File();
-
-        if (@$request->thumbnail == 'true') {
-            $path = str_replace("public/", "app/public/",$dir);
-            $thumbnailPath = storage_path($path.'/thumbnail/');
-
-            $thumbnail = $request->folder.'/thumbnail/'.$fileName;
-            $m_file->thumbnail = $thumbnail;
-        }
-
-        $m_file->name = $fileName;
-        $m_file->path = $request->folder . '/' . $fileName;
-        $m_file->type = $parts[0];
-        $m_file->size = $file->getSize();
-        if($request->is_dir){
-            $m_file->is_dir = $request->is_dir;
-        }
-        // $photo->user_id = Auth::user()->id; //////////////////////////////////// Auth
-        $m_file->user_id = 1;
-        $result = $m_file->save();
-
-        if($result){
-            ///////ذخیره تصویر اصلی و بند انگشتی//////
-            Storage::disk('local')->putFileAs($dir, $file, $fileName);
-            if (@$request->thumbnail == 'true') {
-                File::makeDirectory($thumbnailPath, $mode = 0775, true, true);
-                // ایجاد تصویر از تصویر اصلی
-                $image = Image::make($file);
-                // ایجاد تصویر thumbnail
-                $image->fit(200, 200)->save($thumbnailPath.$fileName);
-            }
-            ///////ذخیره تصویر اصلی و بند انگشتی//////
-        }
-
-
+        $result =  $this->file->upload($request);
         return response()->json([
-            'file_id' => $m_file->id,
-            'path' => $m_file->path,
-            'thumbnail' => $m_file->thumbnail,
+            'file_id' => $result['id'],
+            'path' => $result['path'],
+            'thumbnail' => $result['thumbnail'],
         ]);
     }
 
@@ -140,29 +109,9 @@ class FileController extends Controller
      */
     public function remove(Request $request)
     {
-        $Ids = explode(",", $request->id);
-        foreach ($Ids as $key => $id) {
-            $File = M_File::findOrFail($id);
-            $Media = Media::where('file_id',$id)->get();
-            $disk = 'public';
-            $path = str_replace("/storage/", "", $File->path);
-            Storage::disk($disk)->delete($path);
-            if($File->thumbnail != null){
-                $thumbnailPath = str_replace("/storage/", "", $File->thumbnail);
-                Storage::disk($disk)->delete($thumbnailPath);
-            }
-            $dir = $disk . '/' . str_replace($File->name, "", $path);
-            if (Storage::exists($dir)) {
-                $files = Storage::allFiles($dir);
-                if (count($files) == 0) {
-                    Storage::deleteDirectory($dir);
-                }
-            }
-            $File->delete();
-        }
+        $this->file->destroy($request->id);
         return response()->json([
-            'status' => 'success',
-            'media' => $Media
+            'status' => 'success'
         ]);
     }
 

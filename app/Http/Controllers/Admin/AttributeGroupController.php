@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Session;
 class AttributeGroupController extends Controller
 {
 
-    protected $attributeGroup;
+    private $attributeGroup;
 
     public function __construct(AttributeGroupRepositoryInterface $attrGRepositoryInterface)
     {
