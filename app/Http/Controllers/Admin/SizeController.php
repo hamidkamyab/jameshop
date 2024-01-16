@@ -5,17 +5,26 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\SizeRequest;
 use App\Models\Size;
+use App\Repositories\Size\SizeRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class SizeController extends Controller
 {
+
+    private $size;
+
+    public function __construct(SizeRepositoryInterface $size)
+    {
+        $this->size = $size;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $sizes = Size::all();
+        $sizes = $this->size->getAll();
         return view('admin.sizes.index', compact('sizes'));
     }
 
@@ -32,9 +41,7 @@ class SizeController extends Controller
      */
     public function store(SizeRequest $request)
     {
-        $size = new Size();
-        $size->title = $request->title;
-        $size->save();
+        $this->size->store($request);
         Session::flash('opration_size', 'سایز ' . $request->title . ' با موفقیت اضافه شد.');
         return redirect()->route('sizes.index');
     }
@@ -52,7 +59,7 @@ class SizeController extends Controller
      */
     public function edit(string $id)
     {
-        $size = Size::findOrFail($id);
+        $size = $this->size->getById($id);
         return view('admin.sizes.edit',compact('size'));
     }
 
@@ -61,9 +68,7 @@ class SizeController extends Controller
      */
     public function update(SizeRequest $request, string $id)
     {
-        $size = Size::findOrFail($id);
-        $size->title = $request->title;
-        $size->save();
+        $this->size->update($request,$id);
         Session::flash('opration_size', 'سایز ' . $request->title . ' با موفقیت ویرایش شد.');
         return redirect()->route('sizes.index');
     }
@@ -73,8 +78,7 @@ class SizeController extends Controller
      */
     public function destroy(string $id)
     {
-        $size = Size::findOrFail($id);
-        $size->delete();
+        $size = $this->size->destroy($id);
         Session::flash('opration_size', 'سایز ' . $size->title . ' با موفقیت حذف شد.');
         return redirect()->route('sizes.index');
     }
