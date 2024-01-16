@@ -3,17 +3,14 @@
 namespace App\Repositories\AttributeValue;
 
 use App\Models\AttributeValue;
-use App\Repositories\File\FileRepository;
 
 class AttributeValueRepository implements AttributeValueRepositoryInterface
 {
 
-    protected $file;
     protected $attributeValue;
 
-    public function __construct(FileRepository $FileRepository, AttributeValue $attributeValue)
+    public function __construct(AttributeValue $attributeValue)
     {
-        $this->file = $FileRepository;
         $this->attributeValue = $attributeValue;
     }
 

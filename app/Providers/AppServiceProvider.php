@@ -36,6 +36,16 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\AttributeValue\AttributeValueRepositoryInterface',
             'App\Repositories\AttributeValue\AttributeValueRepository'
         );
+
+        $this->app->bind(
+            'App\Repositories\Menu\MenuRepositoryInterface',
+            'App\Repositories\Menu\MenuRepository'
+        );
+
+        $this->app->bind(
+            'App\Repositories\BestMenu\BestMenuRepositoryInterface',
+            'App\Repositories\BestMenu\BestMenuRepository'
+        );
     }
 
     /**

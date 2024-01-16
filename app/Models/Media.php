@@ -9,23 +9,21 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 class Media extends Model
 {
     use HasFactory;
-    // protected $mediaPath = "/storage/";
-    // protected $mediaThumbnail = "/storage/";
 
     protected $table = 'media';
     protected $fillable = ['file_id'];
 
-    // public function user(){
-    //     return $this->belongsTo(User::class);
-    // }
 
-    // public function getPathAttribute($media){
-    //     return $this->mediaPath . $media;
-    // }
+    protected static function boot()
+    {
+        parent::boot();
 
-    // public function getThumbnailAttribute($media){
-    //     return $this->mediaThumbnail . $media;
-    // }
+        static::deleting(function ($file) {
+            $file->media()->delete();
+        });
+    }
+
+
 
     public function file(){
         return $this->belongsTo(File::class);

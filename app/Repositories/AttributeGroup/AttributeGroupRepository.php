@@ -3,17 +3,13 @@
 namespace App\Repositories\AttributeGroup;
 
 use App\Models\AttributeGroup;
-use App\Repositories\File\FileRepository;
 
 class AttributeGroupRepository implements AttributeGroupRepositoryInterface
 {
-
-    protected $file;
     protected $attributeGroup;
 
-    public function __construct(FileRepository $FileRepository, AttributeGroup $attributeGroup)
+    public function __construct(AttributeGroup $attributeGroup)
     {
-        $this->file = $FileRepository;
         $this->attributeGroup = $attributeGroup;
     }
 

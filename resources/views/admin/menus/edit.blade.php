@@ -20,8 +20,8 @@
                 @method('PUT')
                 <div class="col-6">
                     <label for="inputTitle" class="form-label">عنوان</label>
-                    <input type="text" class="form-control vazir fs-12 fw-bold" id="inputTitle" name="title"
-                        placeholder="عنوان منو..." value="{{ $menu->title }}" />
+                    <input type="text" class="form-control vazir fs-12 fw-bold reqCheck" id="inputTitle" name="title"
+                        placeholder="عنوان منو..." value="{{ $menu->title }}" onfocus="rmvCls(this)" />
                 </div>
                 <div class="col-6">
                     <label class="form-label">رنگ</label><small class="mx-1 text-danger">(اختیاری می
@@ -42,7 +42,7 @@
                     <div class="col-12"><label class="form-label">لینک</label></div>
                     <div class="form-group col-6 p-3">
                         <select id="selectLink" class="form-control def-select vazir fs-12 fw-bold form-select"
-                            role="button" name="link_option">
+                            role="button" name="is_cat">
                             <option disabled>انتخاب کنید</option>
                             <option value="0" @if ($menu->is_cat == '0') selected @endif>بدون لینک</option>
                             <option value="1" @if ($menu->is_cat == '1') selected @endif>از دسته بندی</option>
@@ -69,7 +69,7 @@
                     </div>
 
                     <div class="col-12 p-3">
-                        <input type="text" class="form-control vazir fs-12 fw-bold" id="inputLink" disabled
+                        <input type="text" class="form-control vazir fs-12 fw-bold" id="inputLink" @if($menu->is_cat != 2) disabled @endif
                             name="link" placeholder="لینک منو..." value="{{ $menu->link }}" />
                     </div>
                 </div>
@@ -171,7 +171,7 @@
     <div class="col-3 left-box d-flex flex-wrap gap-3">
         <div class="justify-content-center bg-white py-3 ps-2 pe-3 border-start border-4 border-info w-100">
             <div class="col-12 d-flex justify-content-between">
-                <button type="submit" class="btn btn-primary" onclick="sendForm('formTarget')">ویرایش منو</button>
+                <button type="submit" class="btn btn-primary" onclick="sendForm('formTarget',true)">ویرایش منو</button>
                 <a href="{{ route('menus.index') }}" class="btn btn-outline-danger">انصراف</a>
             </div>
         </div>
@@ -211,9 +211,9 @@
                         responseText['file_id'] + '">' +
                         '<img src="' + responseText['path'] + '">' +
                         '<div class="w-50 p-3">' +
-                        '<input type="text" class="form-control vazir fs-12 fw-bold" name="link-' +
+                        '<input type="text" class="form-control vazir fs-12 fw-bold reqCheck" name="link-' +
                         responseText[
-                            'file_id'] + '" placeholder="لینک برند یا طراح برتر...." />' +
+                            'file_id'] + '" placeholder="لینک برند یا طراح برتر...." onfocus="rmvCls(this)" />' +
                         '</div>' +
                         '</li>';
                     $('.ImgChoose').append(tag);

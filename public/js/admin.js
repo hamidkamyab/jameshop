@@ -7161,8 +7161,33 @@ window.onload = () => {
 }
 
 /*********SendForm******** */
-function sendForm(target) {
-    document.getElementById(target).submit();
+function sendForm(target, isCheck = false) {
+    if (isCheck) {
+        let submit = true;
+        var tags = document.querySelectorAll('.reqCheck');
+        tags.forEach(element => {
+            if ($(element).val() == null || $(element).val() == "") {
+                $(element).addClass('inputErr');
+                submit = false;
+            }
+        });
+        if (submit) {
+            document.getElementById(target).submit();
+        } else {
+            Swal.fire({
+                title: 'مقدار خالی است!',
+                text: "تمام موارد مورد نیاز را پر کنید!",
+                icon: 'error',
+                confirmButtonText: 'بستن!',
+            })
+        }
+    } else {
+        document.getElementById(target).submit();
+    }
+}
+
+function rmvCls(elm) {
+    $(elm).removeClass('inputErr');
 }
 /************************** */
 
@@ -7266,3 +7291,9 @@ $('.toast').on('show.bs.toast', function() {
 $('.toast').on('hide.bs.toast', function() {
     $('.toast').fadeOut(250);
 })
+
+function reqValidate(e) {
+    e.preventDefault()
+    var tags = document.querySelectorAll('.reqCheck');
+    console.log(tags);
+}
