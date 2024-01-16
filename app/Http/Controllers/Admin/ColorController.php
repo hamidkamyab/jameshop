@@ -5,17 +5,26 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ColorRequest;
 use App\Models\Color;
+use App\Repositories\Color\ColorRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class ColorController extends Controller
 {
+
+    private $color;
+
+    public function __construct(ColorRepositoryInterface $colorRepository)
+    {
+        $this->color = $colorRepository;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $colors = Color::paginate(20);
+        $colors =$this->color->getAll(20);
         return view('admin.colors.index',compact('colors'));
     }
 
@@ -32,11 +41,8 @@ class ColorController extends Controller
      */
     public function store(ColorRequest $request)
     {
-        $color = new Color();
-        $color->name = $request->name;
-        $color->code = $request->code;
-        $color->save();
-        Session::flash('opration_color', 'رنگ ' . $color->name . ' با موفقیت ثبت شد.');
+        $this->color->store($request);
+        Session::flash('opration_color', 'رنگ ' . $request->name . ' با موفقیت ثبت شد.');
         return redirect(route('colors.index'));
     }
 
@@ -53,7 +59,7 @@ class ColorController extends Controller
      */
     public function edit(string $id)
     {
-        $color = Color::findOrFail($id);
+        $color = $this->color->getById($id);
         return view('admin.colors.edit',compact('color'));
     }
 
@@ -62,10 +68,7 @@ class ColorController extends Controller
      */
     public function update(ColorRequest $request, string $id)
     {
-        $color = Color::findOrFail($id);
-        $color->name = $request->name;
-        $color->code = $request->code;
-        $color->save();
+        $this->color->update($request,$id);
         Session::flash('opration_color', 'رنگ ' . $request->name . ' با موفقیت ویرایش شد.');
         return redirect(route('colors.index'));
     }
@@ -75,8 +78,7 @@ class ColorController extends Controller
      */
     public function destroy(string $id)
     {
-        $color = Color::findOrFail($id);
-        $color->delete();
+        $color = $this->color->destroy($id);
         Session::flash('opration_color', 'رنگ ' . $color->name . ' با موفقیت حذف شد.');
         return redirect(route('colors.index'));
     }

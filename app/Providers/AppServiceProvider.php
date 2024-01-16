@@ -46,6 +46,11 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\BestMenu\BestMenuRepositoryInterface',
             'App\Repositories\BestMenu\BestMenuRepository'
         );
+
+        $this->app->bind(
+            'App\Repositories\Color\ColorRepositoryInterface',
+            'App\Repositories\Color\ColorRepository'
+        );
     }
 
     /**
