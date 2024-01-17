@@ -56,6 +56,11 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\Size\SizeRepositoryInterface',
             'App\Repositories\Size\SizeRepository'
         );
+
+        $this->app->bind(
+            'App\Repositories\Product\ProductRepositoryInterface',
+            'App\Repositories\Product\ProductRepository'
+        );
     }
 
     /**

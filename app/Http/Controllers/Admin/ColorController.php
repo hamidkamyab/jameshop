@@ -14,9 +14,9 @@ class ColorController extends Controller
 
     private $color;
 
-    public function __construct(ColorRepositoryInterface $colorRepository)
+    public function __construct(ColorRepositoryInterface $IColorRepository)
     {
-        $this->color = $colorRepository;
+        $this->color = $IColorRepository;
     }
 
     /**

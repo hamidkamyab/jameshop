@@ -156,4 +156,8 @@ class CategoryRepository implements CategoryRepositoryInterface
         $AttributeGroupCategory = $this->attributeGroupCategory::where('attribute_group_id',$attrId)->where('category_id',$catId)->first();
         return $AttributeGroupCategory->delete();
     }
+
+    public function attrGroupCat($catsId){
+        return  $this->attributeGroupCategory::whereIn('category_id', $catsId)->get();
+    }
 }

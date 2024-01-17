@@ -163,7 +163,7 @@
                     <label for="" class="mb-1">تصاویر محصول</label>
 
                     <div id="productImgBox">
-                        <input type="text" id="photos" name="photos" class="ClearLoad">
+                        <input type="hidden" id="photos" name="photos" class="ClearLoad">
                         <div class="border border-1 border-gray-500 dropzone" id="dropzoneTag">
                             <div class="dz-message">
                                 <div class="d-flex flex-column">
@@ -188,7 +188,7 @@
 
                     </div>
                 </div>
-                <input type="hidden" name="first_pic" id="inputFirstPicId" />
+                <input type="hidden" name="first_pic" id="inputFirstPicId" value="{{$product->first_pic}}" />
                 <input type="hidden" name="attribute_value" id="attribute_value" value="{{implode(',',$attributesValues)}}" />
             </form>
 
@@ -198,14 +198,14 @@
     <div class="col-3 left-box d-flex flex-wrap gap-3">
         <div class="justify-content-center bg-white py-3 ps-2 pe-3 border-start border-4 border-info w-100">
             <div class="col-12 d-flex justify-content-between">
-                <button type="submit" class="btn btn-primary" onclick="sendForm('formTarget')">ثبت محصول</button>
+                <button type="submit" class="btn btn-primary" onclick="sendForm('formTarget')">ویرایش محصول</button>
                 <a href="{{ route('products.index') }}" class="btn btn-outline-danger">انصراف</a>
             </div>
         </div>
 
         <div id="attrCategoryBox"
             class="justify-content-center bg-white py-3 ps-2 pe-3 border-start border-4 border-info w-100 hidden">
-            {{-- {{dd(json_decode($product->attributes_values))}} --}}
+
             <div class="col-12 d-flex justify-content-between flex-wrap">
                 <h6 class="border-bottom border-1 py-2 mb-3 w-100" onclick="selectAttrValue()">ویژگی های دسته بندی</h6>
                 <div id="categoryAttr" class="col-12 d-flex flex-column gap-2">

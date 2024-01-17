@@ -17,11 +17,11 @@ class MenuController extends Controller
     private $bestMenu;
     private $category;
 
-    public function __construct(MenuRepositoryInterface $menu, CategoryRepositoryInterface $category, BestMenuRepositoryInterface $bestMenu)
+    public function __construct(MenuRepositoryInterface $IMenuRepository, CategoryRepositoryInterface $ICategoryRepository, BestMenuRepositoryInterface $IBestMenuRepository)
     {
-        $this->menu = $menu;
-        $this->bestMenu = $bestMenu;
-        $this->category = $category;
+        $this->menu = $IMenuRepository;
+        $this->category = $ICategoryRepository;
+        $this->bestMenu = $IBestMenuRepository;
     }
 
     /**

@@ -12,9 +12,9 @@ class AttributeGroupController extends Controller
 
     private $attributeGroup;
 
-    public function __construct(AttributeGroupRepositoryInterface $attrGRepositoryInterface)
+    public function __construct(AttributeGroupRepositoryInterface $IAttrGRepository)
     {
-        $this->attributeGroup = $attrGRepositoryInterface;
+        $this->attributeGroup = $IAttrGRepository;
     }
 
     /**

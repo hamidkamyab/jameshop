@@ -17,9 +17,9 @@ class FileController extends Controller
 
     private $file;
 
-    public function __construct(FileRepositoryInterface $file)
+    public function __construct(FileRepositoryInterface $IFileRepository)
     {
-        $this->file = $file;
+        $this->file = $IFileRepository;
     }
 
     /**

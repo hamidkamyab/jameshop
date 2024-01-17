@@ -18,10 +18,10 @@ class AttributeValueController extends Controller
     private $attributeValue;
     private $attributeGroup;
 
-    public function __construct(AttributeValueRepositoryInterface $attributeValue, AttributeGroupRepositoryInterface $attributeGroup)
+    public function __construct(AttributeValueRepositoryInterface $IAttributeValueRepository, AttributeGroupRepositoryInterface $IAttributeGroupRepository)
     {
-        $this->attributeValue = $attributeValue;
-        $this->attributeGroup = $attributeGroup;
+        $this->attributeValue = $IAttributeValueRepository;
+        $this->attributeGroup = $IAttributeGroupRepository;
     }
 
     /**

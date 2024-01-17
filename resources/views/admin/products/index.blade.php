@@ -102,7 +102,7 @@
                     if (result['status'] == 'success') {
                         let tag = '#row-' + id;
                         $(tag).fadeOut();
-                        Swal.fire("محصول با موفقیت حذ شد!", "", "success");
+                        Swal.fire("محصول با موفقیت حذف شد!", "", "success");
                     }
 
                 } else if (result.isDenied) {

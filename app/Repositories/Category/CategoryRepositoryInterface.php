@@ -12,4 +12,6 @@ interface CategoryRepositoryInterface {
     public function attrStore($data,$id);
     public function attrDestroy($attrId,$catId);
 
+    public function attrGroupCat($catsId);
+
 }

@@ -14,9 +14,9 @@ class SizeController extends Controller
 
     private $size;
 
-    public function __construct(SizeRepositoryInterface $size)
+    public function __construct(SizeRepositoryInterface $ISizeRepository)
     {
-        $this->size = $size;
+        $this->size = $ISizeRepository;
     }
 
     /**

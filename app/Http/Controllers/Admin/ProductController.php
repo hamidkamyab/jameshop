@@ -4,28 +4,42 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductRequest;
-use App\Models\AttributeGroup;
-use App\Models\AttributeGroupCategory;
-use App\Models\Brand;
-use App\Models\Category;
-use App\Models\Color;
-use App\Models\File;
-use App\Models\MediaFile;
-use App\Models\Product;
-use App\Models\Size;
+use App\Repositories\AttributeGroup\AttributeGroupRepositoryInterface;
+use App\Repositories\Brand\BrandRepositoryInterface;
+use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\Color\ColorRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\Size\SizeRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+
+    private $product;
+    private $category;
+    private $brand;
+    private $size;
+    private $color;
+    private $attrGroup;
+
+    public function __construct(ProductRepositoryInterface $IProductRepository, CategoryRepositoryInterface $ICategoryRepository, BrandRepositoryInterface $IBrandRepository, SizeRepositoryInterface $ISizeRepository, ColorRepositoryInterface $IColorRepository, AttributeGroupRepositoryInterface $IAttrGroupRepository)
+    {
+        $this->product = $IProductRepository;
+        $this->category = $ICategoryRepository;
+        $this->brand = $IBrandRepository;
+        $this->size = $ISizeRepository;
+        $this->color = $IColorRepository;
+        $this->attrGroup = $IAttrGroupRepository;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $products = Product::with('category', 'brand', 'media.file')->paginate(30);
+        $products = $this->product->getAll(30);
         return view('admin.products.index', compact('products'));
     }
 
@@ -34,10 +48,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::with('children')->where('parent_id', null)->get();
-        $brands = Brand::all();
-        $colors = Color::all();
-        $sizes = Size::all();
+        $categories = $this->category->getAll();
+        $brands = $this->brand->getAll();
+        $colors = $this->color->getAll();
+        $sizes = $this->size->getAll();
         $sku = 'JS-' . time();
         return view('admin.products.create', compact(['categories', 'brands', 'colors', 'sizes','sku']));
     }
@@ -47,41 +61,7 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        $product = new Product();
-        $meta_description = '';
-
-        $product->title = $request->title;
-        $product->sku =  $request->sku;
-        $product->slug = $request->slug;
-        $product->price = $request->price;
-        $product->discount_price = $request->discount_price;
-        $product->description = $request->description;
-        $product->status = $request->status;
-        if ($request->meta_description) {
-            $meta_description = $request->meta_description;
-        } else if (!$request->meta_description && $request->description) {
-            $meta_description = $request->description;
-        }
-        $product->meta_description = $meta_description;
-        $product->meta_keywords = $request->meta_keywords;
-        $product->brand_id = $request->brand_id;
-        $product->category_id = $request->category_id;
-        $product->user_id = 1;
-        $product->first_pic = $request->first_pic;
-        $product->save();
-        $product->sizes()->sync($request->size_id);
-        $product->colors()->sync($request->colors);
-
-        $photos = explode(',', $request->photos);
-        foreach ($photos as $key => $id) {
-            $product->media()->create([
-                'file_id' => $id
-            ]);
-        }
-        $attrValues = explode(',', $request->attribute_value);
-
-        $product->attributes_values()->sync($attrValues);
-
+        $this->product->store($request);
         Session::flash('opration_product', 'محصول ' . $request->title . ' با موفقیت ایجاد شد');
         return redirect(route('products.index'));
     }
@@ -99,9 +79,8 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        $product = Product::with('sizes', 'colors', 'media.file', 'attributes_values:id')->where('id', $id)->first();
-
-        $category = Category::with('parent', 'children')->where('id', $product->category->id)->first();
+        $product = $this->product->getById($id);
+        $category = $this->category->getById($product->category_id);
 
         $catParentId = getParentID($category);
         $catChildrenId = getChildrenID($category);
@@ -113,11 +92,13 @@ class ProductController extends Controller
             $catsId[] = $value;
         }
 
+
         $attributesValues = $product->attributes_values()->pluck('attributes_values.id')->toArray();
 
-        $attributes_group_category = AttributeGroupCategory::select('attribute_group_id')->whereIn('category_id', $catsId)->get();
+        $attributes_group_category = $this->category->attrGroupCat($catsId);
         $attributes_group_category = getOneFieldOfArray($attributes_group_category, 'attribute_group_id');
-        $attributesGroup = AttributeGroup::with('attributes_value')->whereIn('id', $attributes_group_category)->get();
+
+        $attributesGroup = $this->attrGroup->getById($attributes_group_category);
 
         $sizesId = getOneFieldOfArray($product->sizes, 'id');
         unset($product->sizes);
@@ -127,10 +108,10 @@ class ProductController extends Controller
         unset($product->colors);
         $product->colors = $colorsId;
 
-        $categories = Category::with('children')->where('parent_id', null)->get();
-        $brands = Brand::all();
-        $colors = Color::all();
-        $sizes = Size::all();
+        $categories = $this->category->getAll();
+        $brands = $this->brand->getAll();
+        $colors = $this->color->getAll();
+        $sizes = $this->size->getAll();
 
         return view('admin.products.edit', compact(['product', 'categories', 'brands', 'colors', 'sizes', 'attributesGroup', 'attributesValues']));
     }
@@ -140,43 +121,7 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, string $id)
     {
-        $product = Product::with('sizes', 'colors', 'media.file', 'attributes_values:id')->where('id', $id)->first();
-        $meta_description = '';
-        $product->title = $request->title;
-        $product->slug = $request->slug;
-        $product->price = $request->price;
-        $product->discount_price = $request->discount_price;
-        $product->description = $request->description;
-        $product->status = $request->status;
-        if ($request->meta_description) {
-            $meta_description = $request->meta_description;
-        } else if (!$request->meta_description && $request->description) {
-            $meta_description = $request->description;
-        }
-        $product->meta_description = $meta_description;
-        $product->meta_keywords = $request->meta_keywords;
-        $product->brand_id  = $request->brand_id;
-        $product->category_id  = $request->category_id;
-        $product->first_pic = $request->first_pic;
-        $product->sizes()->sync($request->size_id);
-
-        $product->colors()->sync($request->colors);
-
-
-        $photos = explode(',', $request->photos);
-        foreach ($product->media as $key => $val) {
-            $product->media()->delete($val->id);
-        }
-        foreach ($photos as $key => $val) {
-            $product->media()->create([
-                'file_id' => $val
-            ]);
-        }
-
-        $attrValues = explode(',', $request->attribute_value);
-        $product->attributes_values()->sync($attrValues);
-
-        $product->save();
+        $this->product->update($request,$id);
         Session::flash('opration_product', 'محصول ' . $request->title . ' با موفقیت ویرایش شد');
         return redirect(route('products.index'));
     }
@@ -190,29 +135,7 @@ class ProductController extends Controller
     }
     public function delete(Request $request, string $id)
     {
-        $product = Product::with('media.file')->findOrFail($id);
-        $disk = 'public';
-        $photosId = [];
-
-        if($request->trash == 'true'){
-            $product->delete();
-        }else{
-            foreach ($product->media as $key => $value) {
-                $path = str_replace("/storage/", "", $value->file->path);
-                Storage::disk($disk)->delete($path);
-                if ($value->file->thumbnail != null) {
-                    $thumbnailPath = str_replace("/storage/", "", $value->file->thumbnail);
-                    Storage::disk($disk)->delete($thumbnailPath);
-                }
-                array_push($photosId,$value->file_id);
-                $dir = $disk . '/' . str_replace($value->file->name, "", $path);
-                Storage::deleteDirectory($dir);
-                $product->media()->delete($value->id);
-            }
-
-            File::whereIn('id',$photosId)->delete();
-            $product->forceDelete();
-        }
+        $this->product->destroy($request,$id);
         return response()->json(['status' => 'success'], Response::HTTP_OK);
     }
 
@@ -222,17 +145,23 @@ class ProductController extends Controller
      */
     public function attributes(string $id)
     {
-        $categories = Category::with('parent')->where('id', $id)->first();
+        $categories = $this->category->getById($id);
         $catParentId = getParentID($categories);
         $catParentId[] = intval($id);
-        $attributes_group_category = AttributeGroupCategory::select('attribute_group_id')->whereIn('category_id', $catParentId)->get();
-        $attributes = AttributeGroup::with('attributes_value')->whereIn('id', $attributes_group_category)->get();
+
+        $attributes_group_category = $this->category->attrGroupCat($catParentId);
+        $attrGroupId = [];
+        foreach ($attributes_group_category as $key => $value) {
+            $attrGroupId[] = $value->attribute_group_id;
+        }
+        $attributes = $this->attrGroup->getById($attrGroupId);
+
         return  response()->json(['status' => 'success', 'attributes' => $attributes], Response::HTTP_OK);
     }
 
     public function photos(string $id)
     {
-        $product = Product::with('media.file')->findOrFail($id);
+        $product = $this->product->getById($id);
         return  response()->json(['status' => 'success', 'photos' => $product->media], Response::HTTP_OK);
     }
 }

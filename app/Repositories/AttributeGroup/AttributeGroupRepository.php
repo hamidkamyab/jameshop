@@ -24,7 +24,7 @@ class AttributeGroupRepository implements AttributeGroupRepositoryInterface
 
     public function getById($id)
     {
-        return  $this->attributeGroup::findorFail($id);
+        return  $this->attributeGroup::with('attributes_value')->whereIn('id', $id)->get();
     }
 
     public function store($data){
