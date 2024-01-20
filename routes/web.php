@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\FileController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SizeController;
+use App\Http\Controllers\Admin\SliderController;
 use App\Models\AttributeValue;
 use Illuminate\Support\Facades\Route;
 
@@ -56,4 +57,9 @@ Route::prefix('admin')->group(function(){
     Route::get('photos/{id}',[ProductController::class,'photos'])->name('products.photos');
     Route::post('products/delete/{product}',[ProductController::class,'delete'])->name('products.delete');
     Route::resource('products',ProductController::class);
+    Route::prefix('widget')->group(function(){
+        Route::get('slider',[SliderController::class,'index'])->name('slider.index');
+        Route::post('slider',[SliderController::class,'store'])->name('slider.store');
+        Route::get('slider/{id}',[SliderController::class,'destroy'])->name('slider.destroy');
+    });
 });

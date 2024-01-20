@@ -237,6 +237,55 @@
                     </li>
                 </ul>
             </li>
+
+                        <li class="itemLi">
+                <a href="javascript:void(0)" class="item px-2 d-flex align-items-center justify-content-between gap-1 text-white toggle_menu">
+                    <div class="d-flex align-items-center gap-2 ">
+                        <i class="icon-widget-line"></i>
+                        <span class="BYekan hiddenItem">ویجتها</span>
+                    </div>
+                    <i class="icon-down-open icon-open open"></i>
+                </a>
+                <ul class="sub-menu list-unstyled open">
+                    <li class="itemLi active">
+                        <a href="{{route('products.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
+                            <div class="d-flex align-items-center gap-2 px-1">
+                                <span class="BYekan hiddenItem">اسلایدر</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="itemLi">
+                        <a href="{{route('products.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
+                            <div class="d-flex align-items-center gap-2 px-1">
+                                <span class="BYekan hiddenItem">شگفت آویز</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="itemLi">
+                        <a href="{{route('products.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
+                            <div class="d-flex align-items-center gap-2 px-1">
+                                <span class="BYekan hiddenItem">استایل هفته</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li class="itemLi">
+                        <a href="{{route('products.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
+                            <div class="d-flex align-items-center gap-2 px-1">
+                                <span class="BYekan hiddenItem">زیبایی و سلامت</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li class="itemLi">
+                        <a href="{{route('products.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
+                            <div class="d-flex align-items-center gap-2 px-1">
+                                <span class="BYekan hiddenItem">طراحان ایرانی</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </nav>
 </div>

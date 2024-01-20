@@ -7292,8 +7292,26 @@ $('.toast').on('hide.bs.toast', function() {
     $('.toast').fadeOut(250);
 })
 
-function reqValidate(e) {
-    e.preventDefault()
-    var tags = document.querySelectorAll('.reqCheck');
-    console.log(tags);
+
+function checkSliderForm() {
+    const seen = {};
+    let isCheck = false;
+    var sortSlider = document.querySelectorAll('.sortSlider');
+
+    sortSlider.forEach(element => {
+        if (seen[element.value]) {
+            isCheck = true;
+        }
+        seen[element.value] = element.value;
+    });
+    if (isCheck) {
+        Swal.fire({
+            title: 'شماره اسلاید تکراری!',
+            text: 'شماره اسلایدها نمی تواند تکراری باشد!',
+            icon: 'error',
+            confirmButtonText: 'بستن!',
+        })
+    } else {
+        sendForm('formTarget', true)
+    }
 }
