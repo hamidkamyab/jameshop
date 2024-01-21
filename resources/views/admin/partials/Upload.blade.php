@@ -58,23 +58,7 @@
                             })
                             const result = await response.json();
                             if (result['status'] == 'success') {
-                                photosId = photosId.filter(item => item !== id);
-                                $('#photos').val(photosId);
-                                $("#PI-" + id).fadeOut(250);
-
-                                if ($("#PI-" + id).hasClass('active')) {
-                                    $('#inputFirstPicId').val('');
-                                }
-                                setTimeout(() => {
-                                    $("#PI-" + id).remove();
-                                    if (document.getElementsByClassName("ImgItem")
-                                        .length == 0) {
-                                        $('.ImgChooseLabel').addClass('d-none');
-                                        $('#inputFirstPicId').val('');
-                                        c = 0;
-                                        $('#photos').attr('disabled',false)
-                                    }
-                                }, 300);
+                                resultRemove(id)
                             }
                         }
                     }
