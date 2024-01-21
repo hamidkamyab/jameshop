@@ -22,15 +22,14 @@
                     @include('admin.partials.Upload')
                     <label for="" class="ImgChooseLabel my-1 d-none">اسلایدرها</label>
                     <ul class="ImgChoose list-unstyled my-2 d-flex flex-column gap-1 p-1">
+                        <?php $separator = ""; $photoIds = ""; ?>
 
                         @if (@$slider && count($slider) > 0)
-                            <?php $photoId = ""; $separator = ""  ?>
-                            @foreach ($slider as $key => $slide)
-                                @if ($photoId != "")
-                                    <?php $separator = ','; ?>
-                                @endif
-                                <?php $photoId = $photoId.$separator.$slide->media[0]->file_id  ?>
-                                <li class="p-1 ImgItem d-flex flex-wrap align-items-center" id="PI-{{$slide->media[0]->file_id}}">
+                        @foreach ($slider as $key => $slide)
+
+                            <?php $photoIds = $photoIds.$separator.$slide->media[0]->file_id; $separator = ","; ?>
+
+                                <li class="p-1 ImgItem d-flex flex-wrap align-items-center dbSlide" id="PI-{{$slide->media[0]->file_id}}" data-id={{$slide->media[0]->file_id}}>
                                     <img src="{{$slide->media[0]->file->path}}">
                                     <div class="w-75 p-3 d-flex gap-1">
                                         <div class="col-8">
@@ -58,7 +57,7 @@
                         @endif
 
                     </ul>
-                    <input type="text" id="photos" name="photosId" disabled value="@if (@$photoId){{$photoId}} @endif">
+                    <input type="text" id="photos" name="photosId" value="{{$photoIds}}">
                 </div>
 
             </form>
@@ -75,10 +74,12 @@
     </div>
 @endsection
 
+@section('head')
+
 <script>
     var token = "{{ csrf_token() }}";
     var type = "image";
-    var folder = "slider/";
+    var folder = "slider";
     var mim = "jpg,jpeg,png,gif";
     var thumbnail = "false";
 
@@ -86,15 +87,18 @@
 
     let photosId = [];
     let slideNum = 1;
+    let setOldVal = false;
 
     function up_success(file) {
         let resText = JSON.parse(file.xhr.responseText);
         photosId.push(resText.file_id);
 
-        $('#photos').attr('disabled', false)
-
-        if($('#photos').val()){
-            photosId.push($('#photos').val());
+        if(!setOldVal){
+            var elements = document.querySelectorAll('.dbSlide');
+            elements.forEach(elem => {
+                photosId.push($(elem).attr('data-id'));
+            })
+            setOldVal = true
         }
         $('#photos').val(photosId);
 
@@ -115,3 +119,5 @@
         slideNum++;
     }
 </script>
+@endsection
+

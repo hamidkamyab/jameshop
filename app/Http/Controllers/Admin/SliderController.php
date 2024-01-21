@@ -30,25 +30,17 @@ class SliderController extends Controller
      */
     public function store(Request $request)
     {
-        $Ids = explode(',', $request->photosId);
-        return $Ids;
-        return $this->slider->store($request);
+        $this->slider->store($request);
+        return redirect()->back();
     }
 
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $this->slider->destroy($id);
+        return redirect()->back();
     }
 }
