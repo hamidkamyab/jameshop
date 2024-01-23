@@ -497,7 +497,7 @@
     {
       "uid": "055c4b6fbbd3dd016a8ee4dfb6cd6f36",
       "css": "tag-add",
-      "code": 59418,
+      "code": 59420,
       "src": "custom_icons",
       "selected": true,
       "svg": {
@@ -607,7 +607,7 @@
     {
       "uid": "69566c3fbbe84202888cd28ca5f53c9e",
       "css": "product-add",
-      "code": 59419,
+      "code": 940191,
       "src": "custom_icons",
       "selected": true,
       "svg": {
@@ -657,7 +657,7 @@
     {
       "uid": "581bad2eeb81097f8bdae497fca0c5b8",
       "css": "size",
-      "code": 59420,
+      "code": 59426,
       "src": "custom_icons",
       "selected": true,
       "svg": {
@@ -671,7 +671,7 @@
     {
       "uid": "4b01d579e1cddc9fc7a10e42fa6c18d5",
       "css": "tapelineplus",
-      "code": 59423,
+      "code": 59428,
       "src": "custom_icons",
       "selected": true,
       "svg": {
@@ -721,7 +721,7 @@
     {
       "uid": "282aa0979d8d380f324d64621f5b3b19",
       "css": "menu-circle",
-      "code": 59426,
+      "code": 59429,
       "src": "custom_icons",
       "selected": true,
       "svg": {
@@ -735,7 +735,7 @@
     {
       "uid": "9b2386403b39e7d0dae9c3acf9dab576",
       "css": "menu-add",
-      "code": 59428,
+      "code": 59430,
       "src": "custom_icons",
       "selected": true,
       "svg": {
@@ -749,7 +749,7 @@
     {
       "uid": "028f46face545a653da3af1816418433",
       "css": "widget-line",
-      "code": 952481,
+      "code": 59431,
       "src": "custom_icons",
       "selected": true,
       "svg": {
@@ -759,6 +759,18 @@
       "search": [
         "widget-line"
       ]
+    },
+    {
+      "uid": "7222571caa5c15f83dcfd447c58d68d9",
+      "css": "search-1",
+      "code": 59419,
+      "src": "entypo"
+    },
+    {
+      "uid": "9dd9e835aebe1060ba7190ad2b2ed951",
+      "css": "search",
+      "code": 59418,
+      "src": "fontawesome"
     },
     {
       "uid": "6a7eaaf87863aab5af8f7c7e0b09d87f",

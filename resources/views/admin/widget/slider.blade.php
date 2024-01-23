@@ -70,7 +70,7 @@
         <div class="justify-content-center bg-white py-3 ps-2 pe-3 border-start border-4 border-info w-100">
             <div class="col-12 d-flex justify-content-between">
                 <button type="submit" class="btn btn-primary" onclick="checkSliderForm()">ثبت</button>
-                <a href="{{ route('brands.index') }}" class="btn btn-outline-danger">انصراف</a>
+                <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-danger">انصراف</a>
             </div>
         </div>
     </div>

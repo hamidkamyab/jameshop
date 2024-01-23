@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AmazingController;
 use App\Http\Controllers\Admin\AttributeGroupController;
 use App\Http\Controllers\Admin\AttributeValueController;
 use App\Http\Controllers\Admin\BrandController;
@@ -61,5 +62,10 @@ Route::prefix('admin')->group(function(){
         Route::get('slider',[SliderController::class,'index'])->name('slider.index');
         Route::post('slider',[SliderController::class,'store'])->name('slider.store');
         Route::get('slider/{id}',[SliderController::class,'destroy'])->name('slider.destroy');
+
+        Route::get('amazings',[AmazingController::class,'index'])->name('amazings.index');
+        Route::get('amazings/create',[AmazingController::class,'create'])->name('amazings.create');
+        Route::post('amazings',[AmazingController::class,'store'])->name('amazings.store');
+        Route::get('amazings/{id}',[AmazingController::class,'destroy'])->name('amazings.destroy');
     });
 });

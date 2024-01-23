@@ -20,18 +20,18 @@
             <thead class="bg-dark text-white">
                 <tr>
                     <th>#</th>
-                    <th class="fw-normal fs-18">تصویر محصول</th>
-                    <th class="fw-normal fs-18">عنوان محصول</th>
-                    <th class="fw-normal fs-18">برند محصول</th>
-                    <th class="fw-normal fs-18">دسته بندی</th>
-                    <th class="fw-normal fs-18">تاریخ ایجاد</th>
-                    <th class="fw-normal fs-18 d-flex align-items-center gap-1 justify-content-center">عملیات<small
+                    <th class="fw-normal fs-16">تصویر محصول</th>
+                    <th class="fw-normal fs-16 text-center">کد محصول</th>
+                    <th class="fw-normal fs-16">عنوان محصول</th>
+                    <th class="fw-normal fs-16">دسته بندی</th>
+                    <th class="fw-normal fs-16">تاریخ ایجاد</th>
+                    <th class="fw-normal fs-16 d-flex align-items-center gap-1 justify-content-center">عملیات<small
                             class="fs-12">(ویرایش - حذف)</small></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($products as $key => $product)
-                    <tr id="row-{{ $product->id }}">
+                    <tr id="row-{{ $product->id }}" class="fs-14">
                         <td class="align-middle">{{ $key + 1 }}</td>
                         <td class="align-middle">
                             <div class="productListImg bg-white align-items-center">
@@ -46,8 +46,8 @@
                                 @endif
                             </div>
                         </td>
+                        <td class="align-middle vazir text-center">{{ $product->sku }}</td>
                         <td class="align-middle">{{ short_str($product->title, 30) }}</td>
-                        <td class="align-middle">{{ $product->brand->title }}</td>
                         <td class="align-middle">{{ $product->category->title }}</td>
                         <td class="align-middle">{{ verta($product->created_at)->format('Y/m/d') }}</td>
                         <td class="align-middle">
