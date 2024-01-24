@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class AmazingController extends Controller
 {
@@ -61,5 +63,28 @@ class AmazingController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function search(Request $request)
+    {
+        $data = null;
+        if ($request->val != null || $request->val != '') {
+            $data = Product::with('media.file')->where('sku', 'like', "%$request->val%")
+                ->orWhere('title', 'like', "%$request->val%")
+                ->Where('status', 1)
+                ->get();
+            if (count($data) > 0) {
+                $status = 'success';
+            } else {
+                $status = 'error';
+            }
+        }else{
+            $status = 'error';
+        }
+
+        return response()->json(['status' => $status, 'products' => $data], Response::HTTP_OK);
     }
 }

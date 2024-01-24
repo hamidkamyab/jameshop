@@ -7315,3 +7315,29 @@ function checkSliderForm() {
         sendForm('formTarget', true)
     }
 }
+
+let searchTimer;
+
+function isCheckSearch(e) {
+    let val = $(e).val();
+    if (val.length > 4) {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(() => {
+            searchProduct()
+        }, 500);
+    }
+}
+
+function isLoading(isCheck) {
+    if (isCheck) {
+        $('.loading').fadeIn()
+    } else {
+        $('.loading').fadeOut()
+    }
+}
+
+function formatPrice(number) {
+    // تبدیل عدد به رشته و جدا کردن به سه رقم سه رقم
+    let formattedNumber = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return formattedNumber;
+}

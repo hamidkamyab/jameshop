@@ -36,80 +36,46 @@
 
                     <div class="form-group col-12">
                         <div class="input-group position-relative">
-                            <input type="text" class="form-control form-control-sm BYekan"
-                                placeholder="کد یا عنوان محصول را وارد کنید..." />
+                            <input type="text" id="searchInputAMZ" class="form-control form-control-sm BYekan"
+                                placeholder="کد یا عنوان محصول را وارد کنید..." onkeyup="isCheckSearch(this)" />
                             <div class="input-group-prepend">
                                 <button class="btn border border-2 px-1" type="button"><i
-                                        class="icon-search-1 text-muted"></i></button>
+                                        class="icon-search-1 text-muted" onclick="searchProduct()"></i></button>
                             </div>
 
-                            <ul id="searchResult" class="position-absolute w-100 bg-white border border-1 list-unstyled"
-                                style="height: 324px; z-index: 5; top:32px;">
+                            <div id="loadingAMZ" class="w-100 loading position-absolute bg-white border border-1">
+                                <div class="d-flex align-items-center justify-content-center h-100">
+                                    <div class="spinner-grow text-primary position-relative" role="status">
+                                    </div>
+                                </div>
+                            </div>
+                            {{--  --}}
+                            <div id="searchContent" class="position-absolute bg-white border border-1 w-100">
+                                <ul id="searchResult" class="w-100 list-unstyled">
+                                    {{-- <li class="resultItem p-3 d-flex align-items-center gap-5 justify-content-between" role="button">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="imgBox border border-1 p-1"><img
+                                                    src="{{ asset('imgs/admin/product-icon.png') }}"
+                                                    style="width:100%;height: 100%;"></div>
+                                            <div class="d-flex flex-column">
+                                                <span>تیشرت آستین بلند مردانه مجید</span>
+                                                <small class="text-muted">کد محصول</small>
+                                            </div>
+                                        </div>
 
-                                <li class="p-3 d-flex align-items-center gap-5 justify-content-between" role="button">
-                                    <div class="d-flex align-items-center gap-2">
-                                        <div class="border border-1 p-1" style="width: 64px; height: 64px;"><img
-                                                src="{{ asset('imgs/admin/product-icon.png') }}"
-                                                style="width:100%;height: 100%;"></div>
                                         <div class="d-flex flex-column">
-                                            <span>عنـــوان محــصول</span>
-                                            <small class="text-muted">کد محصول</small>
+                                            <span class="text-end">50,000</span>
+                                            <div>
+                                                <small class="text-muted">20%</small>
+                                                <small class="text-muted"> :تخفیف</small>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </li> --}}
 
-                                    <div class="d-flex flex-column">
-                                        <span class="text-end">50,000</span>
-                                        <div>
-                                            <small class="text-muted">20%</small>
-                                            <small class="text-muted"> :تخفیف</small>
-                                        </div>
-                                    </div>
-                                </li>
 
-                                <div class="hr w-75 mx-auto my-2"></div>
 
-                                <li class="p-3 d-flex align-items-center gap-5 justify-content-between" role="button">
-                                    <div class="d-flex align-items-center gap-2">
-                                        <div class="border border-1 p-1" style="width: 64px; height: 64px;"><img
-                                                src="{{ asset('imgs/admin/product-icon.png') }}"
-                                                style="width:100%;height: 100%;"></div>
-                                        <div class="d-flex flex-column">
-                                            <span>عنـــوان محــصول</span>
-                                            <small class="text-muted">کد محصول</small>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex flex-column">
-                                        <span class="text-end">50,000</span>
-                                        <div>
-                                            <small class="text-muted">20%</small>
-                                            <small class="text-muted"> :تخفیف</small>
-                                        </div>
-                                    </div>
-                                </li>
-
-                                <div class="hr w-75 mx-auto my-2"></div>
-
-                                <li class="p-3 d-flex align-items-center gap-5 justify-content-between" role="button">
-                                    <div class="d-flex align-items-center gap-2">
-                                        <div class="border border-1 p-1" style="width: 64px; height: 64px;"><img
-                                                src="{{ asset('imgs/admin/product-icon.png') }}"
-                                                style="width:100%;height: 100%;"></div>
-                                        <div class="d-flex flex-column">
-                                            <span>عنـــوان محــصول</span>
-                                            <small class="text-muted">کد محصول</small>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex flex-column">
-                                        <span class="text-end">50,000</span>
-                                        <div>
-                                            <small class="text-muted">20%</small>
-                                            <small class="text-muted"> :تخفیف</small>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                                </ul>
+                            </div>
                         </div>
                     </div>
 
@@ -178,6 +144,12 @@
 @endsection
 
 @section('footer')
+
+    <script>
+        let url ="{{route('amazings.search')}}";
+        let _token = "{{csrf_token()}}";
+    </script>
+
     <script>
         $(document).ready(function() {
             window.persianDatepickerDebug = true;

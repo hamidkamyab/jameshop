@@ -67,5 +67,6 @@ Route::prefix('admin')->group(function(){
         Route::get('amazings/create',[AmazingController::class,'create'])->name('amazings.create');
         Route::post('amazings',[AmazingController::class,'store'])->name('amazings.store');
         Route::get('amazings/{id}',[AmazingController::class,'destroy'])->name('amazings.destroy');
+        Route::post('amazings/search',[AmazingController::class,'search'])->name('amazings.search');
     });
 });
