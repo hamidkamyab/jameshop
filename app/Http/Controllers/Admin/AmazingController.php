@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class AmazingController extends Controller
 {
@@ -73,8 +74,9 @@ class AmazingController extends Controller
         $data = null;
         if ($request->val != null || $request->val != '') {
             $data = Product::with('media.file')->where('sku', 'like', "%$request->val%")
+                ->where('status', 1)
                 ->orWhere('title', 'like', "%$request->val%")
-                ->Where('status', 1)
+                ->where('status', 1)
                 ->get();
             if (count($data) > 0) {
                 $status = 'success';

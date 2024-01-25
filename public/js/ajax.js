@@ -153,47 +153,53 @@ async function searchProduct() {
         loading = true;
         isLoading(loading)
         let val = $('#searchInputAMZ').val();
-        $('#searchContent').fadeOut(0);
+        $('#searchContent').fadeOut();
         const formData = new FormData();
         formData.append('_token', _token)
         formData.append('val', val)
         const response = await fetch(url, { method: "POST", body: formData })
         const data = await response.json();
         document.getElementById('searchResult').innerHTML = '';
-        console.log(data);
         if (data.status == 'success') {
             data.products.forEach(product => {
-                let price = formatPrice(product.price);
-                let imgPath;
-                product.media.forEach(media => {
-                    if (media.file.id == product.first_pic) {
-                        imgPath = media.file.path;
+                if (!amzList.includes(product.id)) {
+                    let price = formatPrice(product.price);
+                    let imgPath;
+                    if (product.media.length > 0) {
+                        product.media.forEach(media => {
+                            if (media.file.id == product.first_pic) {
+                                imgPath = media.file.path;
+                            }
+                        })
+                    } else {
+                        imgPath = deafultProductImg;
                     }
-                })
-                var tag = '<li class="resultItem p-3 d-flex align-items-center gap-5 justify-content-between" role="button">' +
-                    '<div class="d-flex align-items-center gap-2">' +
-                    '<div class="imgBox border border-1 p-1">' +
-                    '<img src="' + imgPath + '">' +
-                    '</div>' +
-                    '<div class="d-flex flex-column">' +
-                    '<span>' + product.title + '</span>' +
-                    '<small class="text-muted">' + product.sku + '</small>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div class="d-flex flex-column">' +
-                    '<div>' +
-                    '<span class="text-end">' + price + '</span>' +
-                    '<small class="text-muted">ریال</small>' +
-                    '</div>' +
-                    '<div>' +
-                    '<small class="text-muted">' + product.discount_price + '%</small>' +
-                    '<small class="text-muted"> :تخفیف</small>' +
-                    '</div>' +
-                    '</div>' +
-                    '</li>';
-                document.getElementById('searchResult').innerHTML += tag;
-                let line = '<div class="hr w-75 mx-auto my-2"></div>';
-                document.getElementById('searchResult').innerHTML += line;
+                    var tag = '<li class="resultItem p-3 d-flex align-items-center gap-5 justify-content-between"' +
+                        'onClick="addToAMZ(' + product.id + ', \'' + product.title + '\',\'' + product.sku + '\',\'' + imgPath + '\')" role="button">' +
+                        '<div class="d-flex align-items-center gap-2">' +
+                        '<div class="imgBox border border-1 p-1 bg-white">' +
+                        '<img src="' + imgPath + '">' +
+                        '</div>' +
+                        '<div class="d-flex flex-column">' +
+                        '<span>' + product.title + '</span>' +
+                        '<small class="text-muted">' + product.sku + '</small>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="d-flex flex-column">' +
+                        '<div class="d-flex justify-content-end align-items-center gap-1">' +
+                        '<span class="text-end">' + price + '</span>' +
+                        '<small class="text-muted">ریال</small>' +
+                        '</div>' +
+                        '<div class="d-flex justify-content-end align-items-center gap-1">' +
+                        '<small class="text-muted">' + product.discount_price + '%</small>' +
+                        '<small class="text-muted"> :تخفیف</small>' +
+                        '</div>' +
+                        '</div>' +
+                        '</li>';
+                    document.getElementById('searchResult').innerHTML += tag;
+                    let line = '<div class="hr w-75 mx-auto my-2"></div>';
+                    document.getElementById('searchResult').innerHTML += line;
+                }
             })
         } else {
             var tag = '<li class="fs-5 text-muted text-center p-3">مـوردی یـافت نشـد!</li>';
@@ -202,7 +208,7 @@ async function searchProduct() {
 
         loading = false;
         isLoading(loading)
-        $('#searchContent').fadeIn(0);
+        $('#searchContent').fadeIn();
     }
 }
 /****************************/

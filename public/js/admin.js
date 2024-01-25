@@ -7317,14 +7317,23 @@ function checkSliderForm() {
 }
 
 let searchTimer;
+let OldLen = 0;
 
 function isCheckSearch(e) {
     let val = $(e).val();
+
+    val = val.replace(/\s/g, "");
     if (val.length > 4) {
-        clearTimeout(searchTimer);
-        searchTimer = setTimeout(() => {
-            searchProduct()
-        }, 500);
+        let NewLen = val.length;
+        if (OldLen < NewLen || OldLen > NewLen) {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(() => {
+                searchProduct()
+            }, 500);
+            OldLen = val.length;
+        }
+    } else {
+        OldLen = 0;
     }
 }
 
@@ -7340,4 +7349,43 @@ function formatPrice(number) {
     // تبدیل عدد به رشته و جدا کردن به سه رقم سه رقم
     let formattedNumber = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return formattedNumber;
+}
+
+
+document.getElementById('searchInputAMZ').addEventListener('focusout', () => {
+    $('#searchContent').fadeOut();
+})
+
+document.getElementById('searchBtnAMZ').addEventListener('focusout', () => {
+    $('#searchContent').fadeOut();
+})
+
+let count = 1;
+
+function addToAMZ(id, title, sku, img) {
+    let tbl = document.getElementById('amzTbl');
+    let tr = '<tr id="p_' + id + '">' +
+        '<td>' + count + '</td>' +
+        '<td>' +
+        '<div class="imgBox border border-1 p-1 bg-white">' +
+        '<img src="' + img + '">' +
+        '</div>' +
+        '</td>' +
+        '<td>' + title + '</td>' +
+        '<td class="fs-12 vazir fw-bold">' + sku + '</td>' +
+        '<td class="text-center">' +
+        '<i class="icon-trash text-danger" onClick="removeOfAMZ(' + id + ')" role="button" title="حذف از لیست شگفت آویز"></i>' +
+        '</td>' +
+        '</tr>';
+    $('tbody', tbl).append(tr)
+    count++;
+    amzList.push(id);
+}
+
+function removeOfAMZ(id) {
+    const index = amzList.indexOf(id);
+    if (index > -1) {
+        amzList.splice(index, 1);
+    }
+    $('#p_' + id).remove();
 }

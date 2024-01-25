@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-    <div class="col-9 bg-white p-3 border-start border-4 border-info right-box" style="height: 1000px">
+    <div class="col-9 bg-white p-3 border-start border-4 border-info right-box">
         @if (count($errors) > 0)
             @include('admin.partials.Alert', ['msg' => $errors->all(), 'status' => 'danger'])
         @endif
@@ -39,8 +39,10 @@
                             <input type="text" id="searchInputAMZ" class="form-control form-control-sm BYekan"
                                 placeholder="کد یا عنوان محصول را وارد کنید..." onkeyup="isCheckSearch(this)" />
                             <div class="input-group-prepend">
-                                <button class="btn border border-2 px-1" type="button"><i
-                                        class="icon-search-1 text-muted" onclick="searchProduct()"></i></button>
+                                <button id="searchBtnAMZ" class="btn border border-2 px-1 bg-white"
+                                    onclick="searchProduct()" type="button">
+                                    <i class="icon-search-1 text-muted"></i>
+                                </button>
                             </div>
 
                             <div id="loadingAMZ" class="w-100 loading position-absolute bg-white border border-1">
@@ -52,33 +54,28 @@
                             {{--  --}}
                             <div id="searchContent" class="position-absolute bg-white border border-1 w-100">
                                 <ul id="searchResult" class="w-100 list-unstyled">
-                                    {{-- <li class="resultItem p-3 d-flex align-items-center gap-5 justify-content-between" role="button">
-                                        <div class="d-flex align-items-center gap-2">
-                                            <div class="imgBox border border-1 p-1"><img
-                                                    src="{{ asset('imgs/admin/product-icon.png') }}"
-                                                    style="width:100%;height: 100%;"></div>
-                                            <div class="d-flex flex-column">
-                                                <span>تیشرت آستین بلند مردانه مجید</span>
-                                                <small class="text-muted">کد محصول</small>
-                                            </div>
-                                        </div>
-
-                                        <div class="d-flex flex-column">
-                                            <span class="text-end">50,000</span>
-                                            <div>
-                                                <small class="text-muted">20%</small>
-                                                <small class="text-muted"> :تخفیف</small>
-                                            </div>
-                                        </div>
-                                    </li> --}}
-
-
 
                                 </ul>
                             </div>
                         </div>
                     </div>
 
+                </div>
+
+                <div class="col-12 apTblBox">
+                    <label class="my-2">لیست شگفت آویز:</label>
+                    <table class="table" id="amzTbl">
+                        <thead class="table-light fs-14">
+                            <th>#</th>
+                            <th>تصویر محصول</th>
+                            <th>عنوان محصول</th>
+                            <th>کد محصول</th>
+                            <th class="text-center">عملیات</th>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
                 </div>
 
                 <input type="hidden" id="products" name="productsId" value="">
@@ -100,6 +97,9 @@
     <link rel="stylesheet" href="{{ asset('css/persian-datepicker.min.css') }}" />
 
     <script>
+        let amzList = [];
+        var deafultProductImg = "{{ asset('imgs/admin/product-icon.png') }}"
+
         var token = "{{ csrf_token() }}";
         var type = "image";
         var folder = "amazing";
@@ -144,10 +144,9 @@
 @endsection
 
 @section('footer')
-
     <script>
-        let url ="{{route('amazings.search')}}";
-        let _token = "{{csrf_token()}}";
+        let url = "{{ route('amazings.search') }}";
+        let _token = "{{ csrf_token() }}";
     </script>
 
     <script>
