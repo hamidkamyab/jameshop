@@ -66,6 +66,11 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\Slider\SliderRepositoryInterface',
             'App\Repositories\Slider\SliderRepository'
         );
+
+        $this->app->bind(
+            'App\Repositories\Amazing\AmazingRepositoryInterface',
+            'App\Repositories\Amazing\AmazingRepository'
+        );
     }
 
     /**

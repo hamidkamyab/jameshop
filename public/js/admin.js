@@ -7380,6 +7380,7 @@ function addToAMZ(id, title, sku, img) {
     $('tbody', tbl).append(tr)
     count++;
     amzList.push(id);
+    $('#amzList').val(amzList);
 }
 
 function removeOfAMZ(id) {
@@ -7388,4 +7389,5 @@ function removeOfAMZ(id) {
         amzList.splice(index, 1);
     }
     $('#p_' + id).remove();
+    $('#amzList').val(amzList);
 }

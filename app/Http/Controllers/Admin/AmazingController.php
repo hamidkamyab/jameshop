@@ -4,12 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Repositories\Amazing\AmazingRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
 class AmazingController extends Controller
 {
+
+    private $amazing;
+
+    public function __construct(AmazingRepositoryInterface $IAmazingRepository)
+    {
+        $this->amazing = $IAmazingRepository;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -31,7 +40,8 @@ class AmazingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->amazing->store($request);
+        return redirect()->route('amazings.index');
     }
 
     /**
@@ -73,11 +83,7 @@ class AmazingController extends Controller
     {
         $data = null;
         if ($request->val != null || $request->val != '') {
-            $data = Product::with('media.file')->where('sku', 'like', "%$request->val%")
-                ->where('status', 1)
-                ->orWhere('title', 'like', "%$request->val%")
-                ->where('status', 1)
-                ->get();
+            $data = $this->amazing->search($request);
             if (count($data) > 0) {
                 $status = 'success';
             } else {

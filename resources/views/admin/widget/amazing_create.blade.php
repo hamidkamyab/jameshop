@@ -24,11 +24,13 @@
 
                 <div class="form-group col-6 mb-3">
                     <label for="" class="form-label">شروع شگفت آویز</label>
-                    <input type="text" class="datePicker form-control text-end BYekan" />
+                    <input type="text" id="dateStart" class="datePicker form-control text-end BYekan" />
+                    <input type="hidden" id="dateStartMain" name="start" class="datePicker form-control text-end BYekan" />
                 </div>
                 <div class="form-group col-6">
                     <label for="" class="form-label">اتمام شگفت آویز</label>
-                    <input type="text" class="datePicker form-control text-end BYekan" />
+                    <input type="text" id="dateEnd" class="datePicker form-control text-end BYekan" />
+                    <input type="hidden" id="dateEndMain" name="end" class="datePicker form-control text-end BYekan" />
                 </div>
 
                 <div class="row my-4">
@@ -51,7 +53,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {{--  --}}
+
                             <div id="searchContent" class="position-absolute bg-white border border-1 w-100">
                                 <ul id="searchResult" class="w-100 list-unstyled">
 
@@ -64,6 +66,7 @@
 
                 <div class="col-12 apTblBox">
                     <label class="my-2">لیست شگفت آویز:</label>
+                    <input type="hidden" id="amzList" name="list" class="clearLoad w-100" value="">
                     <table class="table" id="amzTbl">
                         <thead class="table-light fs-14">
                             <th>#</th>
@@ -77,8 +80,6 @@
                         </tbody>
                     </table>
                 </div>
-
-                <input type="hidden" id="products" name="productsId" value="">
             </form>
         </div>
     </div>
@@ -152,10 +153,23 @@
     <script>
         $(document).ready(function() {
             window.persianDatepickerDebug = true;
-            $(".datePicker").persianDatepicker({
+            $("#dateStart").persianDatepicker({
                 initialValue: true,
                 initialValueType: 'gregorian',
-                altFormat: 'LLLL',
+                altField: '#dateStartMain',
+                altFormat: "H:mm:ss  YYYY-MM-DD",
+                observer: true,
+                format: "H:mm:ss - DD MMMM YYYY",
+                timePicker: {
+                    enabled: true
+                }
+            });
+
+            $("#dateEnd").persianDatepicker({
+                initialValue: true,
+                initialValueType: 'gregorian',
+                altField: '#dateEndMain',
+                altFormat: "H:mm:ss  YYYY-MM-DD",
                 observer: true,
                 format: "H:mm:ss - DD MMMM YYYY",
                 timePicker: {

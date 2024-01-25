@@ -42,4 +42,9 @@ class Product extends Model
         return $this->morphMany(Media::class,'mediable');
     }
 
+
+    public function amazings(){
+        return $this->belongsToMany(Amazing::class);
+    }
+
 }
