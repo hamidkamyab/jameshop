@@ -14,14 +14,30 @@
             <form class="row m-0 g-4" action="{{ route('amazings.update', $amazing->id) }}" method="post" id="formTarget">
                 @csrf
                 @method('PATCH')
-                <div id="ImgBox" class="best_menu_img col-12 mb-3">
+
+                <div id="ImgBox" class="col-12 mb-3 @if(count($amazing->media) > 0) hidden @endif">
                     <div class="row">
                         <h6 class="text-muted">محل آپلود کاور شگفت آویز</h6>
                     </div>
                     @include('admin.partials.Upload')
-
-                    <input type="hidden" id="photos" name="photosId" value="">
                 </div>
+
+                @if(count($amazing->media) > 0)
+                    <div id="amzCover" class="col-12 mb-3">
+                        <div class="row mb-2">
+                            <h6 class="text-muted">کاور شگفت آویز</h6>
+                        </div>
+                        <div class="d-flex align-items-end gap-2">
+                            <img src="{{$amazing->media[0]->file->path}}" >
+                            <button type="button" class="btn btn-sm btn-outline-danger" onclick="amzCoverDel()" >
+                                <i class="icon-trash" ></i>
+                                <span>حذف کاور</span>
+                            </button>
+                        </div>
+
+                    </div>
+                @endif
+                <input type="hidden" id="photos" name="photosId" value="{{@$amazing->media[0]->file_id}}">
 
                 <div class="form-group col-6 mb-3">
                     <label for="" class="form-label">شروع شگفت آویز</label>
@@ -75,7 +91,7 @@
                     @foreach ($amazing->products as $key=>$product)
                         <?php array_push($list,$product->id) ?>
                     @endforeach
-                    <input type="text" id="amzList" name="list" class="w-100" value="{{implode(',', $list)}}">
+                    <input type="hidden" id="amzList" name="list" class="w-100" value="{{implode(',', $list)}}">
                     <table class="table" id="amzTbl">
                         <thead class="table-light fs-14">
                             <th>#</th>

@@ -66,7 +66,9 @@ class AmazingController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        return $request->all();
+        $this->amazing->update($request,$id);
+        Session::flash('opration_amazing', 'شگفت آویز مد نظر با موفقیت ویرایش شد!');
+        return redirect()->route('amazings.index');
     }
 
     /**

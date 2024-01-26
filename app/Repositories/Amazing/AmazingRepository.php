@@ -47,18 +47,28 @@ class AmazingRepository implements AmazingRepositoryInterface
 
     public function update($data, $id)
     {
-        // $isAMZ = $this->getById($id);
-        // $isAMZ->start = convertJtoM($data->start);//تبدیل تاریخ جلالی به میلادی
-        // $isAMZ->end = convertJtoM($data->end);//تبدیل تاریخ جلالی به میلادی
-        // $isAMZ->save();
-        // if($data->photosId != null){
-        //     $isAMZ->media()->create([
-        //         'file_id' => $data->photosId
-        //     ]);
-        // }
+        $isAMZ = $this->getById($id);
+        $isAMZ->start = convertJtoM($data->start);//تبدیل تاریخ جلالی به میلادی
+        $isAMZ->end = convertJtoM($data->end);//تبدیل تاریخ جلالی به میلادی
 
-        // $list = explode(',', $data->list);
-        // $isAMZ->products()->attach($list);
+        if(@$isAMZ->media[0]){
+            if($data->photosId != null){
+                $isAMZ->media()->update([
+                    'file_id' => $data->photosId
+                ]);
+            }
+            if (intval($data->photosId) != $isAMZ->media[0]->file_id || $data->photosId == null) {
+                $photo = $isAMZ->media[0]->file_id;
+                $this->file->destroy($photo);
+            }
+        }else{
+            $isAMZ->media()->create([
+                'file_id' => $data->photosId
+            ]);
+        }
+        $isAMZ->save();
+        $list = explode(',', $data->list);
+        $isAMZ->products()->sync($list);
     }
 
     public function destroy($id)
