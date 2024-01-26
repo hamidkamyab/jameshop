@@ -161,6 +161,7 @@ async function searchProduct() {
         const data = await response.json();
         document.getElementById('searchResult').innerHTML = '';
         if (data.status == 'success') {
+            let alLen = 0;
             data.products.forEach(product => {
                 if (!amzList.includes(product.id)) {
                     let price = formatPrice(product.price);
@@ -175,7 +176,7 @@ async function searchProduct() {
                         imgPath = deafultProductImg;
                     }
                     var tag = '<li class="resultItem p-3 d-flex align-items-center gap-5 justify-content-between"' +
-                        'onClick="addToAMZ(' + product.id + ', \'' + product.title + '\',\'' + product.sku + '\',\'' + imgPath + '\')" role="button">' +
+                        'onClick="addToAMZ(' + product.id + ', \'' + product.title + '\',\'' + product.sku + '\')" role="button">' +
                         '<div class="d-flex align-items-center gap-2">' +
                         '<div class="imgBox border border-1 p-1 bg-white">' +
                         '<img src="' + imgPath + '">' +
@@ -199,8 +200,13 @@ async function searchProduct() {
                     document.getElementById('searchResult').innerHTML += tag;
                     let line = '<div class="hr w-75 mx-auto my-2"></div>';
                     document.getElementById('searchResult').innerHTML += line;
+                    alLen++;
                 }
             })
+            if (alLen == 0) {
+                var tag = '<li class="fs-5 text-muted text-center p-3">مـوردی یـافت نشـد!</li>';
+                document.getElementById('searchResult').innerHTML = tag;
+            }
         } else {
             var tag = '<li class="fs-5 text-muted text-center p-3">مـوردی یـافت نشـد!</li>';
             document.getElementById('searchResult').innerHTML = tag;

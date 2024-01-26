@@ -1,4 +1,7 @@
 ﻿<?php
+
+use Morilog\Jalali\Jalalian;
+
 function make_slug($string)
 {
     $slug =  preg_replace('/\s+/u', '-', trim($string));
@@ -69,4 +72,12 @@ function getManyFieldOfArray($data,$index = [])
         $count++;
     }
     return $itemList;
+}
+
+
+function convertJtoM($date){
+    return Jalalian::fromFormat('Y-m-d H:i:s', $date)->toCarbon();
+}
+function convertMtoJ($date,$format = 'Y-m-d H:i:s'){
+    return Jalalian::fromDateTime($date)->format($format);
 }

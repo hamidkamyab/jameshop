@@ -7362,15 +7362,10 @@ document.getElementById('searchBtnAMZ').addEventListener('focusout', () => {
 
 let count = 1;
 
-function addToAMZ(id, title, sku, img) {
+function addToAMZ(id, title, sku) {
     let tbl = document.getElementById('amzTbl');
     let tr = '<tr id="p_' + id + '">' +
         '<td>' + count + '</td>' +
-        '<td>' +
-        '<div class="imgBox border border-1 p-1 bg-white">' +
-        '<img src="' + img + '">' +
-        '</div>' +
-        '</td>' +
         '<td>' + title + '</td>' +
         '<td class="fs-12 vazir fw-bold">' + sku + '</td>' +
         '<td class="text-center">' +
@@ -7379,11 +7374,21 @@ function addToAMZ(id, title, sku, img) {
         '</tr>';
     $('tbody', tbl).append(tr)
     count++;
+    if ($('#amzList').val() && amzList.length == 0) {
+        let strAMZ = $('#amzList').val();
+        strAMZ = strAMZ.split(',');
+        amzList = strAMZ.map(Number);
+    }
     amzList.push(id);
     $('#amzList').val(amzList);
 }
 
 function removeOfAMZ(id) {
+    if ($('#amzList').val() && amzList.length == 0) {
+        let strAMZ = $('#amzList').val();
+        strAMZ = strAMZ.split(',');
+        amzList = strAMZ.map(Number);
+    }
     const index = amzList.indexOf(id);
     if (index > -1) {
         amzList.splice(index, 1);

@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
 use App\Repositories\Amazing\AmazingRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class AmazingController extends Controller
 {
@@ -24,7 +23,8 @@ class AmazingController extends Controller
      */
     public function index()
     {
-        //
+        $amazings = $this->amazing->getAll();
+        return view('admin.widget.amazings.index',compact('amazings'));
     }
 
     /**
@@ -32,7 +32,7 @@ class AmazingController extends Controller
      */
     public function create()
     {
-        return view('admin.widget.amazing_create');
+        return view('admin.widget.amazings.create');
     }
 
     /**
@@ -57,7 +57,8 @@ class AmazingController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $amazing = $this->amazing->getById($id);
+        return view('admin.widget.amazings.edit',compact('amazing'));
     }
 
     /**
@@ -65,7 +66,7 @@ class AmazingController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        return $request->all();
     }
 
     /**
@@ -73,7 +74,9 @@ class AmazingController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $this->amazing->destroy($id);
+        Session::flash('opration_amazing', 'شگفت آویز مد نظر با موفقیت حذف شد!');
+        return redirect()->route('amazings.index');
     }
 
     /**
