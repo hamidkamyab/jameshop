@@ -44,7 +44,10 @@ class Product extends Model
 
 
     public function amazings(){
-        return $this->belongsToMany(Amazing::class);
+        return $this->belongsToMany(Amazing::class,'amazings_products');
     }
 
+    public function styles(){
+        return $this->belongsToMany(Style::class,'products_styles');
+    }
 }

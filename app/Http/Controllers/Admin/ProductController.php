@@ -164,4 +164,24 @@ class ProductController extends Controller
         $product = $this->product->getById($id);
         return  response()->json(['status' => 'success', 'photos' => $product->media], Response::HTTP_OK);
     }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function search(Request $request)
+    {
+        $data = null;
+        if ($request->val != null || $request->val != '') {
+            $data = $this->product->search($request);
+            if (count($data) > 0) {
+                $status = 'success';
+            } else {
+                $status = 'error';
+            }
+        }else{
+            $status = 'error';
+        }
+
+        return response()->json(['status' => $status, 'products' => $data], Response::HTTP_OK);
+    }
 }

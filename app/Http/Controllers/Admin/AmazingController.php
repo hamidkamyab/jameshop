@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Repositories\Amazing\AmazingRepositoryInterface;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 
 class AmazingController extends Controller
@@ -81,23 +80,5 @@ class AmazingController extends Controller
         return redirect()->route('amazings.index');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function search(Request $request)
-    {
-        $data = null;
-        if ($request->val != null || $request->val != '') {
-            $data = $this->amazing->search($request);
-            if (count($data) > 0) {
-                $status = 'success';
-            } else {
-                $status = 'error';
-            }
-        }else{
-            $status = 'error';
-        }
 
-        return response()->json(['status' => $status, 'products' => $data], Response::HTTP_OK);
-    }
 }

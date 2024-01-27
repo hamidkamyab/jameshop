@@ -119,4 +119,13 @@ class ProductRepository implements ProductRepositoryInterface{
         }
     }
 
+
+    public function search($data)
+    {
+        return $this->product::with('media.file')->where('sku', 'like', "%$data->val%")
+            ->where('status', 1)
+            ->orWhere('title', 'like', "%$data->val%")
+            ->where('status', 1)
+            ->get();
+    }
 }

@@ -2,7 +2,7 @@
 
 
 @section('navigation')
-    شگفت آویز
+    ایجاد استایل هفته
 @endsection
 
 @section('content')
@@ -11,11 +11,11 @@
             @include('admin.partials.Alert', ['msg' => $errors->all(), 'status' => 'danger'])
         @endif
         <div class="row justify-content-center">
-            <form class="row m-0 g-4" action="{{ route('amazings.store') }}" method="post" id="formTarget">
+            <form class="row m-0 g-4" action="{{ route('styles.store') }}" method="post" id="formTarget">
                 @csrf
                 <div id="ImgBox" class="best_menu_img col-12 mb-3">
                     <div class="row">
-                        <h6 class="text-muted">محل آپلود کاور شگفت آویز</h6>
+                        <h6 class="text-muted">محل آپلود کاور استایل هفته</h6>
                     </div>
                     @include('admin.partials.Upload')
 
@@ -23,15 +23,13 @@
                 </div>
 
                 <div class="form-group col-6 mb-3">
-                    <label for="" class="form-label">شروع شگفت آویز</label>
-                    <input type="text" id="dateStart" class="datePicker form-control text-end BYekan" />
-                    <input type="hidden" id="dateStartMain" name="start"
-                        class="datePicker form-control text-end vazir d-ltr" />
+                    <label for="inputTitle" class="form-label">عنوان</label>
+                    <input type="text" id="inputTitle" class="form-control BYekan" name="title" placeholder="عنوان استایل هفته..." />
                 </div>
                 <div class="form-group col-6">
-                    <label for="" class="form-label">اتمام شگفت آویز</label>
-                    <input type="text" id="dateEnd" class="datePicker form-control text-end BYekan" />
-                    <input type="hidden" id="dateEndMain" name="end"
+                    <label for="" class="form-label">تاریخ اتمام</label>
+                    <input type="text" id="date" class="datePicker form-control text-end BYekan" />
+                    <input type="hidden" id="dateMain" name="date"
                         class="datePicker form-control text-end vazir  d-ltr" />
                 </div>
 
@@ -67,7 +65,7 @@
                 </div>
 
                 <div class="col-12 apTblBox">
-                    <label class="my-2">لیست شگفت آویز:</label>
+                    <label class="my-2">لیست محصولات استایل هفته:</label>
                     <input type="hidden" id="amzList" name="list" class="clearLoad w-100" value="">
                     <table class="table" id="amzTbl">
                         <thead class="table-light fs-14">
@@ -89,7 +87,7 @@
         <div class="justify-content-center bg-white py-3 ps-2 pe-3 border-start border-4 border-info w-100">
             <div class="col-12 d-flex justify-content-between">
                 <button type="submit" class="btn btn-primary" onclick="sendForm('formTarget')">ثبت</button>
-                <a href="{{ route('amazings.index') }}" class="btn btn-outline-danger">انصراف</a>
+                <a href="{{ route('styles.index') }}" class="btn btn-outline-danger">انصراف</a>
             </div>
         </div>
     </div>
@@ -104,7 +102,7 @@
 
         var token = "{{ csrf_token() }}";
         var type = "image";
-        var folder = "amazing";
+        var folder = "week_styles";
         var mim = "jpg,jpeg,png,gif";
         var thumbnail = "false";
 
@@ -154,30 +152,13 @@
     <script>
         $(document).ready(function() {
             window.persianDatepickerDebug = true;
-            $("#dateStart").persianDatepicker({
-                autoClose: true,
-                initialValue: true,
-                observer: true,
-                viewMode: 'jalali',
-                altField: '#dateStartMain',
-                altFormat: "YYYY-MM-DD H:mm:ss",
-                format: "H:mm:ss - YYYY/MM/DD",
-                calendar: {
-                    persian: {
-                        locale: 'en', // زبان نمایش
-                    }
-                },
-                timePicker: {
-                    enabled: true
-                }
-            });
 
-            $("#dateEnd").persianDatepicker({
+            $("#date").persianDatepicker({
                 autoClose: true,
                 initialValue: true,
                 observer: true,
                 viewMode: 'jalali',
-                altField: '#dateEndMain',
+                altField: '#dateMain',
                 altFormat: "YYYY-MM-DD H:mm:ss",
                 format: "H:mm:ss - YYYY/MM/DD",
                 calendar: {

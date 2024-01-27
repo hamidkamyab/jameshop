@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\SliderController;
-use App\Models\AttributeValue;
+use App\Http\Controllers\Admin\StyleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -57,6 +57,7 @@ Route::prefix('admin')->group(function(){
     Route::get('attributes/{id}',[ProductController::class,'attributes'])->name('products.attributes');
     Route::get('photos/{id}',[ProductController::class,'photos'])->name('products.photos');
     Route::post('products/delete/{product}',[ProductController::class,'delete'])->name('products.delete');
+    Route::post('products/search',[ProductController::class,'search'])->name('products.search');
     Route::resource('products',ProductController::class);
     Route::prefix('widget')->group(function(){
         Route::get('slider',[SliderController::class,'index'])->name('slider.index');
@@ -69,6 +70,12 @@ Route::prefix('admin')->group(function(){
         Route::get('amazings/edit/{id}',[AmazingController::class,'edit'])->name('amazings.edit');
         Route::patch('amazings/update/{id}',[AmazingController::class,'update'])->name('amazings.update');
         Route::delete('amazings/{id}',[AmazingController::class,'destroy'])->name('amazings.destroy');
-        Route::post('amazings/search',[AmazingController::class,'search'])->name('amazings.search');
+
+        Route::get('styles',[StyleController::class,'index'])->name('styles.index');
+        Route::get('styles/create',[StyleController::class,'create'])->name('styles.create');
+        Route::post('styles',[StyleController::class,'store'])->name('styles.store');
+        Route::get('styles/edit/{id}',[StyleController::class,'edit'])->name('styles.edit');
+        Route::patch('styles/update/{id}',[StyleController::class,'update'])->name('styles.update');
+        Route::delete('styles/{id}',[StyleController::class,'destroy'])->name('styles.destroy');
     });
 });

@@ -1,7 +1,7 @@
 <?php
-namespace App\Repositories\Amazing;
+namespace App\Repositories\Style;
 
-interface AmazingRepositoryInterface {
+interface StyleRepositoryInterface {
     public function getAll($page = false);
     public function getById($id);
     public function store($data);

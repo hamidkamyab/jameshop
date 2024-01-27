@@ -181,7 +181,7 @@
 
 @section('footer')
     <script>
-        let url = "{{ route('amazings.search') }}";
+        let url = "{{ route('products.search') }}";
         let _token = "{{ csrf_token() }}";
     </script>
 

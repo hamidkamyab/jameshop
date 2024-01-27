@@ -71,6 +71,11 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\Amazing\AmazingRepositoryInterface',
             'App\Repositories\Amazing\AmazingRepository'
         );
+
+        $this->app->bind(
+            'App\Repositories\Style\StyleRepositoryInterface',
+            'App\Repositories\Style\StyleRepository'
+        );
     }
 
     /**

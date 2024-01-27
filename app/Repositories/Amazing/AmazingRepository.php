@@ -21,7 +21,11 @@ class AmazingRepository implements AmazingRepositoryInterface
 
     public function getAll($page = false)
     {
-        return $this->amazing->paginate(30);
+        if ($page) {
+            return $this->amazing->paginate($page);
+        } else {
+            return $this->amazing->paginate(30);
+        }
     }
 
     public function getById($id)
@@ -81,12 +85,5 @@ class AmazingRepository implements AmazingRepositoryInterface
         $isAMZ->delete();
     }
 
-    public function search($data)
-    {
-        return $this->product::with('media.file')->where('sku', 'like', "%$data->val%")
-            ->where('status', 1)
-            ->orWhere('title', 'like', "%$data->val%")
-            ->where('status', 1)
-            ->get();
-    }
+
 }

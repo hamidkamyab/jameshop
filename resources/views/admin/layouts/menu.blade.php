@@ -248,14 +248,14 @@
                 </a>
                 <ul class="sub-menu list-unstyled open">
                     <li class="itemLi active">
-                        <a href="{{route('products.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
+                        <a href="{{route('slider.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
                             <div class="d-flex align-items-center gap-2 px-1">
                                 <span class="BYekan hiddenItem">اسلایدر</span>
                             </div>
                         </a>
                     </li>
                     <li class="itemLi">
-                        <a href="{{route('products.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
+                        <a href="{{route('amazings.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
                             <div class="d-flex align-items-center gap-2 px-1">
                                 <span class="BYekan hiddenItem">شگفت آویز</span>
                             </div>
