@@ -262,7 +262,7 @@
                         </a>
                     </li>
                     <li class="itemLi">
-                        <a href="{{route('products.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
+                        <a href="{{route('styles.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
                             <div class="d-flex align-items-center gap-2 px-1">
                                 <span class="BYekan hiddenItem">استایل هفته</span>
                             </div>

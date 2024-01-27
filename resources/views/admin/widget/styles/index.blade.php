@@ -33,7 +33,7 @@
                     <tr class="align-middle">
                         <td>{{ $key + 1 }}</td>
                         <td >{{$style->title}}</td>
-                        <td class="d-ltr text-start">{{convertMtoJ($style->end)}}</td>
+                        <td class="d-ltr text-start">{{convertMtoJ($style->date)}}</td>
 
                         <td>
                             <div class="d-flex align-items-center justify-content-center gap-2 pt-1">

@@ -39,7 +39,7 @@ class StyleController extends Controller
     public function store(Request $request)
     {
         $this->style->store($request);
-        Session::flash('opration_style', 'استایل هغته نظر با موفقیت اضافه شد!');
+        Session::flash('opration_style', 'استایل هغته با موفقیت اضافه شد!');
         return redirect()->route('styles.index');
     }
 
@@ -56,7 +56,8 @@ class StyleController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $style = $this->style->getById($id);
+        return view('admin.widget.styles.edit',compact('style'));
     }
 
     /**
@@ -64,7 +65,9 @@ class StyleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $this->style->update($request,$id);
+        Session::flash('opration_style', 'استایل هغته مدنظر با موفقیت اضافه شد!');
+        return redirect()->route('styles.index');
     }
 
     /**
@@ -72,6 +75,8 @@ class StyleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $this->style->destroy($id);
+        Session::flash('opration_style', 'استایل هغته مدنظر با موفقیت حذف شد!');
+        return redirect()->route('styles.index');
     }
 }

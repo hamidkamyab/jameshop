@@ -52,8 +52,8 @@ class StyleRepository implements StyleRepositoryInterface
     public function update($data, $id)
     {
         $isStyle = $this->getById($id);
-        $isStyle->start = convertJtoM($data->start); //تبدیل تاریخ جلالی به میلادی
-        $isStyle->end = convertJtoM($data->end); //تبدیل تاریخ جلالی به میلادی
+        $isStyle->title = $data->title;
+        $isStyle->date = convertJtoM($data->date); //تبدیل تاریخ جلالی به میلادی
 
         if (@$isStyle->media[0]) {
             if ($data->photosId != null) {

@@ -24,7 +24,8 @@
 
                 <div class="form-group col-6 mb-3">
                     <label for="inputTitle" class="form-label">عنوان</label>
-                    <input type="text" id="inputTitle" class="form-control BYekan" name="title" placeholder="عنوان استایل هفته..." />
+                    <input type="text" id="inputTitle" class="form-control BYekan" name="title" value="{{old('title')}}"
+                    placeholder="عنوان استایل هفته..." />
                 </div>
                 <div class="form-group col-6">
                     <label for="" class="form-label">تاریخ اتمام</label>
@@ -159,8 +160,8 @@
                 observer: true,
                 viewMode: 'jalali',
                 altField: '#dateMain',
-                altFormat: "YYYY-MM-DD H:mm:ss",
-                format: "H:mm:ss - YYYY/MM/DD",
+                altFormat: "YYYY-MM-DD HH:mm:ss",
+                format: "HH:mm:ss - YYYY/MM/DD",
                 calendar: {
                     persian: {
                         locale: 'en', // زبان نمایش

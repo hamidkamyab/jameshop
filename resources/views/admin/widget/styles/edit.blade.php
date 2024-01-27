@@ -2,7 +2,7 @@
 
 
 @section('navigation')
-    ویرایش شگفت آویز
+    ویرایش استایل هفته
 @endsection
 
 @section('content')
@@ -11,24 +11,24 @@
             @include('admin.partials.Alert', ['msg' => $errors->all(), 'status' => 'danger'])
         @endif
         <div class="row justify-content-center">
-            <form class="row m-0 g-4" action="{{ route('amazings.update', $amazing->id) }}" method="post" id="formTarget">
+            <form class="row m-0 g-4" action="{{ route('styles.update', $style->id) }}" method="post" id="formTarget">
                 @csrf
                 @method('PATCH')
 
-                <div id="ImgBox" class="col-12 mb-3 @if(count($amazing->media) > 0) hidden @endif">
+                <div id="ImgBox" class="col-12 mb-3 @if(count($style->media) > 0) hidden @endif">
                     <div class="row">
-                        <h6 class="text-muted">محل آپلود کاور شگفت آویز</h6>
+                        <h6 class="text-muted">محل آپلود کاور استایل هفته</h6>
                     </div>
                     @include('admin.partials.Upload')
                 </div>
 
-                @if(count($amazing->media) > 0)
+                @if(count($style->media) > 0)
                     <div id="amzCover" class="col-12 mb-3">
                         <div class="row mb-2">
-                            <h6 class="text-muted">کاور شگفت آویز</h6>
+                            <h6 class="text-muted">کاور استایل هفته</h6>
                         </div>
                         <div class="d-flex align-items-end gap-2">
-                            <img src="{{$amazing->media[0]->file->path}}" >
+                            <img src="{{$style->media[0]->file->path}}" >
                             <button type="button" class="btn btn-sm btn-outline-danger" onclick="amzCoverDel()" >
                                 <i class="icon-trash" ></i>
                                 <span>حذف کاور</span>
@@ -37,20 +37,18 @@
 
                     </div>
                 @endif
-                <input type="hidden" id="photos" name="photosId" value="{{@$amazing->media[0]->file_id}}">
+                <input type="hidden" id="photos" name="photosId" value="{{@$style->media[0]->file_id}}">
 
                 <div class="form-group col-6 mb-3">
-                    <label for="" class="form-label">شروع شگفت آویز</label>
-                    <input type="text" id="dateStart" class="datePicker form-control text-end BYekan"
-                        value="{{ $amazing->start }}" />
-                    <input type="hidden" id="dateStartMain" name="start"
-                        class="datePicker form-control text-end vazir d-ltr" />
+                    <label for="inputTitle" class="form-label">عنوان استایل هفته</label>
+                    <input type="text" id="inputTitle" name="title" class="form-control BYekan" placeholder="عنوان استایل هفته..."
+                    value="{{ $style->title }}" />
                 </div>
                 <div class="form-group col-6">
-                    <label for="" class="form-label">اتمام شگفت آویز</label>
-                    <input type="text" id="dateEnd" class="datePicker form-control text-end BYekan"
-                        value="{{ $amazing->end }}" />
-                    <input type="hidden" id="dateEndMain" name="end"
+                    <label for="" class="form-label">تاریخ اتمام</label>
+                    <input type="text" id="date" class="datePicker form-control text-end BYekan"
+                        value="{{ $style->date }}" />
+                    <input type="hidden" id="dateMain" name="date"
                         class="datePicker form-control text-end vazir  d-ltr" />
                 </div>
 
@@ -86,9 +84,9 @@
                 </div>
 
                 <div class="col-12 apTblBox">
-                    <label class="my-2">لیست شگفت آویز:</label>
+                    <label class="my-2">لیست محصولات استایل هفته:</label>
                     <?php $list = [] ?>
-                    @foreach ($amazing->products as $key=>$product)
+                    @foreach ($style->products as $key=>$product)
                         <?php array_push($list,$product->id) ?>
                     @endforeach
                     <input type="hidden" id="amzList" name="list" class="w-100" value="{{implode(',', $list)}}">
@@ -100,7 +98,7 @@
                             <th class="text-center">عملیات</th>
                         </thead>
                         <tbody>
-                            @foreach ($amazing->products as $key=>$product)
+                            @foreach ($style->products as $key=>$product)
                                 <tr id="p_{{$product->id}}">
                                     <td>{{$key+1}}</td>
                                     <td>{{$product->title}}</td>
@@ -122,7 +120,7 @@
         <div class="justify-content-center bg-white py-3 ps-2 pe-3 border-start border-4 border-info w-100">
             <div class="col-12 d-flex justify-content-between">
                 <button type="submit" class="btn btn-primary" onclick="sendForm('formTarget')">ثبت</button>
-                <a href="{{ route('amazings.index') }}" class="btn btn-outline-danger">انصراف</a>
+                <a href="{{ route('styles.index') }}" class="btn btn-outline-danger">انصراف</a>
             </div>
         </div>
     </div>
@@ -138,7 +136,7 @@
 
         var token = "{{ csrf_token() }}";
         var type = "image";
-        var folder = "amazing";
+        var folder = "week_style";
         var mim = "jpg,jpeg,png,gif";
         var thumbnail = "false";
 
@@ -181,39 +179,21 @@
 
 @section('footer')
     <script>
-        let url = "{{ route('amazings.search') }}";
+        let url = "{{ route('products.search') }}";
         let _token = "{{ csrf_token() }}";
     </script>
 
     <script>
         $(document).ready(function() {
             window.persianDatepickerDebug = true;
-            $("#dateStart").persianDatepicker({
+            $("#date").persianDatepicker({
                 autoClose: true,
                 initialValue: true,
                 observer: true,
                 viewMode: 'jalali',
-                altField: '#dateStartMain',
-                altFormat: "YYYY-MM-DD H:mm:ss",
-                format: "H:mm:ss - YYYY/MM/DD",
-                calendar: {
-                    persian: {
-                        locale: 'en', // زبان نمایش
-                    }
-                },
-                timePicker: {
-                    enabled: true
-                }
-            });
-
-            $("#dateEnd").persianDatepicker({
-                autoClose: true,
-                initialValue: true,
-                observer: true,
-                viewMode: 'jalali',
-                altField: '#dateEndMain',
-                altFormat: "YYYY-MM-DD H:mm:ss",
-                format: "H:mm:ss - YYYY/MM/DD",
+                altField: '#dateMain',
+                altFormat: "YYYY-MM-DD HH:mm:ss",
+                format: "HH:mm:ss - YYYY/MM/DD",
                 calendar: {
                     persian: {
                         locale: 'en', // زبان نمایش

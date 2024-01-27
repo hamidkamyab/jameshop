@@ -160,8 +160,8 @@
                 observer: true,
                 viewMode: 'jalali',
                 altField: '#dateStartMain',
-                altFormat: "YYYY-MM-DD H:mm:ss",
-                format: "H:mm:ss - YYYY/MM/DD",
+                altFormat: "YYYY-MM-DD HH:mm:ss",
+                format: "HH:mm:ss - YYYY/MM/DD",
                 calendar: {
                     persian: {
                         locale: 'en', // زبان نمایش
@@ -178,8 +178,8 @@
                 observer: true,
                 viewMode: 'jalali',
                 altField: '#dateEndMain',
-                altFormat: "YYYY-MM-DD H:mm:ss",
-                format: "H:mm:ss - YYYY/MM/DD",
+                altFormat: "YYYY-MM-DD HH:mm:ss",
+                format: "HH:mm:ss - YYYY/MM/DD",
                 calendar: {
                     persian: {
                         locale: 'en', // زبان نمایش
