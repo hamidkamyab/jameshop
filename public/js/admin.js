@@ -7397,8 +7397,8 @@ function removeOfAMZ(id) {
     $('#amzList').val(amzList);
 }
 
-function amzCoverDel() {
-    $('#amzCover').fadeOut(0);
+function CoverDel() {
+    $('.coverBox').fadeOut(0);
     $('#ImgBox').removeClass('hidden');
     $('#photos').val(null);
 }

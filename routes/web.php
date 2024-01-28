@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AttributeGroupController;
 use App\Http\Controllers\Admin\AttributeValueController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CategoryTabController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FileController;
@@ -77,5 +78,18 @@ Route::prefix('admin')->group(function(){
         Route::get('styles/edit/{id}',[StyleController::class,'edit'])->name('styles.edit');
         Route::patch('styles/update/{id}',[StyleController::class,'update'])->name('styles.update');
         Route::delete('styles/{id}',[StyleController::class,'destroy'])->name('styles.destroy');
+
+        Route::get('category_tabs',[CategoryTabController::class,'index'])
+        ->name('category_tabs.index');
+        Route::get('category_tabs/create',[CategoryTabController::class,'create'])
+        ->name('category_tabs.create');
+        Route::post('category_tabs',[CategoryTabController::class,'store'])
+        ->name('category_tabs.store');
+        Route::get('category_tabs/edit/{id}',[CategoryTabController::class,'edit'])
+        ->name('category_tabs.edit');
+        Route::patch('category_tabs/update/{id}',[CategoryTabController::class,'update'])
+        ->name('category_tabs.update');
+        Route::delete('category_tabs/{id}',[CategoryTabController::class,'destroy'])
+        ->name('category_tabs.destroy');
     });
 });

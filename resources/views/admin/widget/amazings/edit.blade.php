@@ -23,13 +23,13 @@
                 </div>
 
                 @if(count($amazing->media) > 0)
-                    <div id="amzCover" class="col-12 mb-3">
+                    <div id="amzCover" class="col-12 mb-3 coverBox">
                         <div class="row mb-2">
                             <h6 class="text-muted">کاور شگفت آویز</h6>
                         </div>
                         <div class="d-flex align-items-end gap-2">
                             <img src="{{$amazing->media[0]->file->path}}" >
-                            <button type="button" class="btn btn-sm btn-outline-danger" onclick="amzCoverDel()" >
+                            <button type="button" class="btn btn-sm btn-outline-danger" onclick="CoverDel()" >
                                 <i class="icon-trash" ></i>
                                 <span>حذف کاور</span>
                             </button>

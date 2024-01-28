@@ -268,7 +268,13 @@
                             </div>
                         </a>
                     </li>
-
+                    <li class="itemLi">
+                        <a href="{{route('category_tabs.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
+                            <div class="d-flex align-items-center gap-2 px-1">
+                                <span class="BYekan hiddenItem">برگه دسته بندی</span>
+                            </div>
+                        </a>
+                    </li>
                     <li class="itemLi">
                         <a href="{{route('products.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
                             <div class="d-flex align-items-center gap-2 px-1">

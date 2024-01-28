@@ -8,10 +8,6 @@
         @if (Session::has('opration_menu'))
             @include('admin.partials.Alert', ['msg' => [session('opration_menu')], 'status' => 'success'])
         @endif
-
-        @if (Session::has('error_attr'))
-            @include('admin.partials.Alert', ['msg' => [session('error_attr')], 'status' => 'danger'])
-        @endif
         <table class="table">
             <thead class="bg-dark text-white">
                 <tr>
