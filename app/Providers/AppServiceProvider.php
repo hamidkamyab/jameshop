@@ -81,6 +81,11 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\Category_Tab\CategoryTabRepositoryInterface',
             'App\Repositories\Category_Tab\CategoryTabRepository'
         );
+
+        $this->app->bind(
+            'App\Repositories\Beauty\BeautyRepositoryInterface',
+            'App\Repositories\Beauty\BeautyRepository'
+        );
     }
 
     /**

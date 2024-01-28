@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AmazingController;
 use App\Http\Controllers\Admin\AttributeGroupController;
 use App\Http\Controllers\Admin\AttributeValueController;
+use App\Http\Controllers\Admin\BeautyController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CategoryTabController;
@@ -91,5 +92,14 @@ Route::prefix('admin')->group(function(){
         ->name('category_tabs.update');
         Route::delete('category_tabs/{id}',[CategoryTabController::class,'destroy'])
         ->name('category_tabs.destroy');
+
+
+        Route::get('beauties',[BeautyController::class,'index'])->name('beauties.index');
+        Route::get('beauties/create',[BeautyController::class,'create'])->name('beauties.create');
+        Route::post('beauties',[BeautyController::class,'store'])->name('beauties.store');
+        Route::get('beauties/edit/{id}',[BeautyController::class,'edit'])->name('beauties.edit');
+        Route::patch('beauties/update/{id}',[BeautyController::class,'update'])->name('beauties.update');
+        Route::delete('beauties/{id}',[BeautyController::class,'destroy'])->name('beauties.destroy');
+
     });
 });
