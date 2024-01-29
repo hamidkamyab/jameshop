@@ -46,36 +46,37 @@ class BeautyRepository implements BeautyRepositoryInterface
 
     public function update($data, $id)
     {
-        $isStyle = $this->getById($id);
-        $isStyle->title = $data->title;
-        $isStyle->date = convertJtoM($data->date); //تبدیل تاریخ جلالی به میلادی
+        $isBeauty = $this->getById($id);
+        $isBeauty->title = $data->title;
+        $isBeauty->link = $data->link;
 
-        if (@$isStyle->media[0]) {
+        if (@$isBeauty->media[0]) {
             if ($data->photosId != null) {
-                $isStyle->media()->update([
+                $isBeauty->media()->update([
                     'file_id' => $data->photosId
                 ]);
             }
-            if (intval($data->photosId) != $isStyle->media[0]->file_id || $data->photosId == null) {
-                $photo = $isStyle->media[0]->file_id;
+            if (intval($data->photosId) != $isBeauty->media[0]->file_id || $data->photosId == null) {
+                $photo = $isBeauty->media[0]->file_id;
                 $this->file->destroy($photo);
             }
         } else {
-            $isStyle->media()->create([
+            $isBeauty->media()->create([
                 'file_id' => $data->photosId
             ]);
         }
-        $isStyle->save();
+        $isBeauty->save();
 
     }
 
     public function destroy($id)
     {
-        $isStyle = $this->getById($id);
-        if (@$isStyle->media[0] && count($isStyle->media) > 0) {
-            $photo = $isStyle->media[0]->file_id;
+        $isBeauty = $this->getById($id);
+        if (@$isBeauty->media[0] && count($isBeauty->media) > 0) {
+            $photo = $isBeauty->media[0]->file_id;
             $this->file->destroy($photo);
         }
-        $isStyle->delete();
+        $isBeauty->delete();
+        return $isBeauty->title;
     }
 }

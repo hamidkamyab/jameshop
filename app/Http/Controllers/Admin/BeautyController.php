@@ -55,7 +55,8 @@ class BeautyController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $beauty = $this->beauty->getById($id);
+        return view('admin.widget.beauties.edit',compact('beauty'));
     }
 
     /**
@@ -63,7 +64,9 @@ class BeautyController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $this->beauty->update($request,$id);
+        Session::flash('opration_beauty',$request->title.' با موفقیت ویرایش شد! ');
+        return redirect()->route('beauties.index');
     }
 
     /**
@@ -71,6 +74,8 @@ class BeautyController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $result = $this->beauty->destroy($id);
+        Session::flash('opration_beauty',$result.' با موفقیت ویرایش شد! ');
+        return redirect()->route('beauties.index');
     }
 }
