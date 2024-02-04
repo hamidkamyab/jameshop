@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\StyleController;
+use App\Http\Controllers\Admin\TopBrandController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -61,6 +62,7 @@ Route::prefix('admin')->group(function(){
     Route::post('products/delete/{product}',[ProductController::class,'delete'])->name('products.delete');
     Route::post('products/search',[ProductController::class,'search'])->name('products.search');
     Route::resource('products',ProductController::class);
+
     Route::prefix('widget')->group(function(){
         Route::get('slider',[SliderController::class,'index'])->name('slider.index');
         Route::post('slider',[SliderController::class,'store'])->name('slider.store');
@@ -100,6 +102,15 @@ Route::prefix('admin')->group(function(){
         Route::get('beauties/edit/{id}',[BeautyController::class,'edit'])->name('beauties.edit');
         Route::patch('beauties/update/{id}',[BeautyController::class,'update'])->name('beauties.update');
         Route::delete('beauties/{id}',[BeautyController::class,'destroy'])->name('beauties.destroy');
+
+
+        Route::get('top_brands',[TopBrandController::class,'index'])->name('top_brands.index');
+        Route::get('top_brands/create',[TopBrandController::class,'create'])->name('top_brands.create');
+        Route::post('top_brands',[TopBrandController::class,'store'])->name('top_brands.store');
+        Route::get('top_brands/edit/{id}',[TopBrandController::class,'edit'])->name('top_brands.edit');
+        Route::patch('top_brands/update/{id}',[TopBrandController::class,'update'])->name('top_brands.update');
+        Route::delete('top_brands/{id}',[TopBrandController::class,'destroy'])->name('top_brands.destroy');
+        Route::get('top_brands/search/{id}',[TopBrandController::class,'search'])->name('top_brands.search');
 
     });
 });

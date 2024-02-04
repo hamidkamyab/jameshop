@@ -6,19 +6,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
-class Brand extends Model
+class TopBrand extends Model
 {
     use HasFactory;
+
+    public function products(){
+        return $this->belongsToMany(Product::class,'products_top_brands');
+    }
 
     public function media():MorphMany
     {
         return $this->morphMany(Media::class,'mediable');
     }
-    public function products(){
-        return $this->hasMany(Product::class);
-    }
-    public function country(){
-        return $this->belongsTo(Country::class);
-    }
 
+    public function brand(){
+        return $this->belongsTo(Brand::class);
+    }
 }

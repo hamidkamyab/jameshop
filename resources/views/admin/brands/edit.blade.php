@@ -13,10 +13,21 @@
             <form class="row gap-4 m-0" action="{{ route('brands.update', $brand->id) }}" method="post" id="formTarget">
                 @csrf
                 @method('PATCH')
-                <div class="col-12">
-                    <label for="inputTitle" class="form-label">عنوان</label>
-                    <input type="text" class="form-control" id="inputTitle" name="title" placeholder="عنوان برند..."
-                        value="{{ $brand->title }}">
+                <div class="row">
+                    <div class="col-6">
+                        <label for="inputTitle" class="form-label">عنوان</label>
+                        <input type="text" class="form-control" id="inputTitle" name="title" placeholder="عنوان برند..."
+                            value="{{ $brand->title }}">
+                    </div>
+                    <div class="col-6">
+                        <label for="inputTitle" class="form-label">کشور</label>
+                        <select class="form-select searchSelect mb-4" id="inputParent" name="country_id">
+                            <option value="null">انتخاب کنید...</option>
+                            @foreach ($countries as $country)
+                                <option value="{{ $country->id }}" @if($country->id == $brand->country_id) selected @endif>{{ $country->fa_name }} - {{ $country->en_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
                 <div class="col-12">
                     <label for="inputTitle" class="form-label">تصویر برند</label>

@@ -5,16 +5,19 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BrandRequest;
 use App\Repositories\Brand\BrandRepositoryInterface;
+use App\Repositories\Country\CountryRepositoryInterface;
 use Illuminate\Support\Facades\Session;
 
 class BrandController extends Controller
 {
 
     private $brand;
+    private $country;
 
-    public function __construct(BrandRepositoryInterface $IBrandRepository)
+    public function __construct(BrandRepositoryInterface $IBrandRepository, CountryRepositoryInterface $ICountryRepository)
     {
         $this->brand = $IBrandRepository;
+        $this->country = $ICountryRepository;
     }
 
     /**
@@ -31,7 +34,8 @@ class BrandController extends Controller
      */
     public function create()
     {
-        return view('admin.brands.create');
+        $countries = $this->country->getAll();
+        return view('admin.brands.create',compact('countries'));
     }
 
     /**
@@ -59,7 +63,8 @@ class BrandController extends Controller
     {
         $brand = $this->brand->getById($id);
         $brand['photo']=@$brand->media[0]->file;
-        return view('admin.brands.edit', compact('brand'));
+        $countries = $this->country->getAll();
+        return view('admin.brands.edit', compact('brand','countries'));
     }
 
     /**

@@ -276,7 +276,7 @@
                         </a>
                     </li>
                     <li class="itemLi">
-                        <a href="{{route('products.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
+                        <a href="{{route('beauties.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
                             <div class="d-flex align-items-center gap-2 px-1">
                                 <span class="BYekan hiddenItem">زیبایی و سلامت</span>
                             </div>
@@ -284,9 +284,9 @@
                     </li>
 
                     <li class="itemLi">
-                        <a href="{{route('products.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
+                        <a href="{{route('top_brands.index')}}" class="item px-2 d-flex align-items-center gap-2 text-white">
                             <div class="d-flex align-items-center gap-2 px-1">
-                                <span class="BYekan hiddenItem">طراحان ایرانی</span>
+                                <span class="BYekan hiddenItem">طراحان برتر</span>
                             </div>
                         </a>
                     </li>

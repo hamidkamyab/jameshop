@@ -13,10 +13,21 @@
         <div class="row justify-content-center">
             <form class="row m-0 g-4" action="{{ route('brands.store') }}" method="post" id="formTarget">
                 @csrf
-                <div class="col-12">
-                    <label for="inputTitle" class="form-label">نام</label>
-                    <input type="text" class="form-control" id="inputTitle" name="title" placeholder="نام برند..."
-                        value="{{ old('title') }}" />
+                <div class="row">
+                    <div class="col-6">
+                        <label for="inputTitle" class="form-label">نام</label>
+                        <input type="text" class="form-control" id="inputTitle" name="title" placeholder="نام برند..."
+                            value="{{ old('title') }}" />
+                    </div>
+                    <div class="col-6">
+                        <label for="inputTitle" class="form-label">کشور</label>
+                        <select class="form-select searchSelect mb-4" id="inputParent" name="country_id">
+                            <option value="null">انتخاب کنید...</option>
+                            @foreach ($countries as $country)
+                                <option value="{{ $country->id }}">{{ $country->fa_name }} - {{ $country->en_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
                 <div class="col-12">
                     <label for="inputTitle" class="form-label">تصویر برند</label>
@@ -61,7 +72,7 @@
     <div class="col-3 left-box d-flex flex-wrap gap-3">
         <div class="justify-content-center bg-white py-3 ps-2 pe-3 border-start border-4 border-info w-100">
             <div class="col-12 d-flex justify-content-between">
-                <button type="submit" class="btn btn-primary"  onclick="sendForm('formTarget')">ثبت برند</button>
+                <button type="submit" class="btn btn-primary" onclick="sendForm('formTarget')">ثبت برند</button>
                 <a href="{{ route('brands.index') }}" class="btn btn-outline-danger">انصراف</a>
             </div>
         </div>

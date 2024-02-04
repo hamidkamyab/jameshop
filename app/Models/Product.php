@@ -50,4 +50,8 @@ class Product extends Model
     public function styles(){
         return $this->belongsToMany(Style::class,'products_styles');
     }
+
+    public function top_brands(){
+        return $this->belongsToMany(TopBrand::class,'products_top_brands');
+    }
 }

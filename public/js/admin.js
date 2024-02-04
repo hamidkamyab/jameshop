@@ -7351,14 +7351,15 @@ function formatPrice(number) {
     return formattedNumber;
 }
 
+if (document.querySelector('#searchInputAMZ')) {
+    document.getElementById('searchInputAMZ').addEventListener('focusout', () => {
+        $('#searchContent').fadeOut();
+    })
 
-document.getElementById('searchInputAMZ').addEventListener('focusout', () => {
-    $('#searchContent').fadeOut();
-})
-
-document.getElementById('searchBtnAMZ').addEventListener('focusout', () => {
-    $('#searchContent').fadeOut();
-})
+    document.getElementById('searchBtnAMZ').addEventListener('focusout', () => {
+        $('#searchContent').fadeOut();
+    })
+}
 
 let count = 1;
 
@@ -7388,6 +7389,8 @@ function removeOfAMZ(id) {
         let strAMZ = $('#amzList').val();
         strAMZ = strAMZ.split(',');
         amzList = strAMZ.map(Number);
+    } else {
+        amzList = amzList.map(Number);
     }
     const index = amzList.indexOf(id);
     if (index > -1) {
@@ -7401,4 +7404,60 @@ function CoverDel() {
     $('.coverBox').fadeOut(0);
     $('#ImgBox').removeClass('hidden');
     $('#photos').val(null);
+}
+
+
+function addToTB(event) {
+    if (event.target.value != 'choose') {
+        if ($('#topBrandList').val() && tbList.length == 0) {
+            let strTB = $('#topBrandList').val();
+            strTB = strTB.split(',');
+            tbList = strTB.map(Number);
+        }
+        $('#topBrandList').val('');
+        let target = event.target.selectedOptions[0];
+        let id = $(target).val();
+        let title = $(target).text();
+        let imgPath = $(target).attr('data-image');
+        let category = $(target).attr('data-cat');
+        let sku = $(target).attr('data-sku');
+
+        if (!tbList.includes(id)) {
+            const row = '<tr id="row-' + id + '"><td><div class="productListImg p-1 border border-1"><img src="' + imgPath + '" /></div>' +
+                '</td><td><div class="d-flex flex-column"><span>' + title + '</span><small class="text-info">' + sku + '</small></div></td><td>' + category + '</td>' +
+                '<td><button type="button" class="btn btn-danger btn-sm d-flex align-items-center" onclick="removeOfTB(' + id + ')">' +
+                '<i class="icon-trash"></i>' +
+                '<span>حذف</span></button></td></tr>';
+
+            $('#tbList tbody').append(row)
+            tbList.push(id);
+            $('#topBrandList').val(tbList);
+        } else {
+            Swal.fire({
+                title: 'محصول تکراری!',
+                text: "محصول " + title + " را قبلا به لیست محصولات نمونه اضافه کرده اید!",
+                icon: 'info',
+                confirmButtonText: 'بستن!',
+            })
+        }
+    }
+
+}
+
+function removeOfTB(id) {
+    if ($('#topBrandList').val() && tbList.length == 0) {
+        let strTB = $('#topBrandList').val();
+        strTB = strTB.split(',');
+        tbList = strTB.map(Number);
+    } else {
+        tbList = tbList.map(Number);
+    }
+    const index = tbList.indexOf(id);
+    console.log(id);
+    console.log(tbList);
+    if (index > -1) {
+        tbList.splice(index, 1);
+    }
+    $('#row-' + id).remove();
+    $('#topBrandList').val(tbList);
 }

@@ -86,6 +86,16 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\Beauty\BeautyRepositoryInterface',
             'App\Repositories\Beauty\BeautyRepository'
         );
+
+        $this->app->bind(
+            'App\Repositories\Country\CountryRepositoryInterface',
+            'App\Repositories\Country\CountryRepository'
+        );
+
+        $this->app->bind(
+            'App\Repositories\TopBrand\TopBrandRepositoryInterface',
+            'App\Repositories\TopBrand\TopBrandRepository'
+        );
     }
 
     /**

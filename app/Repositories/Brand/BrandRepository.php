@@ -20,9 +20,9 @@ class BrandRepository implements BrandRepositoryInterface
     public function getAll($page = false)
     {
         if($page){
-            return  $this->brand::with('media.file')->paginate(30);
+            return  $this->brand::with('media.file','country')->paginate(30);
         }else{
-            return  $this->brand::with('media.file')->get();
+            return  $this->brand::with('media.file','country')->get();
         }
     }
 
@@ -34,6 +34,7 @@ class BrandRepository implements BrandRepositoryInterface
     public function store($data){
         $newBrand = new $this->brand();
         $newBrand->title = $data->title;
+        $newBrand->country_id = $data->country_id;
         $newBrand->description = $data->description;
         $newBrand->save();
         $newBrand->media()->create([
@@ -45,6 +46,7 @@ class BrandRepository implements BrandRepositoryInterface
     public function update($data,$id){
         $isBrand = $this->getById($id);
         $isBrand->title = $data->title;
+        $isBrand->country_id = $data->country_id;
         $isBrand->description = $data->description;
         $isBrand->save();
         if(@$isBrand->media[0]){

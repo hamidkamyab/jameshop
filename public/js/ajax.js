@@ -218,3 +218,53 @@ async function searchProduct() {
     }
 }
 /****************************/
+
+async function productsBrandSearch(event, cl = true) {
+    if (event.target.value != 'choose') {
+        url = TB_url.replace("+id+", event.target.value);
+        document.getElementById('selectProduct').innerHTML = '';
+        var tag = '<option selected disabled value="choose">انتخاب کنید...</option>';
+        $('#selectProduct').append(tag);
+        const response = await fetch(url, { method: 'GET' });
+        const result = await response.json();
+        if (result.data.length > 0) {
+            $('#selectProduct').attr('disabled', false);
+            result.data.forEach(item => {
+                var imgPath = '';
+                if (item.media.length > 0) {
+                    imgPath = item.media[0].file.path;
+                } else {
+                    imgPath = deafultProductImg;
+                }
+
+                var tag = '<option value="' + item.id + '" data-image="' + imgPath + '" data-cat="' + item.category.title + '" data-sku="' + item.sku + '">' + item.title + '</option>';
+
+                $('#selectProduct').append(tag);
+            })
+
+            $('#selectProduct').select2({
+                templateResult: formatResult, // اضافه کردن تصاویر به نتایج
+                escapeMarkup: function(m) { return m; }
+            });
+
+            function formatResult(state) {
+                if (!state.id) {
+                    return state.text;
+                }
+                var imageUrl = $(state.element).attr('data-image');
+                var category = $(state.element).attr('data-cat');
+                if (imageUrl) {
+                    return $('<div class="d-flex align-items-center gap-2"><div class="img-flag"><img src="' + imageUrl + '" /></div> ' +
+                        '<div class="d-flex flex-column"><span>' + state.text + '</span><small>دسته: ' + category + '</small></div></div>');
+                }
+                return state.text;
+            }
+
+        }
+    }
+    if (cl) {
+        tbList.length = 0;
+        $('#tbList tbody').empty();
+        $('#topBrandList').val('');
+    }
+}
