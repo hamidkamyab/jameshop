@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FileController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\StyleController;
@@ -113,4 +114,7 @@ Route::prefix('admin')->group(function(){
         Route::get('top_brands/search/{id}',[TopBrandController::class,'search'])->name('top_brands.search');
 
     });
+
+    Route::get('settings',[SettingController::class,'index'])->name('settings.index');
+    Route::post('settings',[SettingController::class,'store'])->name('settings.store');
 });

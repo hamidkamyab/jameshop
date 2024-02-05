@@ -96,6 +96,11 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\TopBrand\TopBrandRepositoryInterface',
             'App\Repositories\TopBrand\TopBrandRepository'
         );
+
+        $this->app->bind(
+            'App\Repositories\Setting\SettingRepositoryInterface',
+            'App\Repositories\Setting\SettingRepository'
+        );
     }
 
     /**

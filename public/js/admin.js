@@ -7461,3 +7461,11 @@ function removeOfTB(id) {
     $('#row-' + id).remove();
     $('#topBrandList').val(tbList);
 }
+
+function giftFunc() {
+    if ($('#inputCat').attr('disabled')) {
+        $('#inputCat').attr('disabled', false);
+    } else {
+        $('#inputCat').attr('disabled', true);
+    }
+}
