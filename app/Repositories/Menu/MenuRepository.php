@@ -41,25 +41,26 @@ class MenuRepository implements MenuRepositoryInterface
 
     public function store($data){
         $newMenu = new $this->menu();
-        if ($data->is_cat && @$data->is_cat == '1') {
-            $category = $this->category->getById($data->link_cat);
-            $link = $category->slug;
-            $newMenu->is_cat = 1;
-        } else if (@$data->is_cat == '2') {
+        $link = null;
+        $category_id= null;
+        if ($data->is_link && @$data->is_link == '1') {
+            $category_id = $data->category_id;
+        } else if (@$data->is_link == '2') {
             $link = $data->link;
-            $newMenu->is_cat = 2;
-        } else {
-            $newMenu->is_cat = 0;
+            $category_id = $data->category_id;
         }
         $newMenu->title = $data->title;
         $newMenu->position = $data->position;
-        $newMenu->link = @$link;
+        $newMenu->is_link = $data->is_link;
+        $newMenu->category_id = $category_id;
+        $newMenu->link = $link;
         $newMenu->color = @$data->color;
         if ($data->parent_id) {
             $newMenu->parent_id = $data->parent_id;
         } else {
             $newMenu->parent_id = 0;
         }
+        $newMenu->best = $data->status;
         if (@$data->best_status && $data->bests != null) {
             $newMenu->best = 1;
             $newMenu->best_title = $data->best_title;
@@ -76,34 +77,36 @@ class MenuRepository implements MenuRepositoryInterface
     }
 
     public function update($data,$id){
-
         $isMenu = $this->getById($id);
         $link = null;
         $color = null;
-        if ($data->is_cat && $data->is_cat == '1') {
-            $category = $this->category->getById($data->link_cat);
-            $link = $category->slug;
-            $isMenu->is_cat = 1;
-        } else if ($data->is_cat == '2') {
+        $category_id= null;
+        if ($data->is_link && @$data->is_link == '1') {
+            $isMenu->is_link = 1;
+            $category_id = $data->category_id;
+        } else if (@$data->is_link == '2') {
             $link = $data->link;
-            $isMenu->is_cat = 2;
-        } else {
-            $isMenu->is_cat = 0;
+            $isMenu->is_link = 2;
+            $category_id = $data->category_id;
         }
+
         if (@$data->color) {
             $color = $data->color;
         }
         $isMenu->title = $data->title;
         $isMenu->position = $data->position;
+        $isMenu->is_link = $data->is_link;
+        $isMenu->category_id = $category_id;
         $isMenu->link = $link;
         $isMenu->color = $color;
         $isMenu->parent_id = $data->parent_id;
+        $isMenu->status = $data->status;
         $status = 'success';
-        if (@$data->best_status && $data->bests != null) {
+        if ($data->best_status && $data->bests != null) {
             $isMenu->best = 1;
             $isMenu->best_title = $data->best_title;
             $isMenu->best_link = $data->best_link;
-        } else if(@$data->best_status && $data->bests == null) {
+        } else if($data->best_status && $data->bests == null) {
             $status = 'error';
             return ['status' => $status , 'isMenu' => $isMenu];
         }else{

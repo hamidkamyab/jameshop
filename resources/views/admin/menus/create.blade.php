@@ -15,12 +15,13 @@
             @include('admin.partials.Alert', ['msg' => $errors->all(), 'status' => 'danger'])
         @endif
         <div class="row justify-content-center">
-            <form class="row m-0 g-4 col-12" action="{{ route('menus.store') }}" method="post" id="formTarget" onsubmit="reqValidate(e)">
+            <form class="row m-0 g-4 col-12" action="{{ route('menus.store') }}" method="post" id="formTarget"
+                onsubmit="reqValidate(e)">
                 @csrf
                 <div class="col-6">
                     <label for="inputTitle" class="form-label">عنوان</label>
-                    <input type="text" class="form-control vazir fs-12 fw-bold reqCheck" id="inputTitle" name="title" placeholder="عنوان منو..."
-                        value="{{ old('title') }}" onfocus="rmvCls(this)" />
+                    <input type="text" class="form-control vazir fs-12 fw-bold reqCheck" id="inputTitle" name="title"
+                        placeholder="عنوان منو..." value="{{ old('title') }}" onfocus="rmvCls(this)" />
                 </div>
                 <div class="col-6">
                     <label class="form-label">رنگ</label><small class="mx-1 text-danger">(اختیاری می
@@ -40,7 +41,8 @@
                 <div class="col-12 d-flex flex-wrap">
                     <div class="col-12"><label class="form-label">لینک</label></div>
                     <div class="form-group col-6 p-3">
-                        <select id="selectLink" class="form-control def-select vazir fs-12 fw-bold form-select" role="button" name="is_cat">
+                        <select id="selectLink" class="form-control def-select vazir fs-12 fw-bold form-select"
+                            role="button" name="is_link">
                             <option class="defaultOption" disabled>انتخاب کنید</option>
                             <option value="0">بدون لینک</option>
                             <option value="1">از دسته بندی</option>
@@ -48,7 +50,8 @@
                         </select>
                     </div>
                     <div class="form-group col-6 p-3">
-                        <select id="selectCategories" class="form-control vazir fs-12 fw-bold def-select form-select" role="button" name="link_cat" disabled>
+                        <select id="selectCategories" class="form-control vazir fs-12 fw-bold def-select form-select"
+                            role="button" name="category_id" disabled>
                             <option class="defaultOption" disabled>انتخاب دسته بندی</option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}">
@@ -66,10 +69,27 @@
                     </div>
 
                     <div class="col-12 p-3">
-                        <input type="text" class="form-control vazir fs-12 fw-bold" id="inputLink" disabled name="link"
-                            placeholder="لینک منو..." value="{{ old('link') }}" />
+                        <input type="text" class="form-control vazir fs-12 fw-bold" id="inputLink" disabled
+                            name="link" placeholder="لینک منو..." value="{{ old('link') }}" />
                     </div>
                 </div>
+
+                <div class="col-12 d-flex gap-3 align-items-center">
+                    <label class="form-check-label text-muted" for="DiactiveMenu">وضعیت منو</label>
+                    <div class="form-check">
+                        <input class="form-check-input border border-danger" type="radio" name="status" id="flexRadioDefault1" value="0" checked>
+                        <label class="form-check-label" for="DiactiveMenu">
+                            غیرفعال
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input border border-success" type="radio" name="status" id="ActiveMenu" value="1">
+                        <label class="form-check-label" for="ActiveMenu">
+                            فعال
+                        </label>
+                    </div>
+                </div>
+
                 <div class="col-6">
                     <div class="form-group">
                         <label for="selectPosition" class="form-label">موقعیت</label>
@@ -84,10 +104,12 @@
                 <div class="col-6">
                     <div class="form-group">
                         <label for="selectParent" class="form-label">والد</label>
-                        <select id="selectParent" class="create form-control vazir fs-12 fw-bold def-select form-select" role="button" name="parent_id" disabled>
+                        <select id="selectParent" class="create form-control vazir fs-12 fw-bold def-select form-select"
+                            role="button" name="parent_id" disabled>
                             <option class="defaultOption" disabled>انتخاب کنید</option>
                             @foreach ($menus as $menu)
-                                <option value="{{ $menu->id }}" class="text-primary parent"> {{ $menu->title }}</option>
+                                <option value="{{ $menu->id }}" class="text-primary parent"> {{ $menu->title }}
+                                </option>
                                 @if ($menu->children)
                                     @include('admin.partials.MenuChildren', [
                                         'menus' => $menu->children,
@@ -105,20 +127,20 @@
                         <div class="form-check form-switch">
                             <label class="form-check-label" for="SwitchCheckBest">بهترین برند ها یا طراحان</label>
                             <small class="mx-1 text-danger">(برای منو بالای صفحه [هدر] می باشد)</small>
-                            <input class="form-check-input vazir fs-12 fw-bold disabled" disabled type="checkbox" id="SwitchCheckBest"
-                              name="best_status"  role="button">
+                            <input class="form-check-input vazir fs-12 fw-bold disabled" disabled type="checkbox"
+                                id="SwitchCheckBest" name="best_status" role="button">
                         </div>
                     </div>
                     <div class="col-12 d-flex flex-wrap">
                         <div class="col-6 px-2 my-2">
                             <label for="inputTitle" class="form-label">عنوان</label>
-                            <input type="text" class="b-input-t vazir fs-12 fw-bold form-control" id="inputTitle" name="best_title"
-                                placeholder="عنوان..." value="{{ old('best_title') }}" disabled />
+                            <input type="text" class="b-input-t vazir fs-12 fw-bold form-control" id="inputTitle"
+                                name="best_title" placeholder="عنوان..." value="{{ old('best_title') }}" disabled />
                         </div>
                         <div class="col-6 px-2 my-2">
                             <label for="inputTitle" class="form-label">لینک عنوان</label>
-                            <input type="text" class="b-input-t vazir fs-12 fw-bold form-control" id="inputTitle" name="best_link"
-                                placeholder="لینک عنوان..." value="{{ old('best_link') }}" disabled />
+                            <input type="text" class="b-input-t vazir fs-12 fw-bold form-control" id="inputTitle"
+                                name="best_link" placeholder="لینک عنوان..." value="{{ old('best_link') }}" disabled />
                         </div>
                         <div class="imgBest col-12 px-2 my-2 d-flex flex-wrap align-items-center d-none">
                             <div class="col-12">
@@ -188,7 +210,7 @@
             init: function() {
                 this.on("success", (file, responseText) => {
                     photosId.push(responseText['file_id']);
-                    $('#photos').attr('disabled',false)
+                    $('#photos').attr('disabled', false)
                     $('#photos').val(photosId);
                     let active = '';
                     if (c == 0) {
@@ -202,8 +224,10 @@
                         responseText['file_id'] + '">' +
                         '<img src="' + responseText['path'] + '">' +
                         '<div class="w-50 p-3">' +
-                        '<input type="text" class="form-control vazir fs-12 fw-bold reqCheck" name="link-' + responseText[
-                            'file_id'] + '" placeholder="لینک برند یا طراح برتر...." onfocus="rmvCls(this)" />' +
+                        '<input type="text" class="form-control vazir fs-12 fw-bold reqCheck" name="link-' +
+                        responseText[
+                            'file_id'] +
+                        '" placeholder="لینک برند یا طراح برتر...." onfocus="rmvCls(this)" />' +
                         '</div>' +
                         '</li>';
                     $('.ImgChoose').append(tag);
@@ -247,7 +271,7 @@
                                         $('.ImgChooseLabel').addClass('d-none');
                                         $('#inputFirstPicId').val('');
                                         c = 0;
-                                        $('#photos').attr('disabled',false)
+                                        $('#photos').attr('disabled', false)
                                     }
                                 }, 300);
                             }
@@ -314,5 +338,4 @@
             }
         })
     </script>
-
 @endsection

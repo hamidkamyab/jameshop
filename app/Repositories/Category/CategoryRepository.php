@@ -6,7 +6,6 @@ use App\Models\AttributeGroup;
 use App\Models\AttributeGroupCategory;
 use App\Models\Category;
 use App\Repositories\File\FileRepository;
-use Illuminate\Support\Facades\Storage;
 
 class CategoryRepository implements CategoryRepositoryInterface
 {

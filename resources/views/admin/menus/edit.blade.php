@@ -42,19 +42,19 @@
                     <div class="col-12"><label class="form-label">لینک</label></div>
                     <div class="form-group col-6 p-3">
                         <select id="selectLink" class="form-control def-select vazir fs-12 fw-bold form-select"
-                            role="button" name="is_cat">
+                            role="button" name="is_link">
                             <option disabled>انتخاب کنید</option>
-                            <option value="0" @if ($menu->is_cat == '0') selected @endif>بدون لینک</option>
-                            <option value="1" @if ($menu->is_cat == '1') selected @endif>از دسته بندی</option>
-                            <option value="2" @if ($menu->is_cat == '2') selected @endif>افزودن دستی</option>
+                            <option value="0" @if ($menu->is_link == '0') selected @endif>بدون لینک</option>
+                            <option value="1" @if ($menu->is_link == '1') selected @endif>از دسته بندی</option>
+                            <option value="2" @if ($menu->is_link == '2') selected @endif>افزودن دستی</option>
                         </select>
                     </div>
                     <div class="form-group col-6 p-3">
-                        <select id="selectCategories" class="form-control vazir fs-12 fw-bold def-select form-select"
-                            role="button" name="link_cat" @if ($menu->is_cat != '1') disabled @endif>
+                        <select id="selectCategories" class="form-control vazir fs-12 fw-bold form-select"
+                            role="button" name="category_id" @if ($menu->category_id == null) disabled @endif>
                             <option class="defaultOption" disabled>انتخاب دسته بندی</option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">
+                                <option value="{{ $category->id }}" @if($menu->category_id == $category->id) selected @endif>
                                     {{ $category->title }}</option>
                                 @if ($category->children)
                                     @include('admin.partials.CategoryChildren', [
@@ -62,6 +62,7 @@
                                         'level' => 1,
                                         'toltipTitle' => $category->title,
                                         'disableParent' => false,
+                                        'selectedId' => $menu->category_id
                                     ])
                                 @endif
                             @endforeach
@@ -73,6 +74,25 @@
                             name="link" placeholder="لینک منو..." value="{{ $menu->link }}" />
                     </div>
                 </div>
+
+                <div class="col-12 d-flex gap-3 align-items-center">
+                    <label class="form-check-label text-muted" for="DiactiveMenu">وضعیت منو</label>
+                    <div class="form-check">
+                        <input class="form-check-input border border-danger" type="radio" name="status" id="flexRadioDefault1" value="0"
+                        @if($menu->status == 0) checked @endif >
+                        <label class="form-check-label" for="DiactiveMenu">
+                            غیرفعال
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input border border-success" type="radio" name="status" id="ActiveMenu" value="1"
+                        @if($menu->status == 1) checked @endif>
+                        <label class="form-check-label" for="ActiveMenu">
+                            فعال
+                        </label>
+                    </div>
+                </div>
+
                 <div class="col-6">
                     <div class="form-group">
                         <label for="selectPosition" class="form-label">موقعیت</label>
@@ -113,7 +133,7 @@
                     <div class="form-group py-2">
                         <div class="form-check form-switch d-flex align-items-center justify-content-start">
                             <input
-                                class="form-check-input vazir fs-12 fw-bold @if ($menu->best == 0) disabled hamid @endif me-2"
+                                class="form-check-input vazir fs-12 fw-bold @if ($menu->best == 0) disabled @endif me-2"
                                 @if ($menu->best != 0) checked @endif type="checkbox"
                                 id="SwitchCheckBest" name="best_status" role="button">
                             <label class="form-check-label" for="SwitchCheckBest">بهترین برند ها یا طراحان</label>

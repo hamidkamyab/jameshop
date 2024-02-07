@@ -5,6 +5,7 @@
             <th class="fw-normal fs-18">عنوان منو</th>
             <th class="fw-normal fs-18">والد منو</th>
             <th class="fw-normal fs-18">محل منو</th>
+            <th class="fw-normal fs-18">وضعیت</th>
             <th class="fw-normal fs-18">تاریخ ایجاد</th>
             <th class="fw-normal fs-18 d-flex align-items-center gap-1 justify-content-center">عملیات<small
                     class="fs-12">(ویرایش - حذف)</small></th>
@@ -18,6 +19,13 @@
                 <td>{{ str_repeat('+', $level) }} {{ $menu->title }}</td>
                 <td>{{ $menu->parent[0]->title }}</td>
                 <td>{{ $menu->position }}</td>
+                <td>
+                    @if($menu->status == 0)
+                        <span class="badge bg-danger fw-normal">غیرفعال</span>
+                    @else
+                    <span class="badge bg-success fw-normal">فعال</span>
+                    @endif
+                </td>
                 <td>{{ verta($menu->created_at)->format('H:i:s') }} -
                     {{ verta($menu->created_at)->format('Y/m/d') }}</td>
                 <td>

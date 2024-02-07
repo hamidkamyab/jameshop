@@ -15,13 +15,17 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('position');
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->string('link')->nullable();
             $table->string('color')->nullable();
+            $table->tinyInteger('is_link');
             $table->unsignedBigInteger('parent_id')->default(0);
             $table->tinyInteger('best')->unsigned()->default(0);
             $table->string('best_title')->nullable();
             $table->string('best_link')->nullable();
             $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('categories')->nullOnDelete()->onUpdate('null');
         });
     }
 
