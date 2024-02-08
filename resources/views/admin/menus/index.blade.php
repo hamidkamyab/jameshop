@@ -3,6 +3,12 @@
 @section('navigation')
     منوها
 @endsection
+@section('navBtnBox')
+    <a href="{{ route('menus.create') }}" class="btn btn-success btn-sm d-flex align-items-center">
+        <i class="icon-plus"></i>
+        <span>افزودن</span>
+    </a>
+@endsection
 @section('content')
     <div class="bg-white col-12 p-3 border-start border-4 border-info right-box">
         @if (Session::has('opration_menu'))
@@ -13,7 +19,7 @@
                 <tr>
                     <th>#</th>
                     <th class="fw-normal fs-18">عنوان منو</th>
-                    {{-- <th class="fw-normal fs-18">والد منو</th> --}}
+                    <th class="fw-normal fs-18">والد منو</th>
                     <th class="fw-normal fs-18">محل منو</th>
                     <th class="fw-normal fs-18">وضعیت</th>
                     <th class="fw-normal fs-18">تاریخ ایجاد</th>
@@ -25,8 +31,9 @@
             <tbody>
                 @foreach ($menus as $key => $menu)
                     <tr class="align-middle">
-                        <td>{{ $key + 1 }}
+                        <td>{{ $key + 1 }}</td>
                         <td>{{ $menu->title }}</td>
+                        <td>-</td>
                         <td>{{ $menu->position }}</td>
                         <td>
                             @if($menu->status == 0)
@@ -61,7 +68,7 @@
                     </tr>
                     @if ($menu->children && count($menu->children) > 0)
                         <tr class="trSubTbl st-{{$menu->id}}">
-                            <td colspan="6">
+                            <td colspan="8">
                                 @include('admin.partials.MenuList', [
                                     'menus' => $menu->children,
                                     'level' => 1,

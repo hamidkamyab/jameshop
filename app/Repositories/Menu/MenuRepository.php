@@ -43,12 +43,19 @@ class MenuRepository implements MenuRepositoryInterface
         $newMenu = new $this->menu();
         $link = null;
         $category_id= null;
+        $best = 0;
+
         if ($data->is_link && @$data->is_link == '1') {
             $category_id = $data->category_id;
         } else if (@$data->is_link == '2') {
             $link = $data->link;
             $category_id = $data->category_id;
         }
+
+        if (@$data->best_status) {
+            $best = $data->best_status;
+        }
+
         $newMenu->title = $data->title;
         $newMenu->position = $data->position;
         $newMenu->is_link = $data->is_link;
@@ -60,7 +67,8 @@ class MenuRepository implements MenuRepositoryInterface
         } else {
             $newMenu->parent_id = 0;
         }
-        $newMenu->best = $data->status;
+        $newMenu->status = $data->status;
+        $newMenu->best = $best;
         if (@$data->best_status && $data->bests != null) {
             $newMenu->best = 1;
             $newMenu->best_title = $data->best_title;
@@ -80,6 +88,8 @@ class MenuRepository implements MenuRepositoryInterface
         $isMenu = $this->getById($id);
         $link = null;
         $color = null;
+        $best = 0;
+
         $category_id= null;
         if ($data->is_link && @$data->is_link == '1') {
             $isMenu->is_link = 1;
@@ -93,6 +103,11 @@ class MenuRepository implements MenuRepositoryInterface
         if (@$data->color) {
             $color = $data->color;
         }
+
+        if (@$data->best_status) {
+            $best = $data->best_status;
+        }
+
         $isMenu->title = $data->title;
         $isMenu->position = $data->position;
         $isMenu->is_link = $data->is_link;
@@ -101,6 +116,7 @@ class MenuRepository implements MenuRepositoryInterface
         $isMenu->color = $color;
         $isMenu->parent_id = $data->parent_id;
         $isMenu->status = $data->status;
+        $isMenu->best = $best;
         $status = 'success';
         if ($data->best_status && $data->bests != null) {
             $isMenu->best = 1;

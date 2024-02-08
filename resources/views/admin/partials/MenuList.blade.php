@@ -55,7 +55,7 @@
             </tr>
             @if ($menu->children && count($menu->children) > 0)
                 <tr class="trSubTbl st-{{ $menu->id }}">
-                    <td colspan="7">
+                    <td colspan="8">
                         @include('admin.partials.MenuList', [
                             'menus' => $menu->children,
                             'level' => $level + 1,

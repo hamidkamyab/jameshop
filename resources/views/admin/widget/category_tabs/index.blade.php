@@ -4,7 +4,7 @@
     برگه دستی بندی ها
 @endsection
 @section('navBtnBox')
-    <a href="{{ route('category_tabs.create') }}" class="btn btn-success d-flex align-items-center">
+    <a href="{{ route('category_tabs.create') }}" class="btn btn-success btn-sm d-flex align-items-center">
         <i class="icon-plus"></i>
         <span>افزودن</span>
     </a>

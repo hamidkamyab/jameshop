@@ -77,14 +77,14 @@
                 <div class="col-12 d-flex gap-3 align-items-center">
                     <label class="form-check-label text-muted" for="DiactiveMenu">وضعیت منو</label>
                     <div class="form-check">
-                        <input class="form-check-input border border-danger" type="radio" name="status" id="flexRadioDefault1" value="0" checked>
-                        <label class="form-check-label" for="DiactiveMenu">
+                        <input class="form-check-input border border-danger" type="radio" name="status" id="flexRadioDefault1" value="0" checked role="button">
+                        <label class="form-check-label" for="DiactiveMenu" role="button">
                             غیرفعال
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input border border-success" type="radio" name="status" id="ActiveMenu" value="1">
-                        <label class="form-check-label" for="ActiveMenu">
+                        <input class="form-check-input border border-success" type="radio" name="status" id="ActiveMenu" value="1" role="button" >
+                        <label class="form-check-label" for="ActiveMenu" role="button" >
                             فعال
                         </label>
                     </div>

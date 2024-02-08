@@ -79,15 +79,15 @@
                     <label class="form-check-label text-muted" for="DiactiveMenu">وضعیت منو</label>
                     <div class="form-check">
                         <input class="form-check-input border border-danger" type="radio" name="status" id="flexRadioDefault1" value="0"
-                        @if($menu->status == 0) checked @endif >
-                        <label class="form-check-label" for="DiactiveMenu">
+                        @if($menu->status == 0) checked @endif role="button" >
+                        <label class="form-check-label" for="DiactiveMenu" role="button">
                             غیرفعال
                         </label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input border border-success" type="radio" name="status" id="ActiveMenu" value="1"
-                        @if($menu->status == 1) checked @endif>
-                        <label class="form-check-label" for="ActiveMenu">
+                        @if($menu->status == 1) checked @endif role="button">
+                        <label class="form-check-label" for="ActiveMenu" role="button">
                             فعال
                         </label>
                     </div>

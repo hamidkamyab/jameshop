@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('brands', function (Blueprint $table) {
             $table->unsignedBigInteger('country_id')->nullable()->after('title');
-            $table->foreign('country_id')->references('id')->on('countries')->noActionOnDelete();
+            $table->foreign('country_id')->references('id')->on('countries')->nullOnDelete();
         });
     }
 
