@@ -33,8 +33,8 @@
                             <input class="form-check-input disabled" type="checkbox" id="SwitchCheckColor" role="button">
                         </div>
 
-                        <input type="hidden" value="" name="color" disabled class="vazir fs-12 fw-bold ClearLoad"
-                            id="inputColor">
+                        <input type="hidden" @if ($menu->color) value="{{$menu->color}}" @else value="#42445a" @endif
+                        name="color" disabled class="vazir fs-12 fw-bold" id="inputColor">
                         <div id="color-picker"></div>
                     </div>
                 </div>
@@ -308,6 +308,7 @@
             pickr = Pickr.create({
                 el: '#color-picker',
                 theme: 'monolith', // or 'monolith', or 'nano'
+                default: $('#inputColor').val(),
                 swatches: [
                     'rgba(244, 67, 54, 1)',
                     'rgba(233, 30, 99, 0.95)',

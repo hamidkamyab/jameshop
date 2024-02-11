@@ -3,6 +3,13 @@
 @section('navigation')
     دسته بندی ها
 @endsection
+@section('navBtnBox')
+    <a href="{{ route('products.create') }}" class="btn btn-success btn-sm d-flex align-items-center">
+        <i class="icon-plus"></i>
+        <span>افزودن</span>
+    </a>
+@endsection
+
 @section('content')
     <div class="bg-white col-12 p-3 pb-5 border-start border-4 border-info right-box">
         <div class="col-12">
@@ -12,9 +19,7 @@
                     'status' => 'success',
                 ])
             @endif
-            {{-- @if (Session::has('error_category'))
-                @include('admin.partials.Alert',['msg'=>[session('error_category')],'status'=>'danger'])
-            @endif --}}
+
         </div>
         <table class="table">
             <thead class="bg-dark text-white">

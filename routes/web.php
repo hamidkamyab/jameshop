@@ -95,6 +95,17 @@ Route::prefix('admin')->group(function(){
         ->name('category_tabs.update');
         Route::delete('category_tabs/{id}',[CategoryTabController::class,'destroy'])
         ->name('category_tabs.destroy');
+        Route::get('category_tabs/children/create/{parent}',[CategoryTabController::class,'children_create'])
+        ->name('category_tabs.children.create');
+        Route::post('category_tabs/children/{parent}',[CategoryTabController::class,'children_store'])
+        ->name('category_tabs.children.store');
+        Route::get('category_tabs/children/edit/{id}',[CategoryTabController::class,'children_edit'])
+        ->name('category_tabs.children.edit');
+        Route::patch('category_tabs/children/update/{id}',[CategoryTabController::class,'children_update'])
+        ->name('category_tabs.children.update');
+        Route::delete('category_tabs/children/{id}',[CategoryTabController::class,'children_destroy'])
+        ->name('category_tabs.children.destroy');
+
 
 
         Route::get('beauties',[BeautyController::class,'index'])->name('beauties.index');

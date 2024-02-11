@@ -18,4 +18,13 @@ class CategoryTab extends Model
     public function category(){
         return $this->belongsTo(Category::class);
     }
+
+    public function getChildren()
+    {
+        return $this->hasMany(CategoryTab::class, 'parent_id');
+    }
+    public function children()
+    {
+        return $this->getChildren()->with('children');
+    }
 }

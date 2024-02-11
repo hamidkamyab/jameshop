@@ -85,4 +85,44 @@ class CategoryTabController extends Controller
         Session::flash('opration_catTab','برگه '.$result.' با موفقیت حذف شد!');
         return redirect()->route('category_tabs.index');
     }
+
+
+
+    public function children_create($parent)
+    {
+        $categories = $this->category->getAll();
+        return view('admin.widget.category_tabs.children_create',compact('categories','parent'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function children_store(Request $request,$parent)
+    {
+        $this->catTab->store($request,$parent);
+        Session::flash('opration_catTab',$request->title.' با موفقیت ثبت شد!');
+        return redirect()->route('category_tabs.index');
+    }
+
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function children_edit(string $id)
+    {
+        $catTab = $this->catTab->getById($id);
+        $categories = $this->category->getAll();
+        return view('admin.widget.category_tabs.children_edit',compact('catTab','categories'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function children_update(Request $request, string $id)
+    {
+        $this->catTab->update($request,$id);
+        Session::flash('opration_catTab',$request->title.' با موفقیت ویرایش شد!');
+        return redirect()->route('category_tabs.index');
+    }
+
 }

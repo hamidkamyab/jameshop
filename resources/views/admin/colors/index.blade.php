@@ -3,6 +3,12 @@
 @section('navigation')
 رنگ ها
 @endsection
+@section('navBtnBox')
+    <a href="{{ route('colors.create') }}" class="btn btn-success btn-sm d-flex align-items-center">
+        <i class="icon-plus"></i>
+        <span>افزودن</span>
+    </a>
+@endsection
 @section('content')
     <div class="bg-white col-12 p-3 pb-5 border-start border-4 border-info right-box">
         @if(Session::has('opration_color'))

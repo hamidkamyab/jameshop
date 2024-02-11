@@ -14,7 +14,6 @@ class CategoryTabRepository implements CategoryTabRepositoryInterface
     {
         $this->file = $FileRepository;
         $this->catTab = $categoryTab;
-
     }
 
     public function getAll($page = false)
@@ -31,17 +30,22 @@ class CategoryTabRepository implements CategoryTabRepositoryInterface
         return  $this->catTab::with('media.file')->findOrFail($id);
     }
 
-    public function store($data)
+    public function store($data, $parent = 0)
     {
         $newCatTab = new $this->catTab();
         $newCatTab->title = $data->title;
         $newCatTab->category_id = $data->category_id;
+        $newCatTab->parent_id = $parent;
         $newCatTab->save();
-        if ($data->photosId != null) {
-            $newCatTab->media()->create([
-                'file_id' => $data->photosId
-            ]);
+
+        if ($parent != 0) {
+            if ($data->photosId != null) {
+                $newCatTab->media()->create([
+                    'file_id' => $data->photosId
+                ]);
+            }
         }
+
     }
 
     public function update($data, $id)
@@ -60,13 +64,15 @@ class CategoryTabRepository implements CategoryTabRepositoryInterface
                 $this->file->destroy($photo);
             }
         } else {
-            $isCatTab->media()->create([
-                'file_id' => $data->photosId
-            ]);
+            if (@$data->photosId != null) {
+                $isCatTab->media()->create([
+                    'file_id' => $data->photosId
+                ]);
+            }
         }
         $isCatTab->save();
-
     }
+
 
     public function destroy($id)
     {
