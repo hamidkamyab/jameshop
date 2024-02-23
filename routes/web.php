@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\StyleController;
 use App\Http\Controllers\Admin\TopBrandController;
+use App\Http\Controllers\Client\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,7 +37,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 
 Route::prefix('admin')->group(function(){
     Route::get('/',[DashboardController::class,'index'])->name('admin.dashboard');
@@ -129,3 +130,7 @@ Route::prefix('admin')->group(function(){
     Route::get('settings',[SettingController::class,'index'])->name('settings.index');
     Route::post('settings',[SettingController::class,'store'])->name('settings.store');
 });
+
+
+Route::get('/',[HomeController::class,'index'])->name('home');
+Route::get('/home',[HomeController::class,'index'])->name('home');

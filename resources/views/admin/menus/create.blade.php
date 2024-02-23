@@ -107,8 +107,9 @@
                         <select id="selectParent" class="create form-control vazir fs-12 fw-bold def-select form-select"
                             role="button" name="parent_id" disabled>
                             <option class="defaultOption" disabled>انتخاب کنید</option>
+                            <option value="0" data-position="no-parent" class="text-danger">بدون والد</option>
                             @foreach ($menus as $menu)
-                                <option value="{{ $menu->id }}" class="text-primary parent"> {{ $menu->title }}
+                                <option value="{{ $menu->id }}" data-position="{{$menu->position['original']}}" class="text-primary parent"> {{ $menu->title }}
                                 </option>
                                 @if ($menu->children)
                                     @include('admin.partials.MenuChildren', [

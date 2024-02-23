@@ -28,7 +28,7 @@ class SettingController extends Controller
         foreach ($data as $value) {
             $setting[$value->title] = $value->value;
         }
-        return view('settings.index', compact('categories','setting'));
+        return view('admin.settings.index', compact('categories','setting'));
     }
 
     /**

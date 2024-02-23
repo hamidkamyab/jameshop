@@ -99,9 +99,11 @@
                         <select id="selectPosition" class="form-control def-select form-select" role="button"
                             name="position">
                             <option disabled>انتخاب کنید</option>
-                            <option value="Top" @if ($menu->position == 'Top') selected @endif>بالای صفحه (هدر)
+                            <option value="Top" @if ($menu->position['original'] == 'Top') selected @endif>
+                                بالای صفحه (هدر)
                             </option>
-                            <option value="Bottom" @if ($menu->position == 'Bottom') selected @endif>پایین صفحه (فوتر)
+                            <option value="Bottom" @if ($menu->position['original'] == 'Bottom') selected @endif>
+                                پایین صفحه (فوتر)
                             </option>
                         </select>
                     </div>
@@ -110,18 +112,21 @@
                     <div class="form-group">
                         <label for="selectParent" class="form-label">والد</label>
                         <select id="selectParent" class="form-control vazir fs-12 fw-bold def-select form-select"
-                            role="button" name="parent_id" @if ($menu->orginalPosition != 'Top') disabled @endif>
+                            role="button" name="parent_id" >
                             <option disabled>انتخاب کنید</option>
-                            <option value="0" @if ($menu->parent_id == 0) selected @endif>بدون والد</option>
+                            <option value="0" data-position="no-parent" @if ($menu->parent_id == 0) selected @endif class="text-danger">
+                                بدون والد
+                            </option>
                             @foreach ($menus as $item)
                                 <option value="{{ $item->id }}" @if ($menu->parent_id == $item->id) selected @endif
-                                    class="text-primary parent"> {{ $item->title }}</option>
+                                    class="text-primary parent @if($item->position['original'] != $menu->position['original']) d-none @endif" data-position="{{$item->position['original']}}" > {{ $item->title }}</option>
                                 @if ($item->children)
                                     @include('admin.partials.MenuChildren', [
                                         'menus' => $item->children,
                                         'level' => 1,
                                         'toltipTitle' => $item->title,
                                         'selectedId' => $menu->parent_id,
+                                        'position' => $menu->position['original'],
                                     ])
                                 @endif
                             @endforeach

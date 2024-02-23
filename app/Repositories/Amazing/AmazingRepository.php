@@ -5,6 +5,7 @@ namespace App\Repositories\Amazing;
 use App\Models\Amazing;
 use App\Models\Product;
 use App\Repositories\File\FileRepository;
+use Carbon\Carbon;
 
 class AmazingRepository implements AmazingRepositoryInterface
 {
@@ -24,8 +25,14 @@ class AmazingRepository implements AmazingRepositoryInterface
         if ($page) {
             return $this->amazing->paginate($page);
         } else {
-            return $this->amazing->paginate(30);
+            return $this->amazing->all();
         }
+    }
+
+    public function getActive()
+    {
+        $nowDate = Carbon::now()->format('Y-m-d H:i:s');
+        return  $this->amazing::with('media.file','products')->where('end','>',$nowDate)->latest('end')->first();
     }
 
     public function getById($id)

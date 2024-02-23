@@ -81,3 +81,12 @@ function convertJtoM($date){
 function convertMtoJ($date,$format = 'Y-m-d H:i:s'){
     return Jalalian::fromDateTime($date)->format($format);
 }
+
+
+function overwriteSetting($data){
+    $result = [];
+    foreach ($data as $item) {
+        $result[$item->title] =$item->value;
+    }
+    return $result;
+}

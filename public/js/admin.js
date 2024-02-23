@@ -7246,8 +7246,9 @@ $('#selectPosition').on('change', (e) => {
         $('#SwitchCheckBest').prop('checked', false)
         $('.imgBest').addClass('d-none')
         $('.b-input-t').attr('disabled', true)
-        $('#selectParent').attr('disabled', true);
     }
+
+    filterParent(e.target.value);
 })
 $('#SwitchCheckBest').on('change', (e) => {
     if (e.target.checked) {
@@ -7393,7 +7394,7 @@ function removeOfAMZ(id) {
         amzList = amzList.map(Number);
     }
     const index = amzList.indexOf(id);
-    if (index > -1) {
+    if (index != -1) {
         amzList.splice(index, 1);
     }
     $('#p_' + id).remove();
@@ -7453,9 +7454,8 @@ function removeOfTB(id) {
         tbList = tbList.map(Number);
     }
     const index = tbList.indexOf(id);
-    console.log(id);
-    console.log(tbList);
-    if (index > -1) {
+
+    if (index != -1) {
         tbList.splice(index, 1);
     }
     $('#row-' + id).remove();
@@ -7468,4 +7468,11 @@ function giftFunc() {
     } else {
         $('#inputCat').attr('disabled', true);
     }
+}
+
+
+function filterParent(position) {
+    $('#selectParent > option').addClass('d-none');
+    $('#selectParent > option[data-position="' + position + '"]').removeClass('d-none');
+    $('#selectParent > option[data-position="no-parent"]').removeClass('d-none');
 }

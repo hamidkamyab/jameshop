@@ -25,7 +25,7 @@ class CategoryTabController extends Controller
      */
     public function index()
     {
-        $catTabs = $this->catTab->getAll();
+        $catTabs = $this->catTab->getAll(10);
         return view('admin.widget.category_tabs.index',compact('catTabs'));
     }
 

@@ -28,10 +28,15 @@ class MenuRepository implements MenuRepositoryInterface
     public function getAll($page = false)
     {
         if($page){
-            return $this->menu::with('parent','children')->where('parent_id', 0)->paginate(10);
+            return $this->menu::with('parent','children')->where('parent_id', 0)->paginate($page);
         }else{
             return $this->menu::with('parent','children')->where('parent_id', 0)->get();
         }
+    }
+
+    public function getActive()
+    {
+        return $this->menu::with('parent','children','bestMenu.media')->where('parent_id', 0)->where('status',1)->get();
     }
 
     public function getById($id)

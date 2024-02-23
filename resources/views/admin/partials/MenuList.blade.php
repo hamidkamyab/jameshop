@@ -18,7 +18,7 @@
                 <td>{{ $key + 1 }}</td>
                 <td>{{ str_repeat('+', $level) }} {{ $menu->title }}</td>
                 <td>{{ $menu->parent[0]->title }}</td>
-                <td>{{ $menu->position }}</td>
+                <td>{{$menu->position['showing']}}</td>
                 <td>
                     @if($menu->status == 0)
                         <span class="badge bg-danger fw-normal">غیرفعال</span>

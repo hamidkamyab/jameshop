@@ -34,7 +34,7 @@
                         <td>{{ $key + 1 }}</td>
                         <td>{{ $menu->title }}</td>
                         <td>-</td>
-                        <td>{{ $menu->position }}</td>
+                        <td>{{$menu->position['showing']}}</td>
                         <td>
                             @if($menu->status == 0)
                                 <span class="badge bg-danger fw-normal">غیرفعال</span>

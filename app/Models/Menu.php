@@ -2,24 +2,23 @@
 
 namespace App\Models;
 
-use App\Events\MenuDeleting;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
     use HasFactory;
+
     public function getPositionAttribute($value)
     {
+        $originalPosition = $value;
         if ($value === 'Top') {
             $result = 'بالای سایت (هد)';
         } else if ($value === 'Bottom') {
             $result = 'پایین سایت (فوتر)';
         }
-        $this->orginalPosition = $value;
-        return $result;
+        return ['showing' => $result, 'original' => $originalPosition];
     }
-
 
     public function getChildren()
     {
@@ -27,7 +26,7 @@ class Menu extends Model
     }
     public function children()
     {
-        return $this->getChildren()->with('children');
+        return $this->getChildren()->with('children', 'bestMenu.media.file');
     }
 
     public function getParent()
@@ -42,7 +41,7 @@ class Menu extends Model
 
     public function bestMenu()
     {
-        return $this->hasOne(BestMenu::class, 'menu_id');
+        return $this->hasMany(BestMenu::class, 'menu_id');
     }
 
 

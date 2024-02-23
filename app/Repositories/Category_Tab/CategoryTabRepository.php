@@ -19,9 +19,9 @@ class CategoryTabRepository implements CategoryTabRepositoryInterface
     public function getAll($page = false)
     {
         if ($page) {
-            return $this->catTab->paginate($page);
+            return $this->catTab::with('children','category')->where('parent_id', 0)->paginate($page);
         } else {
-            return $this->catTab->paginate(30);
+            return $this->catTab::with('children','category','media.file')->where('parent_id', 0)->get();
         }
     }
 

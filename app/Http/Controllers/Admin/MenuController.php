@@ -30,7 +30,7 @@ class MenuController extends Controller
     public function index()
     {
         $menus = $this->menu->getAll(20);
-        return view('admin.menus.index', compact('menus'));
+        return view('admin.menus.index',compact('menus'));
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Repositories\Style;
 use App\Models\Style;
 use App\Models\Product;
 use App\Repositories\File\FileRepository;
+use Carbon\Carbon;
 
 class StyleRepository implements StyleRepositoryInterface
 {
@@ -24,10 +25,14 @@ class StyleRepository implements StyleRepositoryInterface
         if ($page) {
             return $this->style->paginate($page);
         } else {
-            return $this->style->paginate(30);
+            return $this->style->all();
         }
     }
-
+    public function getActive()
+    {
+        $nowDate = Carbon::now()->format('Y-m-d H:i:s');
+        return $this->style->with('media.file', 'products')->where('date','>',$nowDate)->latest('date')->first();
+    }
     public function getById($id)
     {
         return  $this->style::with('media.file', 'products')->findOrFail($id);

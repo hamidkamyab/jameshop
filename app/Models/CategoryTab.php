@@ -25,6 +25,6 @@ class CategoryTab extends Model
     }
     public function children()
     {
-        return $this->getChildren()->with('children');
+        return $this->getChildren()->with('children','media.file');
     }
 }
