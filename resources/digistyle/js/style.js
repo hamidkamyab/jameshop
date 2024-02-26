@@ -420,6 +420,9 @@ function displayTimer(remainingTime) {
 function updateTimer() {
     if (targetDate) {
         var remainingTime = calculateRemainingTime(targetDate);
+        if ($('.amazing-items-offer-box').hasClass('hidden'))
+            $('.amazing-items-offer-box').removeClass('hidden')
+
         displayTimer(remainingTime);
         if (remainingTime > 0) {
             requestAnimationFrame(updateTimer);

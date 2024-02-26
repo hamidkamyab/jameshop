@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -11,26 +11,22 @@
     <link rel="stylesheet" href="{{ asset('client/fonticon/css/animation.css') }}">
     <link rel="stylesheet" href="{{ asset('client/fonticon/css/fontello-ie7.css') }}">
     <link rel="stylesheet" href="{{ asset('client/fonticon/css/fontello.css') }}">
+    @yield('head')
 </head>
 <body class="BYekan vh-100">
     <div class="bodyBox mCustomScrollbar HoverSC mCS_noMargin mCS_rightPos overflow-hidden vh-100 p-0" data-mcs-theme="light">
         @include('client.layouts.header')
-
             @yield('content')
-
         @include('client.layouts.footer')
 
     </div>
-
-
-
-
 
 </body>
 <footer>
     <script src="{{ asset('js/jquery.custom-scrollbar.js') }}"></script>
     <script src="{{ asset('js/client.js') }}"></script>
-</footer>
+    @yield('footer')
 
+</footer>
 
 </html>

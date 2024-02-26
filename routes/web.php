@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\StyleController;
 use App\Http\Controllers\Admin\TopBrandController;
 use App\Http\Controllers\Client\HomeController;
+use App\Http\Controllers\Client\SearchController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -134,3 +135,4 @@ Route::prefix('admin')->group(function(){
 
 Route::get('/',[HomeController::class,'index'])->name('home');
 Route::get('/home',[HomeController::class,'index'])->name('home');
+Route::get('/search',[SearchController::class,'index'])->name('search');

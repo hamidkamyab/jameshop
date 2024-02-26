@@ -1,4 +1,4 @@
-﻿        <!-- s-footer-menu -->
+        <!-- s-footer-menu -->
         <section class="s-footer-menu py-5">
             <!-- footer-menu-container -->
             <div class="footer-menu-container container">

@@ -1,4 +1,4 @@
-﻿ <!-- s-header -->
+ <!-- s-header -->
  <section class="s-header s-header-dark mb-4 position-absolute w-100">
      <!-- headerBox -->
      <div class="headerBox position-relative d-flex justify-content-center">

@@ -1,4 +1,4 @@
-﻿ <!-- s-recent -->
+ <!-- s-recent -->
  <section class="s-recent mb-2 d-flex align-items-center">
             <div class="recent-container container d-flex py-5 mt-5 position-relative">
 

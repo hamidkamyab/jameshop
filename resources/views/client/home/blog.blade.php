@@ -1,4 +1,4 @@
-﻿<!-- s-last-blog -->
+<!-- s-last-blog -->
 <section class="s-last-blog m-0 d-flex align-items-center">
             <!-- last-blog-container -->
             <div class="last-blog-container container d-flex flex-column py-5 mt-5 position-relative">

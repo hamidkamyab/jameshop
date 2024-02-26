@@ -1,4 +1,4 @@
-﻿<!-- s-popular-brands -->
+<!-- s-popular-brands -->
 <section class="s-popular-brands mt-2 position-relative">
             <div class="popular-brands-title container d-flex align-items-center justify-content-between py-3">
                 <span class="IRYekan fs-3 fw-bolder">محــبوبــــ‌ترینــ بــرنــدها</span>

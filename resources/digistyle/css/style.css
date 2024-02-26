@@ -347,7 +347,6 @@ body {
 
 .bodyBox {
     max-height: 100%;
-    margin-top: -48px !important;
 }
 
 .main-content {
@@ -372,7 +371,7 @@ body {
     height: 100%;
 }
 
-.header-log-dark img {
+.header-logo img {
     filter: brightness(40%);
 }
 
@@ -597,7 +596,8 @@ body {
 }
 
 .h-product-items-top {
-    height: 360px;
+    height: 300px;
+    /*360px*/
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -689,6 +689,10 @@ body {
 
 .amazing-right img {
     width: 128px;
+}
+
+.amazing-items-offer-box.hidden {
+    display: none;
 }
 
 .amazing-items-offer-box img {

@@ -1,10 +1,9 @@
-﻿        <!-- s-visit -->
-        <section class="s-visit m-0 d-flex align-items-center">
-            <div class="visit-container container d-flex py-5 mt-5 position-relative">
+ <!-- s-similar-offer -->
+ <section class="s-similar-offer m-0 d-flex align-items-center">
+            <div class="similar-offer-container container d-flex flex-column mb-5 position-relative">
 
-                <div class="visit-right col-2 d-flex flex-column align-items-start justify-content-between">
-                    <span class="IRYekan fw-bold fs-4"> بازدیدهای اخــــیــــــر شــــــمــــــا </span>
-                    <button type="button" class="btn btn-outline-dark py-2 px-3 rounded-0">مشاهده همه</button>
+                <div class="similar-offer-right col-12">
+                    <span class="IRYekan fw-bold fs-4"> پــیشنهادهای مــشابه </span>
                 </div>
 
                 <!-- swiper-main -->
@@ -12,7 +11,7 @@
 
                     <div class="swiper-container d-flex align-items-center">
                         <!-- h-product-items -->
-                        <div class="visit-items h-product-items h-product-items-ds swiper-items d-flex flex-column gap-3 position-relative bg-white">
+                        <div class="similar-offer-items h-product-items h-product-items-ds swiper-items d-flex flex-column gap-3 position-relative bg-white">
                             <div class=" h-product-items-top position-relative">
                                 <div class="h-product-overly"></div>
                                 <span class="h-product-items-brand bg-white py-1 px-2 position-absolute top-0 fs-14">برند</span>
@@ -41,7 +40,7 @@
                         <!-- End h-product-items -->
 
                         <!-- h-product-items -->
-                        <div class="visit-items h-product-items h-product-items-ds swiper-items d-flex flex-column gap-3 position-relative bg-white">
+                        <div class="similar-offer-items h-product-items h-product-items-ds swiper-items d-flex flex-column gap-3 position-relative bg-white">
                             <div class=" h-product-items-top position-relative">
                                 <div class="h-product-overly"></div>
                                 <span class="h-product-items-brand bg-white py-1 px-2 position-absolute top-0 fs-14">برند</span>
@@ -70,7 +69,7 @@
                         <!-- End h-product-items -->
 
                         <!-- h-product-items -->
-                        <div class="visit-items h-product-items h-product-items-ds swiper-items d-flex flex-column gap-3 position-relative bg-white">
+                        <div class="similar-offer-items h-product-items h-product-items-ds swiper-items d-flex flex-column gap-3 position-relative bg-white">
                             <div class=" h-product-items-top position-relative">
                                 <div class="h-product-overly"></div>
                                 <span class="h-product-items-brand bg-white py-1 px-2 position-absolute top-0 fs-14">برند</span>
@@ -99,7 +98,7 @@
                         <!-- End h-product-items -->
 
                         <!-- h-product-items -->
-                        <div class="visit-items h-product-items h-product-items-ds swiper-items d-flex flex-column gap-3 position-relative bg-white">
+                        <div class="similar-offer-items h-product-items h-product-items-ds swiper-items d-flex flex-column gap-3 position-relative bg-white">
                             <div class=" h-product-items-top position-relative">
                                 <div class="h-product-overly"></div>
                                 <span class="h-product-items-brand bg-white py-1 px-2 position-absolute top-0 fs-14">برند</span>
@@ -128,7 +127,7 @@
                         <!-- End h-product-items -->
 
                         <!-- h-product-items -->
-                        <div class="visit-items h-product-items h-product-items-ds swiper-items d-flex flex-column gap-3 position-relative bg-white">
+                        <div class="similar-offer-items h-product-items h-product-items-ds swiper-items d-flex flex-column gap-3 position-relative bg-white">
                             <div class=" h-product-items-top position-relative">
                                 <div class="h-product-overly"></div>
                                 <span class="h-product-items-brand bg-white py-1 px-2 position-absolute top-0 fs-14">برند</span>
@@ -157,7 +156,7 @@
                         <!-- End h-product-items -->
 
                         <!-- h-product-items -->
-                        <div class="visit-items h-product-items h-product-items-ds swiper-items d-flex flex-column gap-3 position-relative bg-white">
+                        <div class="similar-offer-items h-product-items h-product-items-ds swiper-items d-flex flex-column gap-3 position-relative bg-white">
                             <div class=" h-product-items-top position-relative">
                                 <div class="h-product-overly"></div>
                                 <span class="h-product-items-brand bg-white py-1 px-2 position-absolute top-0 fs-14">برند</span>
@@ -189,12 +188,12 @@
 
 
                     <button type="button" class="swiper-btn swiper-btn-prev icon-right fs-3 px-2 py-3 position-absolute btn btn-light p-0 text-muted disabled" disabled>
-            </button>
+                    </button>
                     <button type="button" class="swiper-btn swiper-btn-next icon-left fs-3 px-2 py-3 position-absolute btn btn-light p-0 text-muted">
-            </button>
+                    </button>
 
                 </div>
                 <!-- End swiper-main -->
             </div>
         </section>
-        <!-- End s-visit -->
+        <!-- End s-similar-offer -->

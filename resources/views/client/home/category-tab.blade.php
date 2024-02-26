@@ -1,4 +1,4 @@
-﻿<!-- s-category-tab -->
+<!-- s-category-tab -->
 <section class="s-category-tab vh-100 my-5">
     <div class="category-tab-container container">
         <nav class="category-tab-nav">

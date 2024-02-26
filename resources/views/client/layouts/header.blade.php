@@ -1,17 +1,17 @@
-﻿ <section class="s-header my-4 position-absolute w-100">
+ <section class="s-header mb-4 position-absolute w-100">
      <!-- headerBox -->
      <div class="headerBox position-relative d-flex justify-content-center">
-         <div class="container header-container mt-4 p-0">
+         <div class="container header-container m-0 pt-4">
              <div class="t-header-container container">
                  <div class="t-header-container-box d-flex align-items-start justify-content-between">
-                     <div class="r-header-container text-white d-flex align-items-start justify-content-start">
+                     <div class="r-header-container text-dark head-text-white d-flex align-items-start justify-content-start">
                          <div class="d-flex align-items-center gap-1">
                              <div class="header-cartBox position-relative">
                                  <div class="d-flex align-items-center" role="button">
                                      <span
                                          class="cart-badge badge position-absolute translate-middle rounded-pill bg-danger fs-10 pt-1">0</span>
-                                     <i class="icon-basket-thin fs-3 text-shadow-dark"></i>
-                                     <span class="fs-14 text-shadow-dark">سبد خرید</span>
+                                     <i class="icon-basket-thin fs-3 text-shadow-dark no-text-shadow"></i>
+                                     <span class="fs-14 text-shadow-dark no-text-shadow">سبد خرید</span>
                                  </div>
 
                                  <div class="header-cart position-absolute start-0 rounded-1 bg-white">
@@ -19,7 +19,7 @@
                                          class="d-flex justify-content-center align-items-center flex-column py-5 gap-2">
                                          <img src="{{ asset('imgs/client/cart-empty.svg') }}" alt=""
                                              srcset="">
-                                         <span class="fs-5 text-dark mt-1">سبد خرید شما خالی است.</span>
+                                         <span class="fs-5 text-dark head-text-white mt-1">سبد خرید شما خالی است.</span>
 
                                          <span class="text-muted mt-5">شاید این صفحات برای شما جذاب باشند</span>
                                          <ul
@@ -33,11 +33,11 @@
                                      </div>
                                  </div>
                              </div>
-                             <div class="vr-seperator vr-seperator-md ms-2 box-shadow-dark"></div>
+                             <div class="vr-seperator vr-seperator-md bg-dark head-bg-white ms-2 box-shadow-dark no-box-shadow"></div>
                              <div class="header-userBox position-relative">
                                  <div class="d-flex align-items-center" role="button">
-                                     <i class="icon-login-thin fs-3 p-0 m-0 text-shadow-dark"></i>
-                                     <span class="fs-14 text-shadow-dark">وارد شوید</span>
+                                     <i class="icon-login-thin fs-3 p-0 m-0 text-shadow-dark no-text-shadow"></i>
+                                     <span class="fs-14 text-shadow-dark no-text-shadow">وارد شوید</span>
                                  </div>
 
                                  <div class="header-user-msg position-absolute bg-white">
@@ -51,7 +51,7 @@
 
                      <div class="c-header-container d-flex flex-column px-3">
                          <div
-                             class="header-log px-5 pb-4 border-1 border-bottom border-white mb-3 d-flex justify-content-center">
+                             class="header-logo header-logo-light px-5 pb-4 border-1 border-bottom border-dark head-border-white mb-3 d-flex justify-content-center">
                              <img src="{{ asset('imgs/client/logo.svg') }}" alt="" srcset="">
                          </div>
 
@@ -62,7 +62,7 @@
                                  @foreach ($menus as $key => $menu)
                                     @if($menu->position['original'] == 'Top')
                                      <li class="nav-item" onmouseenter="openMenu(this)">
-                                         <a class="nav-link text-white text-shadow-dark position-relative"
+                                         <a class="nav-link text-dark head-text-white text-shadow-dark no-text-shadow position-relative"
                                              href="#">
                                              {{ $menu->title }}
                                              <span class="nav-link-triangle"></span>
@@ -70,7 +70,7 @@
                                          <div class="c-mega-menu position-absolute container bg-white p-0">
 
                                              <ul
-                                                 class="c-mega-sub-menu border-1 border-bottom border-muted list-unstyled d-flex justify-content-center align-items-center position-relative">
+                                                 class="c-mega-sub-menu border-1 border border-muted list-unstyled d-flex justify-content-center align-items-center position-relative">
 
                                                  @foreach ($menu->children as $key => $items)
                                                      <li class="c-mega-sub-menu-item fs-15 ">
@@ -161,8 +161,8 @@
 
                      <div class="l-header-container d-flex justify-content-end align-items-start">
                          <div class="searchBox d-flex align-items-center border-bottom border-1 border-silver pe-3">
-                             <i class="icon-search-thin fs-3 text-white text-shadow-dark"></i>
-                             <span class="text-silver fs-13 text-shadow-dark">جستجو محصولات از 290 برند</span>
+                             <i class="icon-search-thin fs-3 text-dark head-text-white text-shadow-dark no-text-shadow"></i>
+                             <span class="text-muted head-text-silver fs-13 text-shadow-dark no-text-shadow">جستجو محصولات از 290 برند</span>
                          </div>
                      </div>
                  </div>
